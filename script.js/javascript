@@ -1,0 +1,28 @@
+function toggleSeccion(id) {
+  const seccion = document.getElementById(id);
+  seccion.classList.toggle('show');
+}
+
+function toggleDetalle(button) {
+  const detalle = button.nextElementSibling;
+  detalle.style.display = detalle.style.display === 'block' ? 'none' : 'block';
+}
+
+async function generarPDF(titulo, contenido) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text(titulo, 20, 20);
+
+  doc.setFontSize(12);
+  const lineas = doc.splitTextToSize(contenido, 170);
+  doc.text(lineas, 20, 40);
+
+  const nombreArchivo = titulo.toLowerCase().replace(/\s+/g, '-') + ".pdf";
+  doc.save(nombreArchivo);
+}
+function toggleTarjeta(elemento) {
+  const tarjeta = elemento.parentElement;
+  tarjeta.classList.toggle('abierta');
+}

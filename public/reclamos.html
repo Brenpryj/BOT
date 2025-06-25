@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Realizar un Reclamo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primario: #0198A4;
+      --secundario: #1A8689;
+      --texto: #FFFFFF;
+      --gris: #46494A;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('/fondo-lourdes.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--gris);
+    }
+
+    .logo-lateral {
+      position: fixed;
+      bottom: 30px;
+      left: 40px;
+      width: 180px;
+      opacity: 0.9;
+      z-index: 1000;
+    }
+
+    header {
+      background-color: var(--primario);
+      color: var(--texto);
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    form {
+      background-color: #ffffffcc;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    button[type="submit"] {
+      background-color: var(--primario);
+      color: white;
+      border: none;
+      padding: 1em;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: var(--secundario);
+      transform: scale(1.05);
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    a.volver {
+      display: block;
+      text-align: center;
+      margin: 2em 0;
+      text-decoration: none;
+      color: var(--primario);
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--secundario);
+      color: white;
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2em;
+      text-decoration: none;
+      z-index: 1000;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 1rem;
+      }
+
+      form {
+        padding: 1.5rem;
+      }
+
+      .logo-lateral {
+        width: 140px;
+        left: 20px;
+        bottom: 20px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <img src="/logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+
+  <header>
+    <h1>📍 Realizá tu Reclamo Vecinal</h1>
+    <p>Contanos qué problema tenés en tu zona para que podamos ayudarte.</p>
+  </header>
+
+  <main>
+    <form action="/reclamos" method="POST" enctype="multipart/form-data">
+      <input type="text" name="nombre" placeholder="Tu nombre completo" required>
+      <input type="text" name="dni" placeholder="DNI" required>
+      <input type="text" name="ubicacion" placeholder="Ubicación o barrio" required>
+      <textarea name="descripcion" placeholder="Describí el problema" required></textarea>
+      <input type="text" name="tiempo_problema" placeholder="¿Desde cuándo ocurre?" required>
+
+      <label>📸 Imagen del problema (opcional):</label>
+      <input type="file" name="imagen" accept="image/*">
+
+      <button type="submit">Enviar reclamo</button>
+    </form>
+
+    <a href="/" class="volver">⬅️ Volver al inicio</a>
+  </main>
+
+  <footer>
+    <p>Creado por PB – 2025</p>
+  </footer>
+
+  <a href="https://wa.me/5493804123456" class="whatsapp-btn" target="_blank" title="Escribinos por WhatsApp">💬</a>
+
+</body>
+</html>

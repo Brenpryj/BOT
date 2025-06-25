@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Administración</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primario: #0198A4;
+      --secundario: #1A8689;
+      --texto: #FFFFFF;
+      --gris: #46494A;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('/fondo-lourdes.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--gris);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-lateral {
+      position: absolute;
+      bottom: 30px;
+      left: 40px;
+      width: 180px;
+      opacity: 0.9;
+    }
+
+    header {
+      text-align: center;
+      color: var(--texto);
+      padding: 2rem 1rem;
+      background-color: rgba(1, 152, 164, 0.9);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem;
+      z-index: 10;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    #login input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-right: 10px;
+      width: 250px;
+    }
+
+    #login button {
+      padding: 10px 20px;
+      background-color: var(--primario);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #login button:hover {
+      background-color: var(--secundario);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--primario);
+      color: white;
+    }
+
+    td img {
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #e53935;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #c62828;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--secundario);
+      color: white;
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .logo-lateral {
+        width: 140px;
+        left: 20px;
+        bottom: 20px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      #login input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      #login button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <img src="/logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+
+  <header>
+    <h1>🔐 Panel privado de Lourdes Ortiz</h1>
+    <p>Reclamos e ideas cargadas por los ciudadanos.</p>
+  </header>
+
+  <main>
+    <div id="login">
+      <input type="password" id="clave" placeholder="Ingresá tu clave">
+      <button onclick="validarClave()">Ingresar</button>
+      <p id="error" style="color:red;"></p>
+    </div>
+
+    <div id="contenido" style="display:none;">
+      <h2>📍 Reclamos</h2>
+      <div id="reclamos"></div>
+
+      <h2>💡 Ideas</h2>
+      <div id="ideas"></div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">⬅️ Volver al inicio</a>
+    <p>Creado por PB – 2025</p>
+  </footer>
+
+  <script>
+    function validarClave() {
+      const clave = document.getElementById('clave').value;
+      if (clave === "pb2025") {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('contenido').style.display = 'block';
+        cargarDatos();
+      } else {
+        document.getElementById('error').textContent = "❌ Clave incorrecta";
+      }
+    }
+
+    function cargarDatos() {
+      fetch('/api/reclamos')
+        .then(res => res.json())
+        .then(data => {
+          let html = '<table><tr><th>Nombre</th><th>Ubicación</th><th>Descripción</th><th>Fecha</th><th>Seguimiento</th><th>Imagen</th><th>Acción</th></tr>';
+          data.forEach(r => {
+            html += `<tr>
+              <td>${r.nombre}</td>
+              <td>${r.ubicacion}</td>
+              <td>${r.descripcion}</td>
+              <td>${r.fecha}</td>
+              <td>${r.numero_seguimiento}</td>
+              <td>${r.imagen ? `<img src="/uploads/${r.imagen}" width="60">` : ''}</td>
+              <td><button onclick="eliminarReclamo(${r.id})">🗑️</button></td>
+            </tr>`;
+          });
+          html += '</table>';
+          document.getElementById('reclamos').innerHTML = html;
+        });
+
+      fetch('/api/ideas')
+        .then(res => res.json())
+        .then(data => {
+          let html = '<table><tr><th>Nombre</th><th>Propuesta</th><th>Problema</th><th>Fecha</th><th>Imagen</th><th>Acción</th></tr>';
+          data.forEach(i => {
+            html += `<tr>
+              <td>${i.nombre}</td>
+              <td>${i.propuesta}</td>
+              <td>${i.problema}</td>
+              <td>${i.fecha}</td>
+              <td>${i.imagen ? `<img src="/uploads/${i.imagen}" width="60">` : ''}</td>
+              <td><button onclick="eliminarIdea(${i.id})">🗑️</button></td>
+            </tr>`;
+          });
+          html += '</table>';
+          document.getElementById('ideas').innerHTML = html;
+        });
+    }
+
+    function eliminarReclamo(id) {
+      if (confirm("¿Eliminar este reclamo?")) {
+        fetch(`/api/reclamos/${id}/eliminar`, { method: 'POST' })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert("✅ Reclamo eliminado");
+              cargarDatos();
+            } else {
+              alert("❌ No se pudo eliminar");
+            }
+          });
+      }
+    }
+
+    function eliminarIdea(id) {
+      if (confirm("¿Eliminar esta idea?")) {
+        fetch(`/api/ideas/${id}/eliminar`, { method: 'POST' })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert("✅ Idea eliminada");
+              cargarDatos();
+            } else {
+              alert("❌ No se pudo eliminar");
+            }
+          });
+      }
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.altKey && e.key === '') {
+        window.location.href = '/admin.html';
+      }
+    });
+  </script>
+
+</body>
+</html>
