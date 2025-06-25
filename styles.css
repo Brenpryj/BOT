@@ -9,14 +9,14 @@
 
 /* General */
 body {
-  font-family: Arial, sans-serif;
+  font-family: montserrat, montserrat;
   color: #000;
 }
 
 /* Introductorio */
 .intro {
   text-align: center;
-  padding: 100px 20px 40px;
+  padding: 100px 40px 60px;
 }
 
 /* Botones */

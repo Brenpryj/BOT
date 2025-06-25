@@ -1,94 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bot de Lourdes Ortiz</title>
-  <link rel="icon" href="logo-lou.png" type="image/png" />
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-image: url('fondo-lourdes.png');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      font-family: Arial, sans-serif;
-    }
-
-    .avatar {
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100px;
-      z-index: 10;
-    }
-
-    footer {
-      background-color: #0198A4;
-      color: white;
-      text-align: center;
-      padding: 30px 10px;
-      position: relative;
-    }
-
-    footer .logo {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 50px;
-    }
-
-    .footer-circle {
-      display: inline-block;
-      background-color: #1A8689;
-      border-radius: 50%;
-      padding: 15px 25px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .intro {
-      text-align: center;
-      padding: 100px 20px 40px;
-      color: #000;
-    }
-
-    button {
-      display: block;
-      margin: 15px auto;
-      padding: 15px 25px;
-      border: 2px solid white;
-      border-radius: 10px;
-      background-color: #0198A4;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 3px 3px 8px #1A8689;
-      transition: all 0.2s ease-in-out;
-    }
-
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 4px 4px 10px #166E6E;
-      background-color: #017d8a;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 <body>
-  <img src="avatar.png" alt="Vicuñita avatar" class="avatar" />
-
+  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
   <main>
     <section class="intro">
       <h2>Bienvenid@s al Bot de Lourdes Ortiz!</h2>
       <p>Participá, consultá, proponé ideas y seguí proyectos en curso.</p>
     </section>
 
-    <nav>
+    <nav class="botones">
       <button onclick="location.href='reclamos.html'">📍 Realizar una Sugerencia</button>
       <button onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
       <button onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
@@ -98,8 +25,10 @@
   </main>
 
   <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo" />
-    <div class="footer-circle">Creado por PB – © 2025</div>
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
+    <div class="marca">
+      <span>Creado por PB – © 2025</span>
+    </div>
   </footer>
 </body>
 </html>

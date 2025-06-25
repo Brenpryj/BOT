@@ -4,37 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>¿Cuál es la función de la Legislatura?</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
     :root {
       --primario: #0198A4;
       --secundario: #1A8689;
+      --terciario: #006B70;
       --texto: #FFFFFF;
       --gris: #46494A;
     }
 
     body {
       margin: 0;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, var(--secundario) 50%, var(--primario) 50%);
+      font-family: 'Montserrat', sans-serif;
+      background: url('fondo-lourdes.png') no-repeat center center fixed;
+      background-size: cover;
       color: var(--gris);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
+    .vicuñita {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      animation: flotar 3s ease-in-out infinite;
+      z-index: 999;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(-50%) translateY(0); }
+      50% { transform: translateY(-50%) translateY(-10px); }
+      100% { transform: translateY(-50%) translateY(0); }
+    }
+
     .logo-lateral {
-      position: absolute;
+      position: fixed;
       bottom: 30px;
       left: 40px;
       width: 180px;
       opacity: 0.9;
+      z-index: 1000;
     }
 
     header {
       text-align: center;
       color: var(--texto);
       padding: 2rem 1rem;
+      background-color: rgba(1, 152, 164, 0.9);
     }
 
     header h1 {
@@ -46,13 +66,14 @@
       max-width: 960px;
       margin: 0 auto;
       padding: 2rem;
+      z-index: 10;
     }
 
     .tarjeta-colapsable {
       border-radius: 10px;
       background-color: #ffffffcc;
       margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       overflow: hidden;
       transition: 0.3s ease;
     }
@@ -63,8 +84,9 @@
       cursor: pointer;
       background-color: var(--secundario);
       color: white;
-      border-bottom: 1px solid #e6cc74;
+      border-bottom: 1px solid white;
       transition: background-color 0.3s ease;
+      text-align: center;
     }
 
     .titulo-tarjeta:hover {
@@ -102,12 +124,28 @@
     }
 
     footer {
-      text-align: center;
-      font-size: 14px;
-      padding: 1rem;
       background-color: var(--secundario);
       color: white;
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       margin-top: auto;
+    }
+
+    .logo-footer {
+      width: 80px;
+    }
+
+    .marca {
+      font-size: 14px;
+      border: 2px solid white;
+      border-radius: 50%;
+      padding: 0.5rem 1rem;
+      background-color: var(--terciario);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     @media (max-width: 600px) {
@@ -125,7 +163,8 @@
 </head>
 <body>
 
-  <img src="/logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
   <header>
     <h1>🏛️ ¿Cuál es la función de la Legislatura?</h1>
@@ -182,7 +221,10 @@
   </main>
 
   <footer>
-    Creado por PB – 2025
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
+    <div class="marca">
+      Creado por PB – © 2025
+    </div>
   </footer>
 
   <script>
@@ -191,6 +233,5 @@
       tarjeta.classList.toggle('abierta');
     }
   </script>
-
 </body>
 </html>

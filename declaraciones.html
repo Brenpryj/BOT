@@ -4,21 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Declaraciones de Interés</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
     :root {
       --primario: #0198A4;
       --secundario: #1A8689;
       --terciario: #006B70;
-      --fondo: #EDECE4;
       --texto: #FFFFFF;
       --gris: #46494A;
     }
 
     body {
       margin: 0;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-      background: url('/fondo-lourdes.png') no-repeat center center fixed;
+      font-family: 'Montserrat', sans-serif;
+      background: url('fondo-lourdes.png') no-repeat center center fixed;
       background-size: cover;
       color: var(--gris);
       min-height: 100vh;
@@ -26,12 +25,29 @@
       flex-direction: column;
     }
 
+    .vicuñita {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      animation: flotar 3s ease-in-out infinite;
+      z-index: 999;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(-50%) translateY(0); }
+      50% { transform: translateY(-50%) translateY(-10px); }
+      100% { transform: translateY(-50%) translateY(0); }
+    }
+
     .logo-lateral {
-      position: absolute;
+      position: fixed;
       bottom: 30px;
       left: 40px;
       width: 180px;
       opacity: 0.9;
+      z-index: 1000;
     }
 
     header {
@@ -123,12 +139,28 @@
     }
 
     footer {
-      text-align: center;
-      padding: 1rem;
       background-color: var(--secundario);
       color: white;
-      font-size: 14px;
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       margin-top: auto;
+    }
+
+    .logo-footer {
+      width: 80px;
+    }
+
+    .marca {
+      font-size: 14px;
+      border: 2px solid white;
+      border-radius: 50%;
+      padding: 0.5rem 1rem;
+      background-color: var(--terciario);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     @media (max-width: 600px) {
@@ -146,51 +178,44 @@
 </head>
 <body>
 
-  <!-- Logo Lourdes Ortiz -->
-  <img src="/logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
   <header>
     <h1>📜 Declaraciones de Interés</h1>
     <p>Reconocimientos otorgados por su relevancia social, cultural, educativa o comunitaria.</p>
   </header>
 
-  <main class="accordion" id="contenedor-declaraciones"></main>
+  <main class="accordion" id="contenedor-declaraciones">
+    <div style="text-align:center; margin: 2rem 0;">
+  <button onclick="window.print()" style="
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: var(--primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  ">
+    📥 Descargar esta página
+  </button>
+</div>
+
+  </main>
 
   <footer>
-    <p>Creado por PB – 2025</p>
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
+    <div class="marca">
+      <span>Creado por PB – © 2025</span>
+    </div>
   </footer>
 
   <script>
     const declaraciones = {
-      '2025': [
-        "Victoria_Para_Amar.pdf", "Encuentro_Artesanos.pdf",
-        "Curso_Abordaje_Integral.pdf", "Liga_NOA_Encuentro.pdf",
-        "Feriado_12_Octubre.pdf"
-      ],
-      '2024': [
-        "Rally_Argentino.pdf", "Dia_Mujer_Rioja.pdf", "Serie_Contra_El_Olvido.pdf", "Mujer_Policia.pdf",
-        "Aniversario_Corazon.pdf", "Encuentro_Los_Vaivenes.pdf", "Fronteras_Abiertas.pdf", "Jornadas_SAC_LaRioja.pdf",
-        "Lactancia_Materna.pdf", "Rechazo_Proyecto_Derecho.pdf", "Jovenes_Democracia.pdf", "Tour_Riojano_2024.pdf",
-        "Reunion_Secretariado.pdf", "Lazos_Dorados.pdf", "Derechos_Politicos_Mujer.pdf", "Trata_Explotacion.pdf",
-        "Grupo_Vocal_Norte.pdf", "Festival_Cortos.pdf", "Dia_Infancia.pdf", "Prevencion_Abuso_Infantil.pdf",
-        "Recuperacion_Archivos.pdf", "Aniversario_Radio_Publica.pdf", "Formacion_Lideres.pdf"
-      ],
-      '2023': [
-        "40_Años_Democracia.pdf", "Aniversario_Ciudad.pdf", "Aniversario_Escuela_Normal.pdf", "Aniversario_Fallecimiento_General.pdf",
-        "Capacitacion_Asperger.pdf", "CientiArte.pdf", "Coleccionistas_Minerales.pdf", "Congreso_REDCOM.pdf",
-        "Dcl69_138_Congreso_Ingenieria.pdf", "Derechos_Politicos_Mujer.pdf", "Dia_Arbol.pdf", "Dia_Educador_Profesor.pdf",
-        "Dia_Habitat.pdf", "Encuentro_Flamencos.pdf", "Encuentro_Holistico.pdf", "Fallecimiento_General_SanMartin.pdf",
-        "Feria_Libro_2023.pdf", "Fiestas_Virgen_Merced.pdf", "Gendarmeria_Nacional.pdf", "Gira_Teatro_2023.pdf",
-        "Industrias_Creativas.pdf", "Jose_Santos_Salinas.pdf", "Literaria_Ser_Mujer.pdf", "Motorock_Festival.pdf",
-        "Olimpiadas_Matematica.pdf", "Reconocimiento_Marlene_R.pdf", "Reconocimiento_Marlene_SANC.pdf"
-      ],
-      '2022': [
-        "100_Años_Gral_Jose.pdf", "Conocer_Educacion.pdf", "Encuentro_Parlamento.pdf", "Dia_Internacional_Explotacion.pdf",
-        "Juventudes.pdf", "Festival_Val_Latinoamericano.pdf", "Libro_Memoria.pdf", "Centros_Estudiantiles.pdf",
-        "Diversidades_Riojanas.pdf", "Jornada_Ninos_Adolescentes.pdf", "Formacion_Regional.pdf", "Memoria_Trans.pdf",
-        "Marathon_Fest.pdf", "Objetivos_Desarrollo.pdf", "Autenticos_Pad.pdf", "Fiestas_Religiosas.pdf",
-        "Gloria_La_Rioja.pdf", "Milagro_Fest.pdf", "Maria_Maldonado.pdf", "Prof_Gustavo_Man.pdf"
-      ]
+      '2025': ["Victoria_Para_Amar.pdf", "Encuentro_Artesanos.pdf", "Curso_Abordaje_Integral.pdf", "Liga_NOA_Encuentro.pdf", "Feriado_12_Octubre.pdf"],
+      '2024': ["Rally_Argentino.pdf", "Dia_Mujer_Rioja.pdf", "Serie_Contra_El_Olvido.pdf", "Mujer_Policia.pdf", "Aniversario_Corazon.pdf", "Encuentro_Los_Vaivenes.pdf", "Fronteras_Abiertas.pdf", "Jornadas_SAC_LaRioja.pdf", "Lactancia_Materna.pdf", "Rechazo_Proyecto_Derecho.pdf", "Jovenes_Democracia.pdf", "Tour_Riojano_2024.pdf", "Reunion_Secretariado.pdf", "Lazos_Dorados.pdf", "Derechos_Politicos_Mujer.pdf", "Trata_Explotacion.pdf", "Grupo_Vocal_Norte.pdf", "Festival_Cortos.pdf", "Dia_Infancia.pdf", "Prevencion_Abuso_Infantil.pdf", "Recuperacion_Archivos.pdf", "Aniversario_Radio_Publica.pdf", "Formacion_Lideres.pdf"],
+      '2023': ["40_Años_Democracia.pdf", "Aniversario_Ciudad.pdf", "Aniversario_Escuela_Normal.pdf", "Aniversario_Fallecimiento_General.pdf", "Capacitacion_Asperger.pdf", "CientiArte.pdf", "Coleccionistas_Minerales.pdf", "Congreso_REDCOM.pdf", "Dcl69_138_Congreso_Ingenieria.pdf", "Derechos_Politicos_Mujer.pdf", "Dia_Arbol.pdf", "Dia_Educador_Profesor.pdf", "Dia_Habitat.pdf", "Encuentro_Flamencos.pdf", "Encuentro_Holistico.pdf", "Fallecimiento_General_SanMartin.pdf", "Feria_Libro_2023.pdf", "Fiestas_Virgen_Merced.pdf", "Gendarmeria_Nacional.pdf", "Gira_Teatro_2023.pdf", "Industrias_Creativas.pdf", "Jose_Santos_Salinas.pdf", "Literaria_Ser_Mujer.pdf", "Motorock_Festival.pdf", "Olimpiadas_Matematica.pdf", "Reconocimiento_Marlene_R.pdf", "Reconocimiento_Marlene_SANC.pdf"],
+      '2022': ["100_Años_Gral_Jose.pdf", "Conocer_Educacion.pdf", "Encuentro_Parlamento.pdf", "Dia_Internacional_Explotacion.pdf", "Juventudes.pdf", "Festival_Val_Latinoamericano.pdf", "Libro_Memoria.pdf", "Centros_Estudiantiles.pdf", "Diversidades_Riojanas.pdf", "Jornada_Ninos_Adolescentes.pdf", "Formacion_Regional.pdf", "Memoria_Trans.pdf", "Marathon_Fest.pdf", "Objetivos_Desarrollo.pdf", "Autenticos_Pad.pdf", "Fiestas_Religiosas.pdf", "Gloria_La_Rioja.pdf", "Milagro_Fest.pdf", "Maria_Maldonado.pdf", "Prof_Gustavo_Man.pdf"]
     };
 
     const contenedor = document.getElementById('contenedor-declaraciones');
@@ -203,7 +228,7 @@
           ${declaraciones[anio].map(file => `
             <div class="declaracion-card">
               <h4>${file.replace(/_/g, ' ').replace('.pdf', '')}</h4>
-              <a href="/pdfs/declaraciones_interes/Dcl${anio}/${file}" target="_blank">Descargar PDF</a>
+              <a href="pdfs/declaraciones_interes/Dcl${anio}/${file}" target="_blank">Descargar PDF</a>
             </div>
           `).join('')}
         </div>`;

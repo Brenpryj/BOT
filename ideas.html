@@ -4,19 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Proponer una Idea</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
     :root {
       --primario: #0198A4;
       --secundario: #1A8689;
+      --terciario: #006B70;
       --texto: #FFFFFF;
       --gris: #46494A;
     }
 
     body {
       margin: 0;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-      background: url('/fondo-lourdes.png') no-repeat center center fixed;
+      font-family: 'Montserrat', sans-serif;
+      background: url('fondo-lourdes.png') no-repeat center center fixed;
       background-size: cover;
       color: var(--gris);
       display: flex;
@@ -24,12 +25,29 @@
       min-height: 100vh;
     }
 
+    .vicuñita {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      animation: flotar 3s ease-in-out infinite;
+      z-index: 999;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(-50%) translateY(0); }
+      50% { transform: translateY(-50%) translateY(-10px); }
+      100% { transform: translateY(-50%) translateY(0); }
+    }
+
     .logo-lateral {
-      position: absolute;
+      position: fixed;
       bottom: 30px;
       left: 40px;
       width: 180px;
       opacity: 0.9;
+      z-index: 1000;
     }
 
     header {
@@ -108,12 +126,28 @@
     }
 
     footer {
-      text-align: center;
-      padding: 1rem;
       background-color: var(--secundario);
       color: white;
-      font-size: 14px;
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       margin-top: auto;
+    }
+
+    .logo-footer {
+      width: 80px;
+    }
+
+    .marca {
+      font-size: 14px;
+      border: 2px solid white;
+      border-radius: 50%;
+      padding: 0.5rem 1rem;
+      background-color: var(--terciario);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .whatsapp-btn {
@@ -122,6 +156,7 @@
       right: 20px;
       font-size: 2em;
       text-decoration: none;
+      z-index: 999;
     }
 
     @media (max-width: 600px) {
@@ -147,7 +182,8 @@
 </head>
 <body>
 
-  <img src="/logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
   <header>
     <h1>💡 Proponé tu idea a Lourdes Ortiz</h1>
@@ -170,7 +206,10 @@
   </main>
 
   <footer>
-    <p>Creado por PB – 2025</p>
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
+    <div class="marca">
+      <span>Creado por PB – © 2025</span>
+    </div>
   </footer>
 
   <a href="https://wa.me/5493804123456" class="whatsapp-btn" target="_blank" title="Escribinos por WhatsApp">💬</a>
