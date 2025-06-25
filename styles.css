@@ -1,79 +1,87 @@
-/* styles.css */
-
-/* Reset */
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* General */
+/* GENERAL */
 body {
-  font-family: montserrat, montserrat;
+  font-family: 'Montserrat', sans-serif;
   color: #000;
+  background: url('fondo-lourdes.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Introductorio */
+/* VICUÑITA flotando */
+.vicuñita {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 120px;
+  animation: flotar 3s ease-in-out infinite;
+  z-index: 50;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-55%) translateX(-3px); }
+  100% { transform: translateY(-50%) translateX(0); }
+}
+
+/* INTRO */
 .intro {
   text-align: center;
-  padding: 100px 40px 60px;
+  padding: 100px 20px 40px;
 }
 
-/* Botones */
+/* BOTONES */
 button {
   display: block;
   margin: 15px auto;
   padding: 15px 25px;
   border: 2px solid white;
-  border-radius: 10px;
+  border-radius: 12px;
   background-color: #0198A4;
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 3px 3px 8px #1A8689;
-  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  transform: translateY(-3px);
-  box-shadow: 4px 4px 10px #166E6E;
-  background-color: #017d8a;
+  background-color: #1A8689;
+  transform: scale(1.05);
 }
 
-/* Imagen de la vicuñita */
-.avatar {
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100px;
-  z-index: 10;
-}
-
-/* Footer */
+/* FOOTER */
 footer {
-  background-color: #0198A4;
+  background-color: #1A8689;
   color: white;
   text-align: center;
-  padding: 30px 10px;
-  position: relative;
-  margin-top: 100px;
+  padding: 2rem 1rem 1.5rem;
+  margin-top: auto;
 }
 
-footer .logo {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 50px;
+.logo-footer {
+  width: 180px;
+  display: block;
+  margin: 0 auto 1rem;
 }
 
-.footer-circle {
+.marca {
   display: inline-block;
-  background-color: #1A8689;
-  border-radius: 50%;
-  padding: 15px 25px;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid white;
+  border-radius: 30px;
   font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
   font-size: 14px;
 }
