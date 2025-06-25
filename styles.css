@@ -1,55 +1,79 @@
-body {
+/* styles.css */
+
+/* Reset */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f8f8;
-  text-align: center;
-  color: #222;
+  padding: 0;
 }
 
-.avatar {
-  width: 120px;
-  margin: 20px auto 0;
-  display: block;
+/* General */
+body {
+  font-family: Arial, sans-serif;
+  color: #000;
 }
 
+/* Introductorio */
 .intro {
-  padding: 20px;
+  text-align: center;
+  padding: 100px 20px 40px;
 }
 
-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
+/* Botones */
 button {
-  background-color: #0198A4;
-  color: white;
+  display: block;
+  margin: 15px auto;
+  padding: 15px 25px;
   border: 2px solid white;
   border-radius: 10px;
-  padding: 12px 25px;
+  background-color: #0198A4;
+  color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 3px 3px 0px #1A8689;
+  box-shadow: 3px 3px 8px #1A8689;
   transition: all 0.2s ease-in-out;
 }
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 4px 4px 0px #166E6E;
+  box-shadow: 4px 4px 10px #166E6E;
   background-color: #017d8a;
 }
 
+/* Imagen de la vicuñita */
+.avatar {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+  z-index: 10;
+}
+
+/* Footer */
 footer {
   background-color: #0198A4;
   color: white;
-  padding: 15px;
+  text-align: center;
+  padding: 30px 10px;
+  position: relative;
+  margin-top: 100px;
+}
+
+footer .logo {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50px;
+}
+
+.footer-circle {
+  display: inline-block;
+  background-color: #1A8689;
+  border-radius: 50%;
+  padding: 15px 25px;
+  font-weight: bold;
   font-size: 14px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  font-family: 'Georgia', serif;
 }

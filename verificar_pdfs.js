@@ -54,3 +54,4 @@ if (faltantes.length > 0) {
 } else {
   console.log("\n✅ ¡Todos los archivos están presentes!");
 }
+// Fin del script
