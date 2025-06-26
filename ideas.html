@@ -57,16 +57,6 @@
       color: var(--texto);
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    header p {
-      margin-top: 8px;
-      font-size: 1rem;
-    }
-
     main {
       max-width: 700px;
       margin: 0 auto;
@@ -113,19 +103,6 @@
       transform: scale(1.05);
     }
 
-    label {
-      font-weight: 600;
-    }
-
-    a.volver {
-      display: block;
-      text-align: center;
-      margin-top: 2em;
-      text-decoration: none;
-      color: var(--primario);
-      font-weight: bold;
-    }
-
     footer {
       background-color: var(--secundario);
       color: white;
@@ -134,12 +111,7 @@
       justify-content: center;
       align-items: center;
       gap: 1rem;
-      flex-wrap: wrap;
       margin-top: auto;
-    }
-
-    .logo-footer {
-      height: 50px;
     }
 
     .marca {
@@ -167,10 +139,8 @@
       <input type="text" name="nombre" placeholder="Tu nombre completo" required>
       <input type="text" name="propuesta" placeholder="Título o resumen de tu propuesta" required>
       <textarea name="problema" placeholder="¿Qué problema busca resolver tu idea?" required></textarea>
-
       <label>📎 Subí una imagen relacionada (opcional):</label>
       <input type="file" name="imagen" accept="image/*">
-
       <button type="submit">Enviar propuesta</button>
     </form>
 
@@ -178,14 +148,14 @@
   </main>
 
   <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
     <div class="marca">Creado por PB – © 2025</div>
   </footer>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
@@ -199,33 +169,40 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 
     const formulario = document.getElementById('formulario-ideas');
+
     formulario.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const nombre = formulario.nombre.value.trim();
       const propuesta = formulario.propuesta.value.trim();
       const problema = formulario.problema.value.trim();
-
-      if (!nombre || !propuesta || !problema) {
-        alert("Por favor completá todos los campos requeridos.");
-        return;
-      }
+      const archivo = formulario.imagen.files[0];
+      let imagenURL = null;
 
       try {
-        await addDoc(collection(db, "propuestas"), {
+        if (archivo) {
+          const ruta = `ideas/${Date.now()}_${archivo.name}`;
+          const archivoRef = ref(storage, ruta);
+          await uploadBytes(archivoRef, archivo);
+          imagenURL = await getDownloadURL(archivoRef);
+        }
+
+        await addDoc(collection(db, "ideas"), {
           nombre,
           propuesta,
           problema,
+          imagenURL: imagenURL || null,
           fecha: serverTimestamp()
         });
 
-        alert("¡Gracias! Tu propuesta fue enviada correctamente.");
+        alert("✅ ¡Gracias! Tu propuesta fue enviada correctamente.");
         formulario.reset();
       } catch (error) {
-        console.error("Error al guardar la propuesta:", error);
-        alert("Ocurrió un error. Por favor intentá de nuevo.");
+        console.error("❌ Error al enviar:", error);
+        alert("Ocurrió un error al enviar la propuesta.");
       }
     });
   </script>

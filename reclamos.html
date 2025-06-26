@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Realizar un Reclamo</title>
+  <title>Realizar una Sugerencia</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -36,9 +36,8 @@
     }
 
     @keyframes flotar {
-      0% { transform: translateY(-50%) translateY(0); }
+      0%, 100% { transform: translateY(-50%) translateY(0); }
       50% { transform: translateY(-50%) translateY(-10px); }
-      100% { transform: translateY(-50%) translateY(0); }
     }
 
     .logo-lateral {
@@ -55,16 +54,6 @@
       color: var(--texto);
       text-align: center;
       padding: 2rem 1rem;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
-
-    header p {
-      margin-top: 8px;
-      font-size: 16px;
     }
 
     main {
@@ -92,9 +81,7 @@
       font-size: 1em;
     }
 
-    textarea {
-      height: 100px;
-    }
+    textarea { height: 100px; }
 
     button[type="submit"] {
       background-color: var(--primario);
@@ -113,19 +100,6 @@
       transform: scale(1.05);
     }
 
-    label {
-      font-weight: 600;
-    }
-
-    a.volver {
-      display: block;
-      text-align: center;
-      margin: 2em 0;
-      text-decoration: none;
-      color: var(--primario);
-      font-weight: bold;
-    }
-
     footer {
       background-color: var(--secundario);
       color: white;
@@ -134,12 +108,7 @@
       justify-content: center;
       align-items: center;
       gap: 1rem;
-      flex-wrap: wrap;
       margin-top: auto;
-    }
-
-    .logo-footer {
-      width: 80px;
     }
 
     .marca {
@@ -150,35 +119,6 @@
       background-color: var(--terciario);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      font-size: 2em;
-      text-decoration: none;
-      z-index: 1000;
-    }
-
-    @media (max-width: 600px) {
-      main {
-        padding: 1rem;
-      }
-
-      form {
-        padding: 1.5rem;
-      }
-
-      .logo-lateral {
-        width: 140px;
-        left: 20px;
-        bottom: 20px;
-      }
-
-      header h1 {
-        font-size: 22px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -187,34 +127,80 @@
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
   <header>
-    <h1>📍 Realizá tu Reclamo Vecinal</h1>
-    <p>Contanos qué problema tenés en tu zona para que podamos ayudarte.</p>
+    <h1>📩 Realizá una Sugerencia</h1>
+    <p>Podés compartir una idea, una mejora o una propuesta para tu comunidad.</p>
   </header>
 
   <main>
-    <form action="/reclamos" method="POST" enctype="multipart/form-data">
+    <form id="sugerenciaForm">
       <input type="text" name="nombre" placeholder="Tu nombre completo" required>
-      <input type="text" name="dni" placeholder="DNI" required>
-      <input type="text" name="ubicacion" placeholder="Ubicación o barrio" required>
-      <textarea name="descripcion" placeholder="Describí el problema" required></textarea>
-      <input type="text" name="tiempo_problema" placeholder="¿Desde cuándo ocurre?" required>
-
-      <label>📸 Imagen del problema (opcional):</label>
+      <input type="text" name="email" placeholder="Tu email (opcional)">
+      <textarea name="mensaje" placeholder="Escribí tu sugerencia" required></textarea>
+      <label>📎 Adjuntar imagen (opcional):</label>
       <input type="file" name="imagen" accept="image/*">
-
-      <button type="submit">Enviar reclamo</button>
+      <button type="submit">Enviar sugerencia</button>
     </form>
-
-    <a href="/" class="volver">⬅️ Volver al inicio</a>
   </main>
 
   <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
-    <div class="marca">
-      <span>Creado por PB – © 2025</span>
-    </div>
+    <div class="marca">Creado por PB – © 2025</div>
   </footer>
 
-  <a href="https://wa.me/5493804123456" class="whatsapp-btn" target="_blank" title="Escribinos por WhatsApp">💬</a>
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
+      authDomain: "boot-5795d.firebaseapp.com",
+      projectId: "boot-5795d",
+      storageBucket: "boot-5795d.appspot.com",
+      messagingSenderId: "711472269493",
+      appId: "1:711472269493:web:0fe610e954fa6be28416fc",
+      measurementId: "G-HNGC51NEKR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    document.getElementById("sugerenciaForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const nombre = form.nombre.value;
+      const email = form.email.value || "";
+      const mensaje = form.mensaje.value;
+      const imagen = form.imagen.files[0];
+
+      let urlImagen = null;
+
+      try {
+        if (imagen) {
+          const ruta = `sugerencias/${Date.now()}_${imagen.name}`;
+          const imagenRef = ref(storage, ruta);
+          await uploadBytes(imagenRef, imagen);
+          urlImagen = await getDownloadURL(imagenRef);
+        }
+
+        await addDoc(collection(db, "sugerencias"), {
+          nombre,
+          email,
+          mensaje,
+          imagenURL: urlImagen || null,
+          fecha: new Date().toISOString()
+        });
+
+        alert("✅ Sugerencia enviada con éxito.");
+        form.reset();
+      } catch (error) {
+        console.error("❌ Error al enviar sugerencia:", error);
+        alert("Ocurrió un error. Intentá de nuevo.");
+      }
+    });
+  </script>
+
 </body>
 </html>
