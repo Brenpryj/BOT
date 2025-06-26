@@ -1,169 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Realizar una Sugerencia</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primario: #0198A4;
-      --secundario: #1A8689;
-      --terciario: #006B70;
-      --texto: #FFFFFF;
-      --gris: #46494A;
-    }
-
     body {
-      font-family: 'Montserrat', sans-serif;
       margin: 0;
+      font-family: 'Montserrat', sans-serif;
       background: url('fondo-lourdes.png') no-repeat center center fixed;
       background-size: cover;
-      color: var(--gris);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      color: #333;
     }
 
-    .vicuñita {
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 120px;
-      animation: flotar 3s ease-in-out infinite;
-      z-index: 999;
-    }
-
-    @keyframes flotar {
-      0%, 100% { transform: translateY(-50%) translateY(0); }
-      50% { transform: translateY(-50%) translateY(-10px); }
-    }
-
-    .logo-lateral {
-      position: fixed;
-      bottom: 30px;
-      left: 40px;
-      width: 180px;
-      opacity: 0.9;
-      z-index: 1000;
-    }
-
-    header {
-      background-color: rgba(1, 152, 164, 0.9);
-      color: var(--texto);
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-
-    main {
-      max-width: 700px;
-      margin: 0 auto;
+    .form-container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.95);
       padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0198A4;
     }
 
     form {
-      background-color: #ffffffcc;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
-      gap: 1em;
+      gap: 1rem;
     }
 
-    input[type="text"],
-    textarea,
-    input[type="file"] {
-      padding: 0.8em;
+    input, textarea, input[type="file"] {
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1em;
     }
-
-    textarea { height: 100px; }
 
     button {
-      background-color: var(--primario);
+      padding: 1rem;
+      background-color: #0198A4;
       color: white;
-      border: 2px solid white;
-      padding: 1em;
-      font-size: 1em;
+      border: none;
+      font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease, transform 0.3s ease;
+      transition: 0.3s;
     }
 
     button:hover {
-      background-color: var(--secundario);
-      transform: scale(1.05);
+      background-color: #1A8689;
     }
 
     .volver {
       margin-top: 1rem;
       display: inline-block;
+      text-align: center;
+      background-color: #006B70;
+      padding: 0.7rem;
+      color: white;
+      border-radius: 8px;
       text-decoration: none;
-      background-color: var(--terciario);
-      color: white;
-      padding: 0.7em 1em;
-      border-radius: 6px;
-      font-weight: bold;
-      border: 2px solid white;
     }
 
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-top: auto;
-    }
-
-    .marca {
-      font-size: 14px;
-      border: 2px solid white;
-      border-radius: 50%;
-      padding: 0.5rem 1rem;
-      background-color: var(--terciario);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    .volver:hover {
+      background-color: #0198A4;
     }
   </style>
 </head>
 <body>
-
-  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
-
-  <header>
+  <div class="form-container">
     <h1>📩 Realizá una Sugerencia</h1>
-    <p>Podés compartir una idea, una mejora o una propuesta para tu comunidad.</p>
-  </header>
-
-  <main>
-    <form id="sugerenciaForm">
-      <input type="text" name="nombre" placeholder="Tu nombre completo" required>
-      <input type="text" name="email" placeholder="Tu email (opcional)">
+    <form id="form-sugerencia">
+      <input type="text" name="nombre" placeholder="Tu nombre" required />
+      <input type="email" name="email" placeholder="Tu email" required />
       <textarea name="mensaje" placeholder="Escribí tu sugerencia" required></textarea>
       <label>📎 Adjuntar imagen (opcional):</label>
-      <input type="file" name="imagen" accept="image/*">
+      <input type="file" name="imagen" accept="image/*" />
       <button type="submit">Enviar sugerencia</button>
     </form>
 
     <a href="index.html" class="volver">⬅️ Volver al inicio</a>
-  </main>
+  </div>
 
-  <footer>
-    <div class="marca">Creado por PB – © 2025</div>
-  </footer>
-
-  <!-- Firebase SDKs -->
+  <!-- FIREBASE SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
     const firebaseConfig = {
@@ -180,41 +107,40 @@
     const db = getFirestore(app);
     const storage = getStorage(app);
 
-    document.getElementById("sugerenciaForm").addEventListener("submit", async (e) => {
+    const formulario = document.getElementById("form-sugerencia");
+
+    formulario.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const form = e.target;
-      const nombre = form.nombre.value.trim();
-      const email = form.email.value.trim();
-      const mensaje = form.mensaje.value.trim();
-      const imagen = form.imagen.files[0];
-
-      let urlImagen = null;
+      const nombre = formulario.nombre.value.trim();
+      const email = formulario.email.value.trim();
+      const mensaje = formulario.mensaje.value.trim();
+      const archivo = formulario.imagen.files[0];
+      let imagenURL = null;
 
       try {
-        if (imagen) {
-          const ruta = `sugerencias/${Date.now()}_${imagen.name}`;
-          const imagenRef = ref(storage, ruta);
-          await uploadBytes(imagenRef, imagen);
-          urlImagen = await getDownloadURL(imagenRef);
+        if (archivo) {
+          const ruta = `sugerencias/${Date.now()}_${archivo.name}`;
+          const archivoRef = ref(storage, ruta);
+          await uploadBytes(archivoRef, archivo);
+          imagenURL = await getDownloadURL(archivoRef);
         }
 
         await addDoc(collection(db, "sugerencias"), {
           nombre,
           email,
           mensaje,
-          imagenURL: urlImagen || null,
-          fecha: new Date().toISOString()
+          imagenURL: imagenURL || null,
+          fecha: serverTimestamp()
         });
 
-        alert("✅ Sugerencia enviada con éxito.");
-        form.reset();
+        alert("✅ ¡Gracias! Tu sugerencia fue enviada con éxito.");
+        formulario.reset();
       } catch (error) {
-        console.error("❌ Error al enviar sugerencia:", error);
-        alert("Ocurrió un error. Intentá de nuevo.");
+        console.error("Error al enviar sugerencia:", error);
+        alert("❌ Ocurrió un error al enviar. Intentá nuevamente.");
       }
     });
   </script>
-
 </body>
 </html>

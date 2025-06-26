@@ -165,59 +165,61 @@
 
   <!-- Firebase SDK -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
-      authDomain: "boot-5795d.firebaseapp.com",
-      projectId: "boot-5795d",
-      storageBucket: "boot-5795d.appspot.com",
-      messagingSenderId: "711472269493",
-      appId: "1:711472269493:web:0fe610e954fa6be28416fc",
-      measurementId: "G-HNGC51NEKR"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
+    authDomain: "boot-5795d.firebaseapp.com",
+    projectId: "boot-5795d",
+    storageBucket: "boot-5795d.appspot.com",
+    messagingSenderId: "711472269493",
+    appId: "1:711472269493:web:0fe610e954fa6be28416fc",
+    measurementId: "G-HNGC51NEKR"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
-    const formulario = document.getElementById('formulario-ideas');
+  const formulario = document.getElementById("formulario-ideas");
 
-    formulario.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  formulario.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const nombre = formulario.nombre.value.trim();
-      const propuesta = formulario.propuesta.value.trim();
-      const problema = formulario.problema.value.trim();
-      const archivo = formulario.imagen.files[0];
-      let imagenURL = null;
+    const nombre = formulario.nombre.value.trim();
+    const propuesta = formulario.propuesta.value.trim();
+    const problema = formulario.problema.value.trim();
+    const archivo = formulario.imagen.files[0];
+    let imagenURL = "";
 
-      try {
-        if (archivo) {
-          const ruta = `ideas/${Date.now()}_${archivo.name}`;
-          const archivoRef = ref(storage, ruta);
-          await uploadBytes(archivoRef, archivo);
-          imagenURL = await getDownloadURL(archivoRef);
-        }
-
-        await addDoc(collection(db, "ideas"), {
-          nombre,
-          propuesta,
-          problema,
-          imagenURL: imagenURL || null,
-          fecha: serverTimestamp()
-        });
-
-        alert("✅ ¡Gracias! Tu propuesta fue enviada correctamente.");
-        formulario.reset();
-      } catch (error) {
-        console.error("❌ Error al enviar:", error);
-        alert("Ocurrió un error al enviar la propuesta.");
+    try {
+      // Si hay imagen, sube a Firebase Storage
+      if (archivo) {
+        const nombreArchivo = `ideas/${Date.now()}_${archivo.name}`;
+        const archivoRef = ref(storage, nombreArchivo);
+        await uploadBytes(archivoRef, archivo);
+        imagenURL = await getDownloadURL(archivoRef);
       }
-    });
-  </script>
+
+      // Guarda datos en Firestore
+      await addDoc(collection(db, "ideas"), {
+        nombre,
+        propuesta,
+        problema,
+        imagenURL: imagenURL || null,
+        fecha: serverTimestamp()
+      });
+
+      alert("✅ ¡Gracias por tu idea! Fue enviada correctamente.");
+      formulario.reset();
+    } catch (error) {
+      console.error("❌ Error al enviar:", error);
+      alert("Ocurrió un error. Verificá tu conexión o intentá de nuevo.");
+    }
+  });
+</script>
 
 </body>
 </html>
