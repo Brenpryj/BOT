@@ -2,90 +2,138 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Proponer una Idea</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bot de Lourdes Ortiz</title>
+  <link rel="preload" as="image" href="fondo-lourdes.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
   <style>
-    /* ... TODO TU ESTILO AQUÍ ... (es igual que el anterior, sin cambios) ... */
+    :root {
+      --primario: #0198a4;
+      --secundario: #1a8689;
+      --blanco: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: url('fondo-lourdes.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .vicuñita {
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      width: 120px;
+      animation: flotar 3s ease-in-out infinite;
+      z-index: 50;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(-50%) translateX(0); }
+      50% { transform: translateY(-55%) translateX(-3px); }
+      100% { transform: translateY(-50%) translateX(0); }
+    }
+
+    header {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background-color: rgba(1, 152, 164, 0.9);
+      color: var(--blanco);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .botones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .botones button {
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 1rem 1.5rem;
+      background-color: var(--primario);
+      color: white;
+      border: 2px solid white;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .botones button:hover {
+      background-color: var(--secundario);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: var(--secundario);
+      text-align: center;
+      padding: 2rem 1rem 1.5rem;
+      position: relative;
+      margin-top: auto;
+    }
+
+    .logo-footer {
+      width: 180px;
+      display: block;
+      margin: 0 auto 1rem;
+    }
+
+    .marca {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border: 2px solid white;
+      border-radius: 30px;
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
   </style>
 </head>
 <body>
 
-  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+  <!-- Vicuñita flotando -->
+  <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita" />
 
+  <!-- Encabezado -->
   <header>
-    <h1>Hola soy vicuñita y estoy aca para ayudarte</h1>
+    <h1>¡Hola! Soy Vicuñita y estoy acá para ayudarte y guiarte.</h1>
     <p>Participá, consultá, proponé ideas y seguí proyectos en curso.</p>
   </header>
 
+  <!-- Menú de navegación -->
   <main>
-    <form id="formulario-ideas">
-      <input type="text" name="nombre" placeholder="Tu nombre completo" required>
-      <input type="text" name="propuesta" placeholder="Título o resumen de tu propuesta" required>
-      <textarea name="problema" placeholder="¿Qué problema busca resolver tu idea?" required></textarea>
-
-      <label>📎 Subí una imagen relacionada (opcional):</label>
-      <input type="file" name="imagen" accept="image/*">
-
-      <button type="submit">Enviar propuesta</button>
-    </form>
-
-    <a href="/" class="volver">⬅️ Volver al inicio</a>
+    <nav class="botones">
+      <button onclick="location.href='reclamos.html'">📍 Realizar una Sugerencia</button>
+      <button onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
+      <button onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
+      <button onclick="location.href='ideas.html'">💡 Proponer una Idea</button>
+      <button onclick="location.href='funcion-legislatura.html'">🏛️ ¿Conocés cuál es la función de la Legislatura?</button>
+    </nav>
   </main>
 
+  <!-- Pie de página -->
   <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer" />
     <div class="marca">Creado por PB – © 2025</div>
   </footer>
-
-  <!-- Firebase SDKs -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
-      authDomain: "boot-5795d.firebaseapp.com",
-      projectId: "boot-5795d",
-      storageBucket: "boot-5795d.appspot.com",
-      messagingSenderId: "711472269493",
-      appId: "1:711472269493:web:0fe610e954fa6be28416fc",
-      measurementId: "G-HNGC51NEKR"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const formulario = document.getElementById('formulario-ideas');
-    formulario.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const nombre = formulario.nombre.value.trim();
-      const propuesta = formulario.propuesta.value.trim();
-      const problema = formulario.problema.value.trim();
-
-      if (!nombre || !propuesta || !problema) {
-        alert("Por favor completá todos los campos requeridos.");
-        return;
-      }
-
-      try {
-        await addDoc(collection(db, "propuestas"), {
-          nombre,
-          propuesta,
-          problema,
-          fecha: serverTimestamp()
-        });
-
-        alert("¡Gracias! Tu propuesta fue enviada correctamente.");
-        formulario.reset();
-      } catch (error) {
-        console.error("Error al guardar la propuesta:", error);
-        alert("Ocurrió un error. Por favor intentá de nuevo.");
-      }
-    });
-  </script>
 
 </body>
 </html>
