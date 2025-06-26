@@ -83,7 +83,7 @@
 
     textarea { height: 100px; }
 
-    button[type="submit"] {
+    button {
       background-color: var(--primario);
       color: white;
       border: 2px solid white;
@@ -95,9 +95,21 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    button[type="submit"]:hover {
+    button:hover {
       background-color: var(--secundario);
       transform: scale(1.05);
+    }
+
+    .volver {
+      margin-top: 1rem;
+      display: inline-block;
+      text-decoration: none;
+      background-color: var(--terciario);
+      color: white;
+      padding: 0.7em 1em;
+      border-radius: 6px;
+      font-weight: bold;
+      border: 2px solid white;
     }
 
     footer {
@@ -140,6 +152,8 @@
       <input type="file" name="imagen" accept="image/*">
       <button type="submit">Enviar sugerencia</button>
     </form>
+
+    <a href="index.html" class="volver">⬅️ Volver al inicio</a>
   </main>
 
   <footer>
@@ -170,9 +184,9 @@
       e.preventDefault();
 
       const form = e.target;
-      const nombre = form.nombre.value;
-      const email = form.email.value || "";
-      const mensaje = form.mensaje.value;
+      const nombre = form.nombre.value.trim();
+      const email = form.email.value.trim();
+      const mensaje = form.mensaje.value.trim();
       const imagen = form.imagen.files[0];
 
       let urlImagen = null;

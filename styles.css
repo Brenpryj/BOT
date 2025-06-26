@@ -85,3 +85,21 @@ footer {
   color: white;
   font-size: 14px;
 }
+a.volver {
+  display: inline-block;
+  margin: 2rem auto 0;
+  background-color: var(--terciario);
+  color: white;
+  padding: 0.8em 1.2em;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid white;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a.volver:hover {
+  background-color: var(--secundario);
+  transform: scale(1.05);
+}

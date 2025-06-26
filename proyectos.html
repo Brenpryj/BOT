@@ -57,6 +57,27 @@
       padding: 2rem 1rem;
     }
 
+    .volver {
+      display: block;
+      text-align: center;
+      margin: 1rem auto;
+      font-weight: bold;
+      background-color: var(--terciario);
+      color: white;
+      padding: 0.8em 1.5em;
+      text-decoration: none;
+      border-radius: 8px;
+      border: 2px solid white;
+      width: fit-content;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .volver:hover {
+      background-color: var(--primario);
+      transform: scale(1.05);
+    }
+
     main.accordion {
       max-width: 960px;
       margin: 0 auto;
@@ -109,9 +130,11 @@
       margin: 0 0 0.5em;
     }
 
-    .ley-card a {
-      display: inline-block;
-      margin-top: 0.5em;
+    .botones {
+      margin-top: 1rem;
+    }
+
+    .botones a, .botones button {
       background-color: var(--terciario);
       color: white;
       padding: 0.5em 1em;
@@ -119,13 +142,22 @@
       text-decoration: none;
       font-weight: bold;
       border: 2px solid white;
+      margin-right: 0.5em;
       transition: all 0.3s ease;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
     }
 
-    .ley-card a:hover {
+    .botones a:hover, .botones button:hover {
       background-color: var(--primario);
       transform: scale(1.05);
+    }
+
+    .descripcion-extra {
+      margin-top: 0.5em;
+      display: none;
+      font-size: 0.95em;
+      color: #333;
     }
 
     footer {
@@ -151,22 +183,18 @@
 </head>
 <body>
 
-  <!-- Avatar flotando -->
   <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
-
-  <!-- Logo lateral grande -->
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
-  <!-- Encabezado -->
   <header>
     <h1>📚 Proyectos Legislativos</h1>
     <p>Explorá las leyes propuestas organizadas por temas.</p>
   </header>
 
-  <!-- Contenido dinámico -->
+  <a href="/" class="volver">⬅️ Volver al inicio</a>
+
   <main class="accordion" id="contenedor-proyectos"></main>
 
-  <!-- Pie de página -->
   <footer>
     <div class="marca">Creado por PB – © 2025</div>
   </footer>
@@ -342,7 +370,6 @@
     archivo: "L10757_Colegio_Kinesiologos.pdf"
   }
 ];
-
     const agrupados = {};
     proyectosData.forEach(p => {
       if (!agrupados[p.categoria]) agrupados[p.categoria] = [];
@@ -360,8 +387,11 @@
             <div class="ley-card">
               <h4>${p.titulo}</h4>
               <p>Ley N° ${p.ley}</p>
-              <p>${p.descripcion}</p>
-              <a href="publico/pdfs/proyectos_legislativos/${p.archivo}" target="_blank">Descargar PDF</a>
+              <div class="botones">
+                <a href="publico/pdfs/proyectos_legislativos/${p.archivo}" target="_blank">Descargar PDF</a>
+                <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+                <div class="descripcion-extra">${p.descripcion}</div>
+              </div>
             </div>
           `).join('')}
         </div>
@@ -378,5 +408,6 @@
       });
     });
   </script>
+
 </body>
 </html>
