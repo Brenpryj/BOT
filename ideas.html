@@ -59,12 +59,12 @@
 
     header h1 {
       margin: 0;
-      font-size: 26px;
+      font-size: 2rem;
     }
 
     header p {
       margin-top: 8px;
-      font-size: 16px;
+      font-size: 1rem;
     }
 
     main {
@@ -93,6 +93,7 @@
 
     textarea {
       height: 100px;
+      resize: vertical;
     }
 
     button[type="submit"] {
@@ -138,7 +139,7 @@
     }
 
     .logo-footer {
-      width: 80px;
+      height: 50px;
     }
 
     .marca {
@@ -149,35 +150,6 @@
       background-color: var(--terciario);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      font-size: 2em;
-      text-decoration: none;
-      z-index: 999;
-    }
-
-    @media (max-width: 600px) {
-      main {
-        padding: 1rem;
-      }
-
-      form {
-        padding: 1.5rem;
-      }
-
-      .logo-lateral {
-        width: 140px;
-        left: 20px;
-        bottom: 20px;
-      }
-
-      header h1 {
-        font-size: 22px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -186,12 +158,12 @@
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
   <header>
-    <h1>💡 Proponé tu idea a Lourdes Ortiz</h1>
-    <p>Queremos escucharte. Dejanos tu propuesta y contanos cómo puede ayudar a la comunidad.</p>
+    <h1>HOLA! Soy vicuñita y estoy acá para ayudarte y guiarte.</h1>
+    <p>Participá, consultá, proponé ideas y seguí proyectos en curso.</p>
   </header>
 
   <main>
-    <form action="/ideas" method="POST" enctype="multipart/form-data">
+    <form id="formulario-ideas">
       <input type="text" name="nombre" placeholder="Tu nombre completo" required>
       <input type="text" name="propuesta" placeholder="Título o resumen de tu propuesta" required>
       <textarea name="problema" placeholder="¿Qué problema busca resolver tu idea?" required></textarea>
@@ -207,11 +179,56 @@
 
   <footer>
     <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
-    <div class="marca">
-      <span>Creado por PB – © 2025</span>
-    </div>
+    <div class="marca">Creado por PB – © 2025</div>
   </footer>
 
-  <a href="https://wa.me/5493804123456" class="whatsapp-btn" target="_blank" title="Escribinos por WhatsApp">💬</a>
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
+      authDomain: "boot-5795d.firebaseapp.com",
+      projectId: "boot-5795d",
+      storageBucket: "boot-5795d.appspot.com",
+      messagingSenderId: "711472269493",
+      appId: "1:711472269493:web:0fe610e954fa6be28416fc",
+      measurementId: "G-HNGC51NEKR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const formulario = document.getElementById('formulario-ideas');
+    formulario.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nombre = formulario.nombre.value.trim();
+      const propuesta = formulario.propuesta.value.trim();
+      const problema = formulario.problema.value.trim();
+
+      if (!nombre || !propuesta || !problema) {
+        alert("Por favor completá todos los campos requeridos.");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "propuestas"), {
+          nombre,
+          propuesta,
+          problema,
+          fecha: serverTimestamp()
+        });
+
+        alert("¡Gracias! Tu propuesta fue enviada correctamente.");
+        formulario.reset();
+      } catch (error) {
+        console.error("Error al guardar la propuesta:", error);
+        alert("Ocurrió un error. Por favor intentá de nuevo.");
+      }
+    });
+  </script>
+
 </body>
 </html>

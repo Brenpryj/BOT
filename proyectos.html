@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Proyectos Legislativos</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
@@ -139,10 +139,6 @@
       flex-wrap: wrap;
     }
 
-    .logo-footer {
-      width: 80px;
-    }
-
     .marca {
       font-size: 14px;
       border: 2px solid white;
@@ -155,27 +151,197 @@
 </head>
 <body>
 
+  <!-- Avatar flotando -->
   <img src="vicuñita.png" alt="Vicuñita avatar" class="vicuñita">
+
+  <!-- Logo lateral grande -->
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
+  <!-- Encabezado -->
   <header>
     <h1>📚 Proyectos Legislativos</h1>
     <p>Explorá las leyes propuestas organizadas por temas.</p>
   </header>
 
-  <main class="accordion" id="contenedor-proyectos">
-    
-  </main>
+  <!-- Contenido dinámico -->
+  <main class="accordion" id="contenedor-proyectos"></main>
 
+  <!-- Pie de página -->
   <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer">
-    <div class="marca">
-      <span>Creado por PB – © 2025</span>
-    </div>
+    <div class="marca">Creado por PB – © 2025</div>
   </footer>
 
   <script>
-    const proyectosData = [/* tu array de proyectos completo (sin cambios) */];
+    const proyectosData = [
+  {
+    categoria: "Salud",
+    titulo: "Endometriosis",
+    ley: "10490",
+    descripcion: "Ley sobre la concientización y tratamiento de la endometriosis.",
+    archivo: "L10490_Endometriosis.pdf"
+  },
+  {
+    categoria: "Educación",
+    titulo: "Reconocimiento Legislativo",
+    ley: "10492",
+    descripcion: "Reconocimiento a acciones destacadas en el ámbito educativo.",
+    archivo: "L10492_Reconocimiento_Legislativo.pdf"
+  },
+  {
+    categoria: "Niñez y Adolescencia",
+    titulo: "Parlamento Juvenil",
+    ley: "10544",
+    descripcion: "Fomento a la participación juvenil en espacios legislativos.",
+    archivo: "L10544_Parlamento_Niñez.pdf"
+  },
+  {
+    categoria: "Salud",
+    titulo: "Salud Digital",
+    ley: "10549",
+    descripcion: "Promoción del uso de herramientas digitales en salud.",
+    archivo: "L10549_Salud_Digital.pdf"
+  },
+  {
+    categoria: "Juventud",
+    titulo: "Derechos de Juventud",
+    ley: "10556",
+    descripcion: "Reconocimiento de derechos a jóvenes en la provincia.",
+    archivo: "L10556_12_Agosto_Derechos_Juventud.pdf"
+  },
+  {
+    categoria: "Cultura",
+    titulo: "Consejo de Cultura",
+    ley: "10563",
+    descripcion: "Creación del Consejo para el desarrollo cultural provincial.",
+    archivo: "L10563_Consejo_Cultura.pdf"
+  },
+  {
+    categoria: "Justicia",
+    titulo: "Comité de Búsqueda",
+    ley: "10580",
+    descripcion: "Organización de comités de búsqueda para casos urgentes.",
+    archivo: "L10580_Comite_Busqueda.pdf"
+  },
+  {
+    categoria: "Salud",
+    titulo: "Colegio de Odontólogos",
+    ley: "10585",
+    descripcion: "Normativa para el funcionamiento del Colegio de Odontólogos.",
+    archivo: "L10585_Colegio_Odontologos.pdf"
+  },
+  {
+    categoria: "Deportes",
+    titulo: "Régimen de Incentivo Deportivo",
+    ley: "10589",
+    descripcion: "Incentivos para deportistas y clubes deportivos.",
+    archivo: "L10589_Regimen_Incentivo_Deporte.pdf"
+  },
+  {
+    categoria: "Género",
+    titulo: "Diversidad y Género",
+    ley: "10618",
+    descripcion: "Promoción de políticas con perspectiva de género y diversidad.",
+    archivo: "L10618_Diversidad_Sexo_Genero.pdf"
+  },
+  {
+    categoria: "Niñez",
+    titulo: "Protección Integral",
+    ley: "10647",
+    descripcion: "Protección integral de niñas, niños y adolescentes.",
+    archivo: "L10647_Proteccion_Integral.pdf"
+  },
+  {
+    categoria: "Juventud",
+    titulo: "Septiembre Joven",
+    ley: "10657",
+    descripcion: "Actividades culturales y educativas durante septiembre para jóvenes.",
+    archivo: "L10657_Septiembre_Joven.pdf"
+  },
+  {
+    categoria: "Cultura",
+    titulo: "Bibliotecas Populares",
+    ley: "10665",
+    descripcion: "Fomento y apoyo a bibliotecas populares de la provincia.",
+    archivo: "L10665_Bibliotecas_Populares.pdf"
+  },
+  {
+    categoria: "Educación",
+    titulo: "Lenguas Señas",
+    ley: "10675",
+    descripcion: "Reconocimiento e inclusión de la lengua de señas.",
+    archivo: "L10675_Lengua_Senas.pdf"
+  },
+  {
+    categoria: "Economía",
+    titulo: "Impuesto Inmobiliario",
+    ley: "10713",
+    descripcion: "Modificación del impuesto inmobiliario provincial.",
+    archivo: "L10713_Impuesto_Inmobiliario.pdf"
+  },
+  {
+    categoria: "Economía",
+    titulo: "Aporte Extraordinario",
+    ley: "10714",
+    descripcion: "Ley de aporte extraordinario con fines sociales.",
+    archivo: "L10714_Aporte_Extraordinario.pdf"
+  },
+  {
+    categoria: "Infraestructura",
+    titulo: "Parque Lineal Las Talas",
+    ley: "10716",
+    descripcion: "Proyecto de parque urbano para los barrios del oeste.",
+    archivo: "L10716_Parque_Las_Talas.pdf"
+  },
+  {
+    categoria: "Energía",
+    titulo: "Combustibles",
+    ley: "10725",
+    descripcion: "Normativas sobre comercialización de combustibles.",
+    archivo: "L10725_Combustibles.pdf"
+  },
+  {
+    categoria: "Control Público",
+    titulo: "Auditorías",
+    ley: "10729",
+    descripcion: "Ampliación de las facultades de auditoría del Estado.",
+    archivo: "L10729_Auditorias.pdf"
+  },
+  {
+    categoria: "Salud",
+    titulo: "Rayos X",
+    ley: "10731",
+    descripcion: "Regulación del uso de equipos de rayos X en salud pública.",
+    archivo: "L10731_Rayos_X.pdf"
+  },
+  {
+    categoria: "Salud",
+    titulo: "Reducción de Sodio",
+    ley: "10733",
+    descripcion: "Disminución del contenido de sodio en alimentos procesados.",
+    archivo: "L10733_Reduccion_Sodio.pdf"
+  },
+  {
+    categoria: "Tecnología",
+    titulo: "Juego Online",
+    ley: "10743",
+    descripcion: "Regulación de plataformas de juego en línea en la provincia.",
+    archivo: "L10743_Juego_Online.pdf"
+  },
+  {
+    categoria: "Discapacidad",
+    titulo: "Perros de Asistencia",
+    ley: "10754",
+    descripcion: "Derechos de acceso y uso de perros de asistencia.",
+    archivo: "L10754_Perro_Asistencia.pdf"
+  },
+  {
+    categoria: "Salud",
+    titulo: "Colegio de Kinesiólogos",
+    ley: "10757",
+    descripcion: "Marco legal para el Colegio de Kinesiólogos de La Rioja.",
+    archivo: "L10757_Colegio_Kinesiologos.pdf"
+  }
+];
 
     const agrupados = {};
     proyectosData.forEach(p => {
@@ -198,7 +364,8 @@
               <a href="pdfs/proyectos_legislativos/${p.archivo}" target="_blank">Descargar PDF</a>
             </div>
           `).join('')}
-        </div>`;
+        </div>
+      `;
       contenedor.appendChild(item);
     });
 
