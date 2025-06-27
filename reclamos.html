@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -71,7 +71,6 @@
       background-color: #0198A4;
     }
 
-    /* Panel oculto */
     #panelSugerencias {
       display: none;
       position: fixed;
@@ -121,7 +120,6 @@
   <!-- PANEL OCULTO -->
   <div id="panelSugerencias"></div>
 
-  <!-- Firebase y lógica -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
@@ -138,9 +136,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Panel oculto con Alt + ★
     document.addEventListener('keydown', async (e) => {
-      if (e.altKey && e.key === '2605') {
+      if (e.altKey && e.key === '★') {
         const panel = document.getElementById('panelSugerencias');
         panel.innerHTML = '<h2>📬 Sugerencias Recibidas</h2>';
         const querySnapshot = await getDocs(collection(db, "sugerencias"));
@@ -160,14 +157,14 @@
   </script>
 
   <script>
-    // Enviar a la Cloud Function
+    // Enviar a la Cloud Function ACTUALIZADA
     document.getElementById('formulario').addEventListener('submit', async function (e) {
       e.preventDefault();
       const form = e.target;
       const formData = new FormData(form);
 
       try {
-        const response = await fetch("https://us-central1-boot-5795d.cloudfunctions.net/api/enviarFormulario", {
+        const response = await fetch("https://api-63nmgyapoa-uc.a.run.app/enviarFormulario", {
           method: 'POST',
           body: formData
         });
@@ -180,13 +177,12 @@
         alert("Error al enviar el formulario");
       }
     });
-  </script>
-</body>
-</html>
-  <script>
-    // Mostrar el panel oculto al cargar la página
+
+    // Ocultar panel al cargar
     document.addEventListener('DOMContentLoaded', () => {
       const panel = document.getElementById('panelSugerencias');
       panel.style.display = 'none';
     });
   </script>
+</body>
+</html>

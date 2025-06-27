@@ -9,7 +9,8 @@ const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: true })); // CORS corregido
+
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/enviarFormulario", upload.single("imagen"), async (req, res) => {
