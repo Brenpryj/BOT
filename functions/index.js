@@ -1,3 +1,6 @@
+// 👇 Forzar cambio para redeploy
+// Último ajuste 27/06/2025
+
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
@@ -5,12 +8,12 @@ const multer = require("multer");
 const admin = require("firebase-admin");
 
 admin.initializeApp();
+
 const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
 const app = express();
-app.use(cors({ origin: true })); // CORS corregido
-
+app.use(cors());
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/enviarFormulario", upload.single("imagen"), async (req, res) => {
