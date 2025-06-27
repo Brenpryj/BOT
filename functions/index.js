@@ -1,53 +1,45 @@
 const functions = require("firebase-functions");
-const admin = require("firebase-admin");
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const { v4: uuidv4 } = require("uuid");
+const admin = require("firebase-admin");
 
 admin.initializeApp();
 const db = admin.firestore();
+const bucket = admin.storage().bucket();
+
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors());
+const upload = multer({ storage: multer.memoryStorage() });
 
-// Configurar Multer para procesar archivos
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-// Ruta para recibir el formulario
 app.post("/enviarFormulario", upload.single("imagen"), async (req, res) => {
   try {
-    const data = req.body;
-    const file = req.file;
+    const { nombre, email, mensaje } = req.body;
+    let imagenURL = "";
 
-    // Guardar imagen en Storage
-    let imageUrl = "";
-    if (file) {
-      const bucket = admin.storage().bucket();
-      const id = uuidv4();
-      const fileRef = bucket.file(`imagenes/${id}_${file.originalname}`);
-      await fileRef.save(file.buffer, {
-        metadata: {
-          contentType: file.mimetype,
-        },
+    if (req.file) {
+      const fileName = `sugerencias/${Date.now()}_${req.file.originalname}`;
+      const file = bucket.file(fileName);
+      await file.save(req.file.buffer, {
+        metadata: { contentType: req.file.mimetype },
+        public: true,
       });
-      await fileRef.makePublic();
-      imageUrl = fileRef.publicUrl();
+      imagenURL = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
     }
 
-    // Guardar datos en Firestore
-    await db.collection("formularios").add({
-      ...data,
-      imagen: imageUrl,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    await db.collection("sugerencias").add({
+      nombre,
+      email,
+      mensaje,
+      imagenURL,
+      fecha: new Date(),
     });
 
-    res.status(200).send({ mensaje: "Formulario enviado con éxito." });
-  } catch (error) {
-    console.error("Error al enviar:", error);
-    res.status(500).send({ error: "Error al enviar formulario." });
+    res.status(200).json({ mensaje: "Sugerencia enviada correctamente" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ mensaje: "Error al enviar la sugerencia" });
   }
 });
 
-// Exportar función para Firebase
 exports.api = functions.https.onRequest(app);
