@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Realizar una Sugerencia</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
       gap: 1rem;
     }
 
-    input, textarea, input[type="file"] {
+    input, textarea {
       padding: 0.8rem;
       font-size: 1rem;
       border-radius: 6px;
@@ -70,12 +70,43 @@
     .volver:hover {
       background-color: #0198A4;
     }
+
+    /* Panel oculto */
+    #panelSugerencias {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .sugerencia {
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .sugerencia img {
+      max-width: 100%;
+      margin-top: 0.5rem;
+      border-radius: 6px;
+    }
   </style>
 </head>
+
 <body>
   <div class="form-container">
     <h1>📩 Realizá una Sugerencia</h1>
-    <form id="form-sugerencia">
+    <form id="formulario" enctype="multipart/form-data">
       <input type="text" name="nombre" placeholder="Tu nombre" required />
       <input type="email" name="email" placeholder="Tu email" required />
       <textarea name="mensaje" placeholder="Escribí tu sugerencia" required></textarea>
@@ -87,11 +118,13 @@
     <a href="index.html" class="volver">⬅️ Volver al inicio</a>
   </div>
 
-  <!-- FIREBASE SDK -->
+  <!-- PANEL OCULTO -->
+  <div id="panelSugerencias"></div>
+
+  <!-- Firebase y lógica -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDPgkmq-rROYYki-67oAxiS7UOVqQrvJSo",
@@ -99,48 +132,61 @@
       projectId: "boot-5795d",
       storageBucket: "boot-5795d.appspot.com",
       messagingSenderId: "711472269493",
-      appId: "1:711472269493:web:0fe610e954fa6be28416fc",
-      measurementId: "G-HNGC51NEKR"
+      appId: "1:711472269493:web:0fe610e954fa6be28416fc"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
-    const formulario = document.getElementById("form-sugerencia");
+    // Panel oculto con Alt + ★
+    document.addEventListener('keydown', async (e) => {
+      if (e.altKey && e.key === '2605') {
+        const panel = document.getElementById('panelSugerencias');
+        panel.innerHTML = '<h2>📬 Sugerencias Recibidas</h2>';
+        const querySnapshot = await getDocs(collection(db, "sugerencias"));
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          panel.innerHTML += `
+            <div class="sugerencia">
+              <strong>${data.nombre}</strong> (${data.email})<br/>
+              <p>${data.mensaje}</p>
+              ${data.imagenURL ? `<img src="${data.imagenURL}" />` : ''}
+            </div>
+          `;
+        });
+        panel.style.display = 'block';
+      }
+    });
+  </script>
 
-    formulario.addEventListener("submit", async (e) => {
+  <script>
+    // Enviar a la Cloud Function
+    document.getElementById('formulario').addEventListener('submit', async function (e) {
       e.preventDefault();
-
-      const nombre = formulario.nombre.value.trim();
-      const email = formulario.email.value.trim();
-      const mensaje = formulario.mensaje.value.trim();
-      const archivo = formulario.imagen.files[0];
-      let imagenURL = null;
+      const form = e.target;
+      const formData = new FormData(form);
 
       try {
-        if (archivo) {
-          const ruta = `sugerencias/${Date.now()}_${archivo.name}`;
-          const archivoRef = ref(storage, ruta);
-          await uploadBytes(archivoRef, archivo);
-          imagenURL = await getDownloadURL(archivoRef);
-        }
-
-        await addDoc(collection(db, "sugerencias"), {
-          nombre,
-          email,
-          mensaje,
-          imagenURL: imagenURL || null,
-          fecha: serverTimestamp()
+        const response = await fetch("https://us-central1-boot-5795d.cloudfunctions.net/api/enviarFormulario", {
+          method: 'POST',
+          body: formData
         });
 
-        alert("✅ ¡Gracias! Tu sugerencia fue enviada con éxito.");
-        formulario.reset();
+        const data = await response.json();
+        alert(data.mensaje || "Formulario enviado con éxito");
+        form.reset();
       } catch (error) {
-        console.error("Error al enviar sugerencia:", error);
-        alert("❌ Ocurrió un error al enviar. Intentá nuevamente.");
+        console.error(error);
+        alert("Error al enviar el formulario");
       }
     });
   </script>
 </body>
 </html>
+  <script>
+    // Mostrar el panel oculto al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      const panel = document.getElementById('panelSugerencias');
+      panel.style.display = 'none';
+    });
+  </script>
