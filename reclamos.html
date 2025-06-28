@@ -169,10 +169,11 @@
     }
 
     try {
-      const response = await fetch("https://api-63mngyapoa-uc.a.run.app/enviarFormulario", {
-        method: 'POST',
-        body: formData
-      });
+      const response = await fetch("https://api-63nmgyapoa-uc.a.run.app/enviarFormulario", {
+  method: "POST",
+  body: formData,
+})
+
 
       const data = await response.json();
       alert(data.mensaje || "Formulario enviado con éxito");

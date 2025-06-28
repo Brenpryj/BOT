@@ -1,4 +1,4 @@
-const functions = require("firebase-functions");
+const functions = require("firebase-functions"); 
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -16,10 +16,16 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/enviarFormulario", upload.single("imagen"), async (req, res) => {
   try {
-    console.log("Body recibido:", req.body);
-    console.log("Archivo recibido:", req.file);
+    console.log("✅ Body recibido:", req.body);
+    console.log("✅ Archivo recibido:", req.file);
 
     const { nombre, email, mensaje } = req.body;
+
+    // 🔒 Validación de campos obligatorios
+    if (!nombre || !email || !mensaje) {
+      throw new Error("❌ Faltan campos requeridos (nombre, email o mensaje)");
+    }
+
     let imagenURL = "";
 
     if (req.file && req.file.buffer && req.file.originalname) {
@@ -40,10 +46,13 @@ app.post("/enviarFormulario", upload.single("imagen"), async (req, res) => {
       fecha: new Date(),
     });
 
+    console.log("✅ Sugerencia guardada correctamente");
     res.status(200).json({ mensaje: "Sugerencia enviada correctamente" });
+
   } catch (err) {
     console.error("🔥 Error capturado en servidor:", err);
-    res.status(500).json({ mensaje: "Error al enviar la sugerencia" });
+    // Para evitar enviar HTML como respuesta en errores
+    res.status(500).json({ mensaje: err.message || "Error al enviar la sugerencia" });
   }
 });
 
