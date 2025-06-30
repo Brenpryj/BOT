@@ -1,59 +1,72 @@
-const functions = require("firebase-functions"); 
-const express = require("express");
-const cors = require("cors");
-const multer = require("multer");
-const admin = require("firebase-admin");
+// functions/index.js
+const functions  = require("firebase-functions");
+const express    = require("express");
+// Ruta de comprobación
+// (La declaración de 'app' se realiza más abajo)
 
-admin.initializeApp();
+const cors       = require("cors");
+const formidable = require("formidable");
+const fs         = require("fs");
+const admin      = require("firebase-admin");
 
-const db = admin.firestore();
+// inicializa Admin con tu bucket
+admin.initializeApp({
+  storageBucket: "boot-5795d.appspot.com"
+});
+const db     = admin.firestore();
 const bucket = admin.storage().bucket();
 
 const app = express();
 app.use(cors({ origin: true }));
 
-const upload = multer({ storage: multer.memoryStorage() });
+// ¡NO hay multer aquí, solo formidable!
+app.post("/enviarFormulario", (req, res) => {
+  const form = new formidable.IncomingForm({ keepExtensions: true });
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      console.error("Parse error:", err);
+      return res.status(500).json({ mensaje: err.message });
+    }
 
-app.post("/enviarFormulario", upload.single("imagen"), async (req, res) => {
-  try {
-    console.log("✅ Body recibido:", req.body);
-    console.log("✅ Archivo recibido:", req.file);
-
-    const { nombre, email, mensaje } = req.body;
-
-    // 🔒 Validación de campos obligatorios
+    // Valida campos de texto
+    const { nombre, email, mensaje } = fields;
     if (!nombre || !email || !mensaje) {
-      throw new Error("❌ Faltan campos requeridos (nombre, email o mensaje)");
+      return res.status(400).json({ mensaje: "Faltan campos requeridos" });
     }
 
     let imagenURL = "";
-
-    if (req.file && req.file.buffer && req.file.originalname) {
-      const fileName = `sugerencias/${Date.now()}_${req.file.originalname}`;
-      const file = bucket.file(fileName);
-      await file.save(req.file.buffer, {
-        metadata: { contentType: req.file.mimetype },
-        public: true,
-      });
-      imagenURL = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+    // Si llegó archivo, súbelo
+    if (files.imagen?.filepath) {
+      try {
+        const data     = fs.readFileSync(files.imagen.filepath);
+        const fileName = `sugerencias/${Date.now()}_${files.imagen.originalFilename}`;
+        const fileRef  = bucket.file(fileName);
+        await fileRef.save(data, {
+          metadata: { contentType: files.imagen.mimetype },
+          public: true,
+        });
+        imagenURL = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+      } catch (uploadErr) {
+        console.error("Error subiendo imagen:", uploadErr);
+        // no rompemos todo: seguimos sin imagen
+      }
     }
 
-    await db.collection("sugerencias").add({
-      nombre,
-      email,
-      mensaje,
-      imagenURL,
-      fecha: new Date(),
-    });
-
-    console.log("✅ Sugerencia guardada correctamente");
-    res.status(200).json({ mensaje: "Sugerencia enviada correctamente" });
-
-  } catch (err) {
-    console.error("🔥 Error capturado en servidor:", err);
-    // Para evitar enviar HTML como respuesta en errores
-    res.status(500).json({ mensaje: err.message || "Error al enviar la sugerencia" });
-  }
+    // Guarda en Firestore
+    try {
+      await db.collection("sugerencias").add({
+        nombre,
+        email,
+        mensaje,
+        imagenURL,
+        fecha: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      return res.status(200).json({ mensaje: "Sugerencia enviada correctamente" });
+    } catch (dbErr) {
+      console.error("Error en Firestore:", dbErr);
+      return res.status(500).json({ mensaje: dbErr.message });
+    }
+  });
 });
 
 exports.api = functions.https.onRequest(app);
