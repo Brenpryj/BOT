@@ -93,24 +93,16 @@
       margin-bottom: 1rem;
       padding-bottom: 1rem;
     }
-
-    .idea img {
-      max-width: 100%;
-      margin-top: 0.5rem;
-      border-radius: 6px;
-    }
   </style>
 </head>
 
 <body>
   <div class="form-container">
     <h1>💡 Proponé una Idea</h1>
-    <form id="formulario" enctype="multipart/form-data">
+    <form id="formulario">
       <input type="text" name="nombre" placeholder="Tu nombre" required />
       <input type="email" name="email" placeholder="Tu email" required />
       <textarea name="mensaje" placeholder="Escribí tu idea" required></textarea>
-      <label>📎 Adjuntar imagen (opcional):</label>
-      <input type="file" name="imagen" accept="image/*" />
       <button type="submit">Enviar idea</button>
     </form>
 
@@ -147,7 +139,6 @@
             <div class="idea">
               <strong>${data.nombre}</strong> (${data.email})<br/>
               <p>${data.mensaje}</p>
-              ${data.imagenURL ? `<img src="${data.imagenURL}" />` : ''}
             </div>
           `;
         });
