@@ -158,11 +158,10 @@ document
 </script>
 
 <script type="module">
-  // Importar desde los SDKs públicos
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
-  // Configuración de tu Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDLHeVQc_wSfZsUCsInBQ2UEkZ9GGG4OWg",
     authDomain: "boot-e3229.firebaseapp.com",
@@ -173,29 +172,40 @@ document
     measurementId: "G-KXCTW63PJB"
   };
 
-  // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
-  // Manejador del formulario
   const formulario = document.getElementById("formulario");
+
   formulario.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const nombre = formulario.nombre.value.trim();
     const email = formulario.email.value.trim();
     const mensaje = formulario.mensaje.value.trim();
+    const archivo = formulario.imagen.files[0]; // puede ser undefined
 
     if (!nombre || !email || !mensaje) {
-      alert("Por favor, completá todos los campos.");
+      alert("Por favor completá todos los campos requeridos.");
       return;
     }
 
+    let urlImagen = null;
+
     try {
+      if (archivo) {
+        const nombreArchivo = `${Date.now()}_${archivo.name}`;
+        const storageRef = ref(storage, `sugerencias/${nombreArchivo}`);
+        await uploadBytes(storageRef, archivo);
+        urlImagen = await getDownloadURL(storageRef);
+      }
+
       await addDoc(collection(db, "sugerencias"), {
         nombre,
         email,
         mensaje,
+        imagen: urlImagen || null,
         fecha: serverTimestamp()
       });
 
@@ -207,8 +217,5 @@ document
     }
   });
 </script>
-
-
-
 </body>
 </html>
