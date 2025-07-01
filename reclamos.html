@@ -119,29 +119,7 @@
 
   <!-- PANEL OCULTO -->
   <div id="panelSugerencias"></div>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDLHeVQc_wSfZsUCsInBQ2UEkZ9GGG4OWg",
-    authDomain: "boot-e3229.firebaseapp.com",
-    projectId: "boot-e3229",
-    storageBucket: "boot-e3229.firebasestorage.app",
-    messagingSenderId: "147554246496",
-    appId: "1:147554246496:web:fe5fe7fa6ace642be74805",
-    measurementId: "G-KXCTW63PJB"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+<!-- Firebase initialization moved to the Firestore script below. This block is removed to avoid redeclaration errors. -->
 
 <script>
   // Enviar a la Cloud Function alojada en Cloud Run (CORREGIDO)
@@ -178,6 +156,59 @@ document
     panel.style.display = 'none';
   });
 </script>
+
+<script type="module">
+  // Importar desde los SDKs públicos
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+  // Configuración de tu Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDLHeVQc_wSfZsUCsInBQ2UEkZ9GGG4OWg",
+    authDomain: "boot-e3229.firebaseapp.com",
+    projectId: "boot-e3229",
+    storageBucket: "boot-e3229.appspot.com",
+    messagingSenderId: "147554246496",
+    appId: "1:147554246496:web:fe5fe7fa6ace642be74805",
+    measurementId: "G-KXCTW63PJB"
+  };
+
+  // Inicializar Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Manejador del formulario
+  const formulario = document.getElementById("formulario");
+  formulario.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nombre = formulario.nombre.value.trim();
+    const email = formulario.email.value.trim();
+    const mensaje = formulario.mensaje.value.trim();
+
+    if (!nombre || !email || !mensaje) {
+      alert("Por favor, completá todos los campos.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "sugerencias"), {
+        nombre,
+        email,
+        mensaje,
+        fecha: serverTimestamp()
+      });
+
+      alert("✅ Tu sugerencia fue enviada con éxito.");
+      formulario.reset();
+    } catch (error) {
+      console.error("❌ Error al enviar sugerencia:", error);
+      alert("Ocurrió un error al enviar. Intentalo más tarde.");
+    }
+  });
+</script>
+
+
 
 </body>
 </html>
