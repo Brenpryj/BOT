@@ -1,4 +1,4 @@
-const { onRequest } = require("firebase-functions/v2/https");
+const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
@@ -8,7 +8,7 @@ const db = admin.firestore();
 
 const app = express();
 app.use(cors({ origin: true }));
-app.use(express.json()); // Aceptar JSON directo
+app.use(express.json());
 
 app.post("/enviarFormulario", async (req, res) => {
   const { nombre, email, mensaje } = req.body;
@@ -32,4 +32,4 @@ app.post("/enviarFormulario", async (req, res) => {
   }
 });
 
-exports.api = onRequest(app);
+exports.api = functions.https.onRequest(app);
