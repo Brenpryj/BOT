@@ -118,30 +118,31 @@
   <div id="panelSugerencias"></div>
 
   <script>
-    document.getElementById("formulario").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
+  document.getElementById('formulario').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-      try {
-        const response = await fetch("https://us-central1-boot-e3229.cloudfunctions.net/api/enviarFormulario", {
-          method: "POST",
-          body: formData,
-        });
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const mensaje = document.getElementById('mensaje').value;
 
-        const data = await response.json();
-        alert(data.mensaje);
-        form.reset();
-      } catch (err) {
-        console.error("Error al enviar:", err);
-        alert("Error al enviar el formulario");
-      }
-    });
+    try {
+      const response = await fetch('https://us-central1-boot-e3229.cloudfunctions.net/api/enviarFormulario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nombre, email, mensaje })
+      });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const panel = document.getElementById('panelSugerencias');
-      panel.style.display = 'none';
-    });
-  </script>
+      const data = await response.json();
+      alert(data.mensaje || "Formulario enviado con éxito");
+      document.getElementById('formulario').reset();
+    } catch (error) {
+      console.error(error);
+      alert("Error al enviar el formulario");
+    }
+  });
+</script>
+
 </body>
 </html>
