@@ -106,9 +106,9 @@
   <div class="form-container">
     <h1>📩 Realizá una Sugerencia</h1>
     <form id="formulario">
-      <input type="text" name="nombre" placeholder="Tu nombre" required />
-      <input type="email" name="email" placeholder="Tu email" required />
-      <textarea name="mensaje" placeholder="Escribí tu sugerencia" required></textarea>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+      <input type="email" id="email" name="email" placeholder="Tu email" required />
+      <textarea id="mensaje" name="mensaje" placeholder="Escribí tu sugerencia" required></textarea>
       <button type="submit">Enviar sugerencia</button>
     </form>
 
@@ -118,31 +118,34 @@
   <div id="panelSugerencias"></div>
 
   <script>
-  document.getElementById('formulario').addEventListener('submit', async function (e) {
-    e.preventDefault();
+    document.addEventListener("DOMContentLoaded", () => {
+      const formulario = document.getElementById('formulario');
 
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-    const mensaje = document.getElementById('mensaje').value;
+      formulario.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    try {
-      const response = await fetch('https://us-central1-boot-e3229.cloudfunctions.net/api/enviarFormulario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nombre, email, mensaje })
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
+        const mensaje = document.getElementById('mensaje').value;
+
+        try {
+          const response = await fetch('https://us-central1-boot-e3229.cloudfunctions.net/api/enviarFormulario', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre, email, mensaje })
+          });
+
+          const data = await response.json();
+          alert(data.mensaje || "Formulario enviado con éxito");
+          formulario.reset();
+        } catch (error) {
+          console.error(error);
+          alert("Error al enviar el formulario");
+        }
       });
-
-      const data = await response.json();
-      alert(data.mensaje || "Formulario enviado con éxito");
-      document.getElementById('formulario').reset();
-    } catch (error) {
-      console.error(error);
-      alert("Error al enviar el formulario");
-    }
-  });
-</script>
-
+    });
+  </script>
 </body>
 </html>
