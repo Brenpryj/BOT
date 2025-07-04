@@ -4,194 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyectos Legislativos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primario: #0198A4;
-      --secundario: #1A8689;
-      --terciario: #006B70;
-      --texto: #FFFFFF;
-      --gris: #46494A;
-    }
-
     body {
-      margin: 0;
       font-family: 'Montserrat', sans-serif;
       background: url('fondo-lourdes.png') no-repeat center center fixed;
       background-size: cover;
-      color: var(--gris);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      color: #333;
+      margin: 0;
+      padding: 20px;
     }
-
-    .vicuñita {
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 120px;
-      animation: flotar 3s ease-in-out infinite;
-      z-index: 999;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(-50%) translateY(0); }
-      50% { transform: translateY(-50%) translateY(-10px); }
-      100% { transform: translateY(-50%) translateY(0); }
-    }
-
-    header {
+    .encabezado {
       text-align: center;
-      color: var(--texto);
-      background-color: rgba(1, 152, 164, 0.9);
-      padding: 2rem 1rem;
+      margin-bottom: 20px;
     }
-
-    .volver {
-      display: block;
-      text-align: center;
-      margin: 1rem auto;
-      font-weight: bold;
-      background-color: var(--terciario);
-      color: white;
-      padding: 0.8em 1.5em;
-      text-decoration: none;
-      border-radius: 8px;
-      border: 2px solid white;
-      width: fit-content;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    .encabezado h1 {
+      font-size: 28px;
+      color: #0198A4;
+      margin-top: 10px;
     }
-
-    .volver:hover {
-      background-color: var(--primario);
-      transform: scale(1.05);
+    .vicu {
+      width: 60px;
+      position: relative;
+      top: 5px;
     }
-
-    /* Estilo buscador */
-    .buscador {
-      margin: 20px auto;
-      text-align: center;
-    }
-
-    .buscador input {
-      padding: 10px;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 8px;
+    .tarjeta {
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid #ccc;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      padding: 15px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     }
-
-    .accordion {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem;
-      z-index: 10;
-    }
-
-    .accordion-item {
-      background-color: #ffffffcc;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .accordion-header {
-      padding: 1rem;
-      font-weight: bold;
-      background-color: var(--terciario);
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 2px solid white;
-      font-size: 1.1em;
-      text-align: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .accordion-header:hover {
-      background-color: var(--primario);
-      transform: scale(1.05);
-    }
-
-    .accordion-content {
-      display: none;
-      padding: 1rem;
-      background-color: white;
-      border-top: 1px solid #ccc;
-    }
-
-    .ley-card {
-      background-color: #f4f4f4;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .ley-card h4 {
-      margin: 0 0 0.5em;
-    }
-
     .botones {
-      margin-top: 1rem;
+      margin-top: 10px;
     }
-
-    .botones a, .botones button {
-      background-color: var(--terciario);
+    button {
+      background-color: #0198A4;
       color: white;
-      padding: 0.5em 1em;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid white;
-      margin-right: 0.5em;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-right: 10px;
       cursor: pointer;
     }
-
-    .botones a:hover, .botones button:hover {
-      background-color: var(--primario);
-      transform: scale(1.05);
-    }
-
-    .descripcion-extra {
-      margin-top: 0.5em;
+    .descripcion {
       display: none;
-      font-size: 0.95em;
+      margin-top: 10px;
+      font-size: 14px;
       color: #333;
     }
-
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .marca {
-      font-size: 14px;
-      border: 2px solid white;
-      border-radius: 50%;
-      padding: 0.5rem 1rem;
-      background-color: var(--terciario);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
   </style>
+  <script>
+    function toggleDescripcion(id) {
+      const desc = document.getElementById(id);
+      desc.style.display = desc.style.display === 'none' ? 'block' : 'none';
+    }
+    function filtrarTarjetas() {
+      const input = document.getElementById('buscador').value.toLowerCase();
+      const tarjetas = document.getElementsByClassName('tarjeta');
+
+      for (let tarjeta of tarjetas) {
+        const texto = tarjeta.innerText.toLowerCase();
+        tarjeta.style.display = texto.includes(input) ? 'block' : 'none';
+      }
+    }
+  </script>
 </head>
 <body>
 
-<!-- BUSCADOR -->
-<div class="buscador">
-  <input type="text" id="buscador" placeholder="Buscar por número de ley o palabra clave...">
+<div class="encabezado">
+  <img src="vicu.png" alt="Vicu" class="vicu">
+  <h1>Proyectos Legislativos</h1>
 </div>
+
+<!-- Buscador -->
+<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()" style="margin-bottom: 20px; padding: 8px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;">
+
 
 <!-- IMÁGENES SUPERIORES -->
 <img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
