@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyectos Legislativos</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
@@ -41,15 +41,6 @@
       100% { transform: translateY(-50%) translateY(0); }
     }
 
-    .logo-lateral {
-      position: fixed;
-      bottom: 30px;
-      left: 40px;
-      width: 180px;
-      opacity: 0.9;
-      z-index: 1000;
-    }
-
     header {
       text-align: center;
       color: var(--texto);
@@ -78,7 +69,21 @@
       transform: scale(1.05);
     }
 
-    main.accordion {
+    /* Estilo buscador */
+    .buscador {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .buscador input {
+      padding: 10px;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .accordion {
       max-width: 960px;
       margin: 0 auto;
       padding: 2rem;
@@ -183,231 +188,333 @@
 </head>
 <body>
 
-  <img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+<!-- BUSCADOR -->
+<div class="buscador">
+  <input type="text" id="buscador" placeholder="Buscar por número de ley o palabra clave...">
+</div>
 
-  <header>
-    <h1>📚 Proyectos Legislativos</h1>
-    <p>Explorá las leyes propuestas organizadas por temas.</p>
-  </header>
+<!-- IMÁGENES SUPERIORES -->
+<img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
+<img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
-  <a href="/" class="volver">⬅️ Volver al inicio</a>
+<!-- ENCABEZADO -->
+<header>
+  <h1>📚 Proyectos Legislativos</h1>
+  <p>Explorá las leyes propuestas organizadas por temas.</p>
+</header>
 
-  <main class="accordion" id="contenedor-proyectos"></main>
+<!-- BOTÓN VOLVER -->
+<a href="/" class="volver">⬅️ Volver al inicio</a>
 
-  <footer>
-    <div class="marca">Creado por PB – © 2025</div>
-  </footer>
+<!-- CONTENEDOR DE TARJETAS -->
+<main class="accordion" id="contenedor-proyectos">
+<!-- Categoría: Salud -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Salud</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Endometriosis</h4>
+      <p>Ley N° 10490</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10490_Endometriosis.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Promueve la concientización y tratamiento de la endometriosis en la provincia.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Salud Digital</h4>
+      <p>Ley N° 10549</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10549_Salud_Digital.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Regula y fomenta el uso de tecnologías digitales en la atención sanitaria.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Colegio de Odontólogos</h4>
+      <p>Ley N° 10585</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Crea el Colegio de Odontólogos y regula su funcionamiento en la provincia.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Rayos X</h4>
+      <p>Ley N° 10731</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10731_Rayos_X.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Establece normas para el uso seguro de equipos de rayos X en instituciones sanitarias.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Reducción de Sodio</h4>
+      <p>Ley N° 10733</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Busca disminuir el contenido de sodio en alimentos procesados.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Colegio de Kinesiólogos</h4>
+      <p>Ley N° 10757</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Crea y regula el Colegio de Kinesiólogos en la provincia.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <script>
-    const proyectosData = [
-  {
-    categoria: "Salud",
-    titulo: "Endometriosis",
-    ley: "10490",
-    descripcion: "Ley sobre la concientización y tratamiento de la endometriosis.",
-    archivo: "L10490_Endometriosis.pdf"
-  },
-  {
-    categoria: "Educación",
-    titulo: "Reconocimiento Legislativo",
-    ley: "10492",
-    descripcion: "Reconocimiento a acciones destacadas en el ámbito educativo.",
-    archivo: "L10492_Reconocimiento_Legislativo.pdf"
-  },
-  {
-    categoria: "Niñez y Adolescencia",
-    titulo: "Parlamento Juvenil",
-    ley: "10544",
-    descripcion: "Fomento a la participación juvenil en espacios legislativos.",
-    archivo: "L10544_Parlamento_Niñez.pdf"
-  },
-  {
-    categoria: "Salud",
-    titulo: "Salud Digital",
-    ley: "10549",
-    descripcion: "Promoción del uso de herramientas digitales en salud.",
-    archivo: "L10549_Salud_Digital.pdf"
-  },
-  {
-    categoria: "Juventud",
-    titulo: "Derechos de Juventud",
-    ley: "10556",
-    descripcion: "Reconocimiento de derechos a jóvenes en la provincia.",
-    archivo: "L10556_12_Agosto_Derechos_Juventud.pdf"
-  },
-  {
-    categoria: "Cultura",
-    titulo: "Consejo de Cultura",
-    ley: "10563",
-    descripcion: "Creación del Consejo para el desarrollo cultural provincial.",
-    archivo: "L10563_Consejo_Cultura.pdf"
-  },
-  {
-    categoria: "Justicia",
-    titulo: "Comité de Búsqueda",
-    ley: "10580",
-    descripcion: "Organización de comités de búsqueda para casos urgentes.",
-    archivo: "L10580_Comite_Busqueda.pdf"
-  },
-  {
-    categoria: "Salud",
-    titulo: "Colegio de Odontólogos",
-    ley: "10585",
-    descripcion: "Normativa para el funcionamiento del Colegio de Odontólogos.",
-    archivo: "L10585_Colegio_Odontologos.pdf"
-  },
-  {
-    categoria: "Deportes",
-    titulo: "Régimen de Incentivo Deportivo",
-    ley: "10589",
-    descripcion: "Incentivos para deportistas y clubes deportivos.",
-    archivo: "L10589_Regimen_Incentivo_Deporte.pdf"
-  },
-  {
-    categoria: "Género",
-    titulo: "Diversidad y Género",
-    ley: "10618",
-    descripcion: "Promoción de políticas con perspectiva de género y diversidad.",
-    archivo: "L10618_Diversidad_Sexo_Genero.pdf"
-  },
-  {
-    categoria: "Niñez",
-    titulo: "Protección Integral",
-    ley: "10647",
-    descripcion: "Protección integral de niñas, niños y adolescentes.",
-    archivo: "L10647_Proteccion_Integral.pdf"
-  },
-  {
-    categoria: "Juventud",
-    titulo: "Septiembre Joven",
-    ley: "10657",
-    descripcion: "Actividades culturales y educativas durante septiembre para jóvenes.",
-    archivo: "L10657_Septiembre_Joven.pdf"
-  },
-  {
-    categoria: "Cultura",
-    titulo: "Bibliotecas Populares",
-    ley: "10665",
-    descripcion: "Fomento y apoyo a bibliotecas populares de la provincia.",
-    archivo: "L10665_Bibliotecas_Populares.pdf"
-  },
-  {
-    categoria: "Educación",
-    titulo: "Lenguas Señas",
-    ley: "10675",
-    descripcion: "Reconocimiento e inclusión de la lengua de señas.",
-    archivo: "L10675_Lengua_Senas.pdf"
-  },
-  {
-    categoria: "Economía",
-    titulo: "Impuesto Inmobiliario",
-    ley: "10713",
-    descripcion: "Modificación del impuesto inmobiliario provincial.",
-    archivo: "L10713_Impuesto_Inmobiliario.pdf"
-  },
-  {
-    categoria: "Economía",
-    titulo: "Aporte Extraordinario",
-    ley: "10714",
-    descripcion: "Ley de aporte extraordinario con fines sociales.",
-    archivo: "L10714_Aporte_Extraordinario.pdf"
-  },
-  {
-    categoria: "Infraestructura",
-    titulo: "Parque Lineal Las Talas",
-    ley: "10716",
-    descripcion: "Proyecto de parque urbano para los barrios del oeste.",
-    archivo: "L10716_Parque_Las_Talas.pdf"
-  },
-  {
-    categoria: "Energía",
-    titulo: "Combustibles",
-    ley: "10725",
-    descripcion: "Normativas sobre comercialización de combustibles.",
-    archivo: "L10725_Combustibles.pdf"
-  },
-  {
-    categoria: "Control Público",
-    titulo: "Auditorías",
-    ley: "10729",
-    descripcion: "Ampliación de las facultades de auditoría del Estado.",
-    archivo: "L10729_Auditorias.pdf"
-  },
-  {
-    categoria: "Salud",
-    titulo: "Rayos X",
-    ley: "10731",
-    descripcion: "Regulación del uso de equipos de rayos X en salud pública.",
-    archivo: "L10731_Rayos_X.pdf"
-  },
-  {
-    categoria: "Salud",
-    titulo: "Reducción de Sodio",
-    ley: "10733",
-    descripcion: "Disminución del contenido de sodio en alimentos procesados.",
-    archivo: "L10733_Reduccion_Sodio.pdf"
-  },
-  {
-    categoria: "Tecnología",
-    titulo: "Juego Online",
-    ley: "10743",
-    descripcion: "Regulación de plataformas de juego en línea en la provincia.",
-    archivo: "L10743_Juego_Online.pdf"
-  },
-  {
-    categoria: "Discapacidad",
-    titulo: "Perros de Asistencia",
-    ley: "10754",
-    descripcion: "Derechos de acceso y uso de perros de asistencia.",
-    archivo: "L10754_Perro_Asistencia.pdf"
-  },
-  {
-    categoria: "Salud",
-    titulo: "Colegio de Kinesiólogos",
-    ley: "10757",
-    descripcion: "Marco legal para el Colegio de Kinesiólogos de La Rioja.",
-    archivo: "L10757_Colegio_Kinesiologos.pdf"
-  }
-];
-    const agrupados = {};
-    proyectosData.forEach(p => {
-      if (!agrupados[p.categoria]) agrupados[p.categoria] = [];
-      agrupados[p.categoria].push(p);
-    });
+<!-- Categoría: Educación -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Educación</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Reconocimiento Legislativo</h4>
+      <p>Ley N° 10492</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Otorga reconocimientos legislativos a iniciativas educativas destacadas.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Lengua de Señas</h4>
+      <p>Ley N° 10675</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10675_Lengua_Senas.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Reconoce e incorpora la Lengua de Señas Argentina en el ámbito educativo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Categoría: Juventud -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Juventud</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Derechos de Juventud</h4>
+      <p>Ley N° 10556</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Reconoce y protege los derechos de los jóvenes riojanos.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Septiembre Joven</h4>
+      <p>Ley N° 10657</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Establece el mes de septiembre como espacio para actividades culturales y educativas juveniles.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    const contenedor = document.getElementById('contenedor-proyectos');
-    Object.keys(agrupados).forEach(categoria => {
-      const item = document.createElement('div');
-      item.className = 'accordion-item';
-      item.innerHTML = `
-        <div class="accordion-header">${categoria}</div>
-        <div class="accordion-content">
-          ${agrupados[categoria].map(p => `
-            <div class="ley-card">
-              <h4>${p.titulo}</h4>
-              <p>Ley N° ${p.ley}</p>
-              <div class="botones">
-                <a href="publico/pdfs/proyectos_legislativos/${p.archivo}" target="_blank">Descargar PDF</a>
-                <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-                <div class="descripcion-extra">${p.descripcion}</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-      contenedor.appendChild(item);
-    });
+<!-- Categoría: Niñez -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Niñez</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Parlamento Juvenil</h4>
+      <p>Ley N° 10544</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10544_Parlamento_Niñez.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Fomenta la participación de niños y adolescentes en espacios legislativos.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Protección Integral</h4>
+      <p>Ley N° 10647</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Garantiza derechos integrales a niñas, niños y adolescentes.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', () => {
-          const content = header.nextElementSibling;
-          content.style.display = content.style.display === 'block' ? 'none' : 'block';
-        });
-      });
-    });
-  </script>
+<!-- Categoría: Cultura -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Cultura</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Consejo de Cultura</h4>
+      <p>Ley N° 10563</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Crea el Consejo Provincial de Cultura para fomentar la actividad cultural local.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Bibliotecas Populares</h4>
+      <p>Ley N° 10665</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Apoya y fomenta el desarrollo de bibliotecas populares.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-</body>
-</html>
+<!-- Categoría: Deportes -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Deportes</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Régimen de Incentivo Deportivo</h4>
+      <p>Ley N° 10589</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Brinda incentivos económicos y fiscales a deportistas y clubes.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Categoría: Género -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Género</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Diversidad y Género</h4>
+      <p>Ley N° 10618</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Promueve políticas públicas con perspectiva de género y diversidad sexual.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categoría: Economía -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Economía</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Impuesto Inmobiliario</h4>
+      <p>Ley N° 10713</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Modifica el régimen del impuesto inmobiliario provincial.</div>
+      </div>
+    </div>
+    <div class="ley-card">
+      <h4>Aporte Extraordinario</h4>
+      <p>Ley N° 10714</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Establece un aporte extraordinario destinado a políticas sociales.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categoría: Infraestructura -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Infraestructura</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Parque Lineal Las Talas</h4>
+      <p>Ley N° 10716</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Proyecto para la creación de un parque lineal en el oeste de la ciudad.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categoría: Energía -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Energía</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Combustibles</h4>
+      <p>Ley N° 10725</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10725_Combustibles.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Regula la comercialización y distribución de combustibles en la provincia.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categoría: Control Público -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Control Público</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Auditorías</h4>
+      <p>Ley N° 10729</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10729_Auditorias.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Amplía las competencias de control y fiscalización del Estado.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Categoría: Tecnología -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Tecnología</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Juego Online</h4>
+      <p>Ley N° 10743</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10743_Juego_Online.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Regula las plataformas de apuestas y juegos en línea.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categoría: Discapacidad -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Discapacidad</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Perros de Asistencia</h4>
+      <p>Ley N° 10754</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Garantiza el acceso de perros de asistencia a espacios públicos y privados.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categoría: Profesionales de la Salud -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Profesionales de la Salud</div>
+  <div class="accordion-content">
+    <div class="ley-card">
+      <h4>Colegio de Kinesiólogos</h4>
+      <p>Ley N° 10757</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank">Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <div class="descripcion-extra">Crea el Colegio de Kinesiólogos y regula su funcionamiento en la provincia.</div>
+      </div>
+    </div>
+  </div>
+</div>

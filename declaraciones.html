@@ -1,226 +1,948 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Declaraciones de Interés</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primario: #0198A4;
-      --secundario: #1A8689;
-      --terciario: #006B70;
-      --texto: #FFFFFF;
-      --gris: #46494A;
-    }
-
     body {
-      margin: 0;
       font-family: 'Montserrat', sans-serif;
       background: url('fondo-lourdes.png') no-repeat center center fixed;
       background-size: cover;
-      color: var(--gris);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .vicuñita {
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 120px;
-      animation: flotar 3s ease-in-out infinite;
-      z-index: 999;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(-50%) translateY(0); }
-      50% { transform: translateY(-50%) translateY(-10px); }
-      100% { transform: translateY(-50%) translateY(0); }
-    }
-
-    .logo-lateral {
-      position: fixed;
-      bottom: 30px;
-      left: 40px;
-      width: 180px;
-      opacity: 0.9;
-      z-index: 1000;
-    }
-
-    header {
-      text-align: center;
-      color: var(--texto);
-      padding: 2rem 1rem;
-      background-color: rgba(1, 152, 164, 0.9);
-    }
-
-    header h1 {
+      color: #333;
       margin: 0;
-      font-size: 2.2rem;
+      padding: 20px;
     }
-
-    header p {
-      margin-top: 8px;
-      font-size: 1.1rem;
+    .seccion-ano {
+      margin-bottom: 40px;
     }
-
-    main.accordion {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem;
-      z-index: 10;
+    h2 {
+      color: #0198A4;
+      border-bottom: 2px solid #1A8689;
+      padding-bottom: 5px;
     }
-
-    .accordion-item {
-      background-color: #ffffffcc;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    .tarjeta {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      padding: 15px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     }
-
-    .accordion-header {
-      padding: 1rem;
-      font-weight: bold;
-      background-color: var(--terciario);
+    .botones {
+      margin-top: 10px;
+    }
+    button {
+      background-color: #0198A4;
       color: white;
-      border-radius: 10px;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-right: 10px;
       cursor: pointer;
-      border: 2px solid white;
-      font-size: 1.1em;
-      text-align: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     }
-
-    .accordion-header:hover {
-      background-color: var(--primario);
-      transform: scale(1.05);
-    }
-
-    .accordion-content {
+    .descripcion {
       display: none;
-      padding: 1rem;
-      background-color: white;
-      border-top: 1px solid #ccc;
-    }
-
-    .declaracion-card {
-      background-color: #f4f4f4;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .declaracion-card h4 {
-      margin: 0 0 0.5em;
-    }
-
-    .declaracion-card a {
-      display: inline-block;
-      margin-top: 0.5em;
-      background-color: var(--terciario);
-      color: white;
-      padding: 0.5em 1em;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid white;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .declaracion-card a:hover {
-      background-color: var(--primario);
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: auto;
-    }
-
-    .marca {
+      margin-top: 10px;
       font-size: 14px;
-      border: 2px solid white;
-      border-radius: 50%;
-      padding: 0.5rem 1rem;
-      background-color: var(--terciario);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    @media (max-width: 600px) {
-      .logo-lateral {
-        width: 140px;
-        left: 20px;
-        bottom: 20px;
-      }
-
-      header h1 {
-        font-size: 22px;
-      }
+      color: #333;
     }
   </style>
+  <script>
+    function toggleDescripcion(id) {
+      const desc = document.getElementById(id);
+      desc.style.display = desc.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function filtrarTarjetas() {
+      const input = document.getElementById('buscador').value.toLowerCase();
+      const tarjetas = document.getElementsByClassName('tarjeta');
+
+      for (let tarjeta of tarjetas) {
+        const texto = tarjeta.innerText.toLowerCase();
+        tarjeta.style.display = texto.includes(input) ? 'block' : 'none';
+      }
+    }
+  </script>
 </head>
 <body>
 
-  <img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+<!-- Buscador -->
+<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()" style="margin-bottom: 20px; padding: 8px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;">
 
-  <header>
-    <h1>📜 Declaraciones de Interés</h1>
-    <p>Reconocimientos otorgados por su relevancia social, cultural, educativa o comunitaria.</p>
-  </header>
+<h1>Declaraciones de Interés</h1>
+  <!-- Año 2022 -->
+  <div class="seccion-ano">
+    <h2>Año 2022</h2>
 
-  <main class="accordion" id="contenedor-declaraciones"></main>
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 1001/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1001.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc1')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc1">
+        Reconocimiento como Visitante Ilustre por su trayectoria internacional en educación.
+      </div>
+    </div>
 
-  <footer>
-    <div class="marca">Creado por PB – © 2025</div>
-  </footer>
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 1002/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1002.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc2')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc2">
+        Destacado ciudadano local por su compromiso social y ambiental en la provincia.
+      </div>
+    </div>
 
-  <script>
-    const declaraciones = {
-      '2025': ["Victoria_Para_Amar.pdf", "Encuentro_Artesanos.pdf", "Curso_Abordaje_Integral.pdf", "Liga_NOA_Encuentro.pdf", "Feriado_12_Octubre.pdf"],
-      '2024': ["Rally_Argentino.pdf", "Dia_Mujer_Rioja.pdf", "Serie_Contra_El_Olvido.pdf", "Mujer_Policia.pdf", "Aniversario_Corazon.pdf", "Encuentro_Los_Vaivenes.pdf", "Fronteras_Abiertas.pdf", "Jornadas_SAC_LaRioja.pdf", "Lactancia_Materna.pdf", "Rechazo_Proyecto_Derecho.pdf", "Jovenes_Democracia.pdf", "Tour_Riojano_2024.pdf", "Reunion_Secretariado.pdf", "Lazos_Dorados.pdf", "Derechos_Politicos_Mujer.pdf", "Trata_Explotacion.pdf", "Grupo_Vocal_Norte.pdf", "Festival_Cortos.pdf", "Dia_Infancia.pdf", "Prevencion_Abuso_Infantil.pdf", "Recuperacion_Archivos.pdf", "Aniversario_Radio_Publica.pdf", "Formacion_Lideres.pdf"],
-      '2023': ["40_Años_Democracia.pdf", "Aniversario_Ciudad.pdf", "Aniversario_Escuela_Normal.pdf", "Aniversario_Fallecimiento_General.pdf", "Capacitacion_Asperger.pdf", "CientiArte.pdf", "Coleccionistas_Minerales.pdf", "Congreso_REDCOM.pdf", "Dcl69_138_Congreso_Ingenieria.pdf", "Derechos_Politicos_Mujer.pdf", "Dia_Arbol.pdf", "Dia_Educador_Profesor.pdf", "Dia_Habitat.pdf", "Encuentro_Flamencos.pdf", "Encuentro_Holistico.pdf", "Fallecimiento_General_SanMartin.pdf", "Feria_Libro_2023.pdf", "Fiestas_Virgen_Merced.pdf", "Gendarmeria_Nacional.pdf", "Gira_Teatro_2023.pdf", "Industrias_Creativas.pdf", "Jose_Santos_Salinas.pdf", "Literaria_Ser_Mujer.pdf", "Motorock_Festival.pdf", "Olimpiadas_Matematica.pdf", "Reconocimiento_Marlene_R.pdf", "Reconocimiento_Marlene_SANC.pdf"],
-      '2022': ["100_Años_Gral_Jose.pdf", "Conocer_Educacion.pdf", "Encuentro_Parlamento.pdf", "Dia_Internacional_Explotacion.pdf", "Juventudes.pdf", "Festival_Val_Latinoamericano.pdf", "Libro_Memoria.pdf", "Centros_Estudiantiles.pdf", "Diversidades_Riojanas.pdf", "Jornada_Ninos_Adolescentes.pdf", "Formacion_Regional.pdf", "Memoria_Trans.pdf", "Marathon_Fest.pdf", "Objetivos_Desarrollo.pdf", "Autenticos_Pad.pdf", "Fiestas_Religiosas.pdf", "Gloria_La_Rioja.pdf", "Milagro_Fest.pdf", "Maria_Maldonado.pdf", "Prof_Gustavo_Man.pdf"]
-    };
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 1003/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1003.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc3')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc3">
+        Reconocimiento a su aporte cultural en el ámbito de la literatura riojana.
+      </div>
+    </div>
 
-    const contenedor = document.getElementById('contenedor-declaraciones');
-    Object.keys(declaraciones).sort((a, b) => b - a).forEach(anio => {
-      const item = document.createElement('div');
-      item.className = 'accordion-item';
-      item.innerHTML = `
-        <div class="accordion-header">Año ${anio}</div>
-        <div class="accordion-content">
-          ${declaraciones[anio].map(file => `
-            <div class="declaracion-card">
-              <h4>${file.replace(/_/g, ' ').replace('.pdf', '')}</h4>
-              <a href="pdfs/declaraciones_interes/Dcl${anio}/${file}" target="_blank">Descargar PDF</a>
-            </div>
-          `).join('')}
-        </div>`;
-      contenedor.appendChild(item);
-    });
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 1004/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1004.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc4')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc4">
+        Reconocimiento legislativo a la labor científica y tecnológica en la región.
+      </div>
+    </div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', () => {
-          const content = header.nextElementSibling;
-          content.style.display = content.style.display === 'block' ? 'none' : 'block';
-        });
-      });
-    });
-  </script>
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 1005/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1005.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc5')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc5">
+        Declaración como Visitante Ilustre a representante diplomático en visita oficial.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 1006/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1006.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc6')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc6">
+        Ciudadano destacado por su liderazgo en programas de inclusión social.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 1007/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1007.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc7')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc7">
+        Personalidad ilustre en la defensa de los derechos humanos y sociales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 1008/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1008.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc8')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc8">
+        Reconocimiento por su aporte a la investigación histórica provincial.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 1009/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1009.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc9')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc9">
+        Visitante Ilustre por su contribución científica en energías renovables.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 1010/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1010.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc10')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc10">
+        Ciudadano destacado por su labor educativa y social en zonas rurales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 1011/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1011.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc11')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc11">
+        Reconocimiento por su trayectoria artística en el folklore riojano.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 1012/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1012.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc12')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc12">
+        Reconocimiento legislativo a la defensa y protección del patrimonio natural.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 1013/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1013.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc13')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc13">
+        Declaración como Visitante Ilustre a personalidad destacada del ámbito académico.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 1014/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1014.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc14')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc14">
+        Reconocimiento por su dedicación al trabajo solidario en comedores comunitarios.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 1015/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1015.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc15')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc15">
+        Reconocimiento por su aporte a la educación y formación universitaria.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 1016/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1016.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc16')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc16">
+        Reconocimiento a instituciones que promueven la cultura local.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 1017/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1017.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc17')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc17">
+        Visitante Ilustre por su trayectoria científica y educativa.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 1018/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1018.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc18')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc18">
+        Ciudadano destacado por sus aportes a la protección del ambiente.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 1019/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1019.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc19')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc19">
+        Reconocimiento a la trayectoria periodística en medios locales y nacionales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 1020/2022</h3>
+      <div class="botones">
+        <a href="declaraciones/2022/1020.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc20')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc20">
+        Reconocimiento por la promoción del deporte y actividades recreativas en la juventud riojana.
+      </div>
+    </div>
+
+  </div> <!-- FIN Año 2022 -->
+  <!-- Año 2023 -->
+  <div class="seccion-ano">
+    <h2>Año 2023</h2>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2001/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2001.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc21')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc21">
+        Reconocimiento como Visitante Ilustre a un destacado referente de la educación popular latinoamericana.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2002/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2002.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc22')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc22">
+        Reconocimiento a un joven emprendedor por la creación de soluciones tecnológicas locales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2003/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2003.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc23')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc23">
+        Personalidad ilustre por su trayectoria artística en la música folklórica argentina.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2004/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2004.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc24')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc24">
+        Reconocimiento legislativo a un proyecto de desarrollo turístico sostenible en La Rioja.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2005/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2005.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc25')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc25">
+        Declaración como Visitante Ilustre a un conferencista internacional en economía social.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2006/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2006.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc26')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc26">
+        Ciudadano destacado por su trayectoria deportiva en ciclismo adaptado.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2007/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2007.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc27')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc27">
+        Personalidad ilustre por su contribución a la medicina comunitaria en la provincia.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2008/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2008.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc28')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc28">
+        Reconocimiento legislativo por la promoción de la cultura ancestral de los pueblos originarios.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2009/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2009.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc29')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc29">
+        Visitante Ilustre por su aporte al desarrollo de la inteligencia artificial en América Latina.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2010/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2010.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc30')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc30">
+        Reconocimiento por su compromiso con la educación ambiental en comunidades rurales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2011/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2011.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc31')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc31">
+        Personalidad ilustre en el ámbito del cine social y documental.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2012/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2012.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc32')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc32">
+        Reconocimiento a entidades que promueven el turismo inclusivo en La Rioja.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2013/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2013.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc33')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc33">
+        Visitante Ilustre por su trayectoria en la promoción del patrimonio cultural.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2014/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2014.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc34')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc34">
+        Ciudadano destacado por su compromiso con la integración de personas con discapacidad.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2015/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2015.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc35')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc35">
+        Reconocimiento por su labor en la protección y conservación del medio ambiente.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2016/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2016.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc36')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc36">
+        Reconocimiento legislativo por el desarrollo de proyectos de inclusión digital.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2017/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2017.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc37')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc37">
+        Declaración como Visitante Ilustre por su aporte a la cooperación internacional.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2018/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2018.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc38')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc38">
+        Ciudadano destacado por su trabajo en la promoción del deporte infantil.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2019/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2019.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc39')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc39">
+        Reconocimiento por su trayectoria en la música popular riojana.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2020/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2020.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc40')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc40">
+        Reconocimiento legislativo a iniciativas de formación laboral para jóvenes.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2021/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2021.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc41')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc41">
+        Visitante Ilustre por su aporte en la investigación científica aplicada a la salud.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2022/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2022.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc42')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc42">
+        Ciudadano destacado por su compromiso con la promoción del acceso a la cultura.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2023/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2023.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc43')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc43">
+        Reconocimiento a su trayectoria en las artes visuales y escénicas.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2024/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2024.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc44')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc44">
+        Reconocimiento a programas de prevención de la violencia de género en la provincia.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 2025/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2025.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc45')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc45">
+        Declaración como Visitante Ilustre por su trayectoria internacional en derechos humanos.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 2026/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2026.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc46')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc46">
+        Reconocimiento por su labor comunitaria en sectores vulnerables.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 2027/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2027.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc47')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc47">
+        Personalidad ilustre por su trayectoria en el periodismo social y comunitario.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 2028/2023</h3>
+      <div class="botones">
+        <a href="declaraciones/2023/2028.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc48')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc48">
+        Reconocimiento legislativo a organizaciones que fomentan la lectura infantil.
+      </div>
+    </div>
+
+  </div> <!-- FIN Año 2023 -->
+  <!-- Año 2024 -->
+  <div class="seccion-ano">
+    <h2>Año 2024</h2>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 3001/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3001.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc49')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc49">
+        Visitante Ilustre por su destacada labor en educación ambiental.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 3002/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3002.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc50')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc50">
+        Reconocimiento por su dedicación a la integración social de jóvenes en situación de vulnerabilidad.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 3003/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3003.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc51')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc51">
+        Personalidad ilustre por su trayectoria en la medicina pediátrica regional.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 3004/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3004.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc52')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc52">
+        Reconocimiento legislativo a organizaciones locales que promueven la cultura riojana.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 3005/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3005.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc53')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc53">
+        Declaración como Visitante Ilustre a representante internacional de derechos civiles.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 3006/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3006.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc54')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc54">
+        Ciudadano destacado por su aporte solidario en campañas contra el hambre infantil.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 3007/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3007.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc55')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc55">
+        Personalidad ilustre por su trayectoria en la danza folklórica riojana.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 3008/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3008.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc56')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc56">
+        Reconocimiento legislativo por su labor educativa en el ámbito rural.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 3009/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3009.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc57')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc57">
+        Visitante Ilustre por su trabajo humanitario en zonas de conflicto internacional.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 3010/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3010.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc58')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc58">
+        Reconocimiento a su trayectoria en la defensa de los derechos de los trabajadores locales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 3011/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3011.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc59')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc59">
+        Personalidad ilustre en el ámbito de la investigación científica provincial.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 3012/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3012.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc60')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc60">
+        Reconocimiento legislativo a proyectos de desarrollo económico local.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 3013/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3013.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc61')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc61">
+        Declaración como Visitante Ilustre por su trayectoria en derechos de la niñez.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 3014/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3014.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc62')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc62">
+        Ciudadano destacado por su aporte a la innovación tecnológica educativa.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 3015/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3015.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc63')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc63">
+        Personalidad ilustre por su legado artístico en la pintura contemporánea.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 3016/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3016.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc64')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc64">
+        Reconocimiento legislativo a asociaciones que promueven la salud mental.
+      </div>
+    </div>
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 3017/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3017.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc65')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc65">
+        Visitante Ilustre por su colaboración en programas de alfabetización digital.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 3018/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3018.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc66')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc66">
+        Reconocimiento a su contribución en la organización de eventos solidarios comunitarios.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 3019/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3019.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc67')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc67">
+        Personalidad ilustre por su trayectoria en el periodismo local.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 3020/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3020.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc68')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc68">
+        Reconocimiento legislativo a proyectos de desarrollo turístico rural.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 3021/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3021.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc69')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc69">
+        Declaración como Visitante Ilustre por su compromiso con la educación inclusiva.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 3022/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3022.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc70')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc70">
+        Ciudadano destacado por su participación activa en campañas de vacunación provincial.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 3023/2024</h3>
+      <div class="botones">
+        <a href="declaraciones/2024/3023.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc71')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc71">
+        Reconocimiento legislativo a instituciones que fomentan el acceso a la educación artística.
+      </div>
+    </div>
+
+  </div> <!-- FIN Año 2024 -->
+  <!-- Año 2025 -->
+  <div class="seccion-ano">
+    <h2>Año 2025</h2>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 4001/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4001.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc72')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc72">
+        Declaración como Visitante Ilustre por su compromiso internacional en derechos sociales.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 4002/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4002.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc73')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc73">
+        Ciudadano destacado por su labor voluntaria en emergencias sanitarias.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Personalidad Ilustre - Declaración N° 4003/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4003.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc74')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc74">
+        Reconocimiento a su trayectoria en la investigación biomédica aplicada.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 4004/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4004.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc75')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc75">
+        Reconocimiento legislativo por la implementación de programas de empleabilidad juvenil.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Visitante Ilustre - Declaración N° 4005/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4005.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc76')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc76">
+        Declaración como Visitante Ilustre a un referente global en sustentabilidad ambiental.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Ciudadano Destacado - Declaración N° 4006/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4006.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc77')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc77">
+        Ciudadano destacado por su compromiso en la organización de actividades culturales inclusivas.
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Reconocimiento Legislativo - Declaración N° 4007/2025</h3>
+      <div class="botones">
+        <a href="declaraciones/2025/4007.pdf" download><button>Descargar PDF</button></a>
+        <button onclick="toggleDescripcion('desc78')">Ver resumen</button>
+      </div>
+      <div class="descripcion" id="desc78">
+        Reconocimiento legislativo a proyectos de innovación social en zonas rurales.
+      </div>
+    </div>
+
+  </div> <!-- FIN Año 2025 -->
+
 </body>
 </html>
