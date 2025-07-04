@@ -6,97 +6,45 @@
   <title>Proyectos Legislativos</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: url('fondo-lourdes.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-    }
-    .encabezado {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .encabezado h1 {
-      font-size: 28px;
-      color: #0198A4;
-      margin-top: 10px;
-    }
-    .vicu {
-      width: 60px;
-      position: relative;
-      top: 5px;
-    }
-    .tarjeta {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      padding: 15px;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    }
-    .botones {
-      margin-top: 10px;
-    }
-    button {
-      background-color: #0198A4;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      margin-right: 10px;
-      cursor: pointer;
-    }
-    .descripcion {
-      display: none;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
-    }
+    body { font-family: 'Montserrat', sans-serif; background: url('fondo-lourdes.png') no-repeat center center fixed; background-size: cover; color: #333; margin: 0; padding: 20px; }
+    .encabezado { text-align: center; margin-bottom: 10px; }
+    .encabezado h1 { font-size: 28px; color: #0198A4; margin-top: 10px; }
+    .vicuñita { width: 50px; vertical-align: middle; margin-right: 10px; }
+    .logo-lateral { width: 50px; vertical-align: middle; margin-left: 10px; }
+    .volver { display: block; margin: 10px 0; color: #0198A4; text-decoration: none; }
+    .categoria { background-color: #0198A4; color: white; padding: 10px; border-radius: 8px; cursor: pointer; margin-top: 15px; margin-bottom: 5px; text-align: left; }
+    .tarjeta { background: rgba(255, 255, 255, 0.95); border: 1px solid #ccc; border-radius: 12px; margin-bottom: 10px; padding: 10px; display: none; }
+    .botones { margin-top: 8px; }
+    button { background-color: #0198A4; color: white; border: none; padding: 6px 10px; border-radius: 6px; margin-right: 8px; cursor: pointer; font-size: 12px; }
+    .descripcion { display: none; margin-top: 8px; font-size: 13px; color: #333; }
+    #buscador { margin-bottom: 20px; padding: 6px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc; }
   </style>
   <script>
-    function toggleDescripcion(id) {
-      const desc = document.getElementById(id);
-      desc.style.display = desc.style.display === 'none' ? 'block' : 'none';
-    }
-    function filtrarTarjetas() {
-      const input = document.getElementById('buscador').value.toLowerCase();
-      const tarjetas = document.getElementsByClassName('tarjeta');
-
-      for (let tarjeta of tarjetas) {
-        const texto = tarjeta.innerText.toLowerCase();
-        tarjeta.style.display = texto.includes(input) ? 'block' : 'none';
-      }
-    }
+    function toggleDescripcion(id) { const desc = document.getElementById(id); desc.style.display = desc.style.display === 'none' ? 'block' : 'none'; }
+    function toggleCategoria(id) { const proyectos = document.querySelectorAll('.' + id); proyectos.forEach(p => p.style.display = p.style.display === 'none' ? 'block' : 'none'); }
+    function filtrarTarjetas() { const input = document.getElementById('buscador').value.toLowerCase(); const tarjetas = document.getElementsByClassName('tarjeta'); for (let tarjeta of tarjetas) { const texto = tarjeta.innerText.toLowerCase(); tarjeta.style.display = texto.includes(input) ? 'block' : 'none'; } }
   </script>
 </head>
 <body>
-
-<div class="encabezado">
-  <img src="vicu.png" alt="Vicu" class="vicu">
-  <h1>Proyectos Legislativos</h1>
-</div>
-
-<!-- Buscador -->
-<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()" style="margin-bottom: 20px; padding: 8px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;">
-
 
 <!-- IMÁGENES SUPERIORES -->
 <img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
 <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
 <!-- ENCABEZADO -->
-<header>
+<div class="encabezado">
   <h1>📚 Proyectos Legislativos</h1>
   <p>Explorá las leyes propuestas organizadas por temas.</p>
-</header>
+</div>
 
 <!-- BOTÓN VOLVER -->
-<a href="/" class="volver">⬅️ Volver al inicio</a>
+<a href="index.html" class="volver">⬅️ Volver al inicio</a>
 
-<!-- CONTENEDOR DE TARJETAS -->
-<main class="accordion" id="contenedor-proyectos">
+<!-- BUSCADOR -->
+<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()">
+</body>
+</html>
+
 <!-- Categoría: Salud -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Salud</div>
