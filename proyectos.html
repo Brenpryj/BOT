@@ -4,47 +4,210 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyectos Legislativos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Montserrat', sans-serif; background: url('fondo-lourdes.png') no-repeat center center fixed; background-size: cover; color: #333; margin: 0; padding: 20px; }
-    .encabezado { text-align: center; margin-bottom: 10px; }
-    .encabezado h1 { font-size: 28px; color: #0198A4; margin-top: 10px; }
-    .vicuñita { width: 50px; vertical-align: middle; margin-right: 10px; }
-    .logo-lateral { width: 50px; vertical-align: middle; margin-left: 10px; }
-    .volver { display: block; margin: 10px 0; color: #0198A4; text-decoration: none; }
-    .categoria { background-color: #0198A4; color: white; padding: 10px; border-radius: 8px; cursor: pointer; margin-top: 15px; margin-bottom: 5px; text-align: left; }
-    .tarjeta { background: rgba(255, 255, 255, 0.95); border: 1px solid #ccc; border-radius: 12px; margin-bottom: 10px; padding: 10px; display: none; }
-    .botones { margin-top: 8px; }
-    button { background-color: #0198A4; color: white; border: none; padding: 6px 10px; border-radius: 6px; margin-right: 8px; cursor: pointer; font-size: 12px; }
-    .descripcion { display: none; margin-top: 8px; font-size: 13px; color: #333; }
-    #buscador { margin-bottom: 20px; padding: 6px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc; }
+    :root {
+      --primario: #0198A4;
+      --secundario: #1A8689;
+      --terciario: #006B70;
+      --texto: #FFFFFF;
+      --gris: #46494A;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: url('fondo-lourdes.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--gris);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vicuñita {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      animation: flotar 3s ease-in-out infinite;
+      z-index: 999;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(-50%) translateY(0); }
+      50% { transform: translateY(-50%) translateY(-10px); }
+      100% { transform: translateY(-50%) translateY(0); }
+    }
+
+    header {
+      text-align: center;
+      color: var(--texto);
+      background-color: rgba(1, 152, 164, 0.9);
+      padding: 2rem 1rem;
+    }
+
+    .volver {
+      display: block;
+      text-align: center;
+      margin: 1rem auto;
+      font-weight: bold;
+      background-color: var(--terciario);
+      color: white;
+      padding: 0.8em 1.5em;
+      text-decoration: none;
+      border-radius: 8px;
+      border: 2px solid white;
+      width: fit-content;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .volver:hover {
+      background-color: var(--primario);
+      transform: scale(1.05);
+    }
+
+    /* Estilo buscador */
+    .buscador {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .buscador input {
+      padding: 10px;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .accordion {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem;
+      z-index: 10;
+    }
+
+    .accordion-item {
+      background-color: #ffffffcc;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .accordion-header {
+      padding: 1rem;
+      font-weight: bold;
+      background-color: var(--terciario);
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid white;
+      font-size: 1.1em;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .accordion-header:hover {
+      background-color: var(--primario);
+      transform: scale(1.05);
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 1rem;
+      background-color: white;
+      border-top: 1px solid #ccc;
+    }
+
+    .ley-card {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .ley-card h4 {
+      margin: 0 0 0.5em;
+    }
+
+    .botones {
+      margin-top: 1rem;
+    }
+
+    .botones a, .botones button {
+      background-color: var(--terciario);
+      color: white;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid white;
+      margin-right: 0.5em;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .botones a:hover, .botones button:hover {
+      background-color: var(--primario);
+      transform: scale(1.05);
+    }
+
+    .descripcion-extra {
+      margin-top: 0.5em;
+      display: none;
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    footer {
+      background-color: var(--secundario);
+      color: white;
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .marca {
+      font-size: 14px;
+      border: 2px solid white;
+      border-radius: 50%;
+      padding: 0.5rem 1rem;
+      background-color: var(--terciario);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
   </style>
-  <script>
-    function toggleDescripcion(id) { const desc = document.getElementById(id); desc.style.display = desc.style.display === 'none' ? 'block' : 'none'; }
-    function toggleCategoria(id) { const proyectos = document.querySelectorAll('.' + id); proyectos.forEach(p => p.style.display = p.style.display === 'none' ? 'block' : 'none'); }
-    function filtrarTarjetas() { const input = document.getElementById('buscador').value.toLowerCase(); const tarjetas = document.getElementsByClassName('tarjeta'); for (let tarjeta of tarjetas) { const texto = tarjeta.innerText.toLowerCase(); tarjeta.style.display = texto.includes(input) ? 'block' : 'none'; } }
-  </script>
 </head>
 <body>
+
+<h1>Declaraciones de Interés</h1>
 
 <!-- IMÁGENES SUPERIORES -->
 <img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
 <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
 <!-- ENCABEZADO -->
-<div class="encabezado">
+<header>
   <h1>📚 Proyectos Legislativos</h1>
   <p>Explorá las leyes propuestas organizadas por temas.</p>
-</div>
+</header>
 
 <!-- BOTÓN VOLVER -->
-<a href="index.html" class="volver">⬅️ Volver al inicio</a>
+<a href="/" class="volver">⬅️ Volver al inicio</a>
 
-<!-- BUSCADOR -->
-<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()">
-</body>
-</html>
+<!-- Buscador -->
+<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()" style="margin-bottom: 20px; padding: 8px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;">
 
+<!-- CONTENEDOR DE TARJETAS -->
+<main class="accordion" id="contenedor-proyectos">
 <!-- Categoría: Salud -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Salud</div>
