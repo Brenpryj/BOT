@@ -62,18 +62,25 @@ button:hover {
 
 /* FOOTER */
 footer {
-  background-color: #1A8689;
-  color: white;
-  text-align: center;
-  padding: 2rem 1rem 1.5rem;
-  margin-top: auto;
+    background-color: var(--secundario);
+    color: white;
+    padding: 1.2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
-.logo-footer {
-  width: 180px;
-  display: block;
-  margin: 0 auto 1rem;
+.marca {
+    font-size: 14px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 0.5rem 1rem;
+    background-color: var(--terciario);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 
 .marca {
   display: inline-block;

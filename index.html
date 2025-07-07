@@ -84,28 +84,30 @@
     }
 
     footer {
-      background-color: var(--secundario);
-      text-align: center;
-      padding: 2rem 1rem 1.5rem;
-      position: relative;
-      margin-top: auto;
+        background-color: var(--secundario);
+        color: white;
+        padding: 1.2rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
     }
 
-    .logo-footer {
-      width: 180px;
-      display: block;
-      margin: 0 auto 1rem;
+    footer img {
+        height: 40px;
     }
 
     .marca {
-      display: inline-block;
-      padding: 0.5rem 1.2rem;
-      border: 2px solid white;
-      border-radius: 30px;
-      font-weight: bold;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
+        font-size: 14px;
+        border: 2px solid white;
+        border-radius: 50%;
+        padding: 0.5rem 1rem;
+        background-color: var(--terciario);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
+
   </style>
 </head>
 <body>
@@ -132,32 +134,10 @@
   </main>
 
   <!-- Pie de página -->
-  <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-footer" />
-    <div class="marca-profesional">PB – © 2025</div>
+   <footer>
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
+    <div class="marca">Creado por PB – © 2025</div>
 </footer>
-
-<style>
-  .marca-profesional {
-    display: inline-block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 20px;
-    padding: 8px 16px;
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .marca-profesional:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-  }
-</style>
-  </footer>
 
 </body>
 </html>

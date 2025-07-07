@@ -184,15 +184,69 @@
       background-color: var(--terciario);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
+
+    footer {
+    background-color: var(--secundario);
+    color: white;
+    padding: 1.2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+footer img {
+    height: 40px;
+}
+
+.marca {
+    font-size: 14px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 0.5rem 1rem;
+    background-color: var(--terciario);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
   </style>
 </head>
+
+<script>
+// Mostrar/ocultar tarjetas por categoría
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+  });
+});
+
+// Mostrar/ocultar la descripción de cada ley (botón Ver resumen)
+function toggleDescripcion(id) {
+  const descripcion = document.getElementById(id);
+  if (descripcion) {
+    descripcion.style.display = (descripcion.style.display === 'block') ? 'none' : 'block';
+  }
+}
+
+// Buscador por palabra clave o número de ley
+function filtrarTarjetas() {
+  const input = document.getElementById('buscador').value.toLowerCase();
+  const tarjetas = document.querySelectorAll('.ley-card');
+
+  tarjetas.forEach(tarjeta => {
+    const texto = tarjeta.innerText.toLowerCase();
+    tarjeta.style.display = texto.includes(input) ? 'block' : 'none';
+  });
+}
+</script>
+
+
 <body>
 
-<h1>Declaraciones de Interés</h1>
-
-<!-- IMÁGENES SUPERIORES -->
+<!-- IMAGEN FLOTANTE IZQUIERDA -->
 <img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
-<img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
 <!-- ENCABEZADO -->
 <header>
@@ -201,120 +255,146 @@
 </header>
 
 <!-- BOTÓN VOLVER -->
-<a href="/" class="volver">⬅️ Volver al inicio</a>
+<a href="index.html" class="volver">⬅️ Volver al inicio</a>
 
-<!-- Buscador -->
-<input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()" style="margin-bottom: 20px; padding: 8px; width: 100%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;">
+<!-- BUSCADOR DEBAJO DEL BOTÓN VOLVER -->
+<div class="buscador">
+  <input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()">
+</div>
 
 <!-- CONTENEDOR DE TARJETAS -->
 <main class="accordion" id="contenedor-proyectos">
+
 <!-- Categoría: Salud -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Salud</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Endometriosis</h4>
       <p>Ley N° 10490</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10490_Endometriosis.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Promueve la concientización y tratamiento de la endometriosis en la provincia.</div>
+        <a href="proyectos_legislativos/L10490_Endometriosis.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10490_Endometriosis.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10490')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10490">Promueve la concientización y tratamiento de la endometriosis en la provincia.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Salud Digital</h4>
       <p>Ley N° 10549</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10549_Salud_Digital.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Regula y fomenta el uso de tecnologías digitales en la atención sanitaria.</div>
+        <a href="proyectos_legislativos/L10549_Salud_Digital.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10549_Salud_Digital.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10549')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10549">Regula y fomenta el uso de tecnologías digitales en la atención sanitaria.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Colegio de Odontólogos</h4>
       <p>Ley N° 10585</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Crea el Colegio de Odontólogos y regula su funcionamiento en la provincia.</div>
+        <a href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10585')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10585">Crea el Colegio de Odontólogos y regula su funcionamiento en la provincia.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Rayos X</h4>
       <p>Ley N° 10731</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10731_Rayos_X.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Establece normas para el uso seguro de equipos de rayos X en instituciones sanitarias.</div>
+        <a href="proyectos_legislativos/L10731_Rayos_X.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10731_Rayos_X.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10731')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10731">Establece normas para el uso seguro de equipos de rayos X en instituciones sanitarias.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Reducción de Sodio</h4>
       <p>Ley N° 10733</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Busca disminuir el contenido de sodio en alimentos procesados.</div>
+        <a href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10733')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10733">Busca disminuir el contenido de sodio en alimentos procesados.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Colegio de Kinesiólogos</h4>
       <p>Ley N° 10757</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Crea y regula el Colegio de Kinesiólogos en la provincia.</div>
+        <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10757')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10757">Crea y regula el Colegio de Kinesiólogos en la provincia.</div>
       </div>
     </div>
-  </div>
+ </div>
 </div>
+
 
 <!-- Categoría: Educación -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Educación</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Reconocimiento Legislativo</h4>
       <p>Ley N° 10492</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Otorga reconocimientos legislativos a iniciativas educativas destacadas.</div>
+        <a href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10492')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10492">Otorga reconocimientos legislativos a iniciativas educativas destacadas.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Lengua de Señas</h4>
       <p>Ley N° 10675</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10675_Lengua_Senas.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Reconoce e incorpora la Lengua de Señas Argentina en el ámbito educativo.</div>
+        <a href="proyectos_legislativos/L10675_Lengua_Senas.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10675_Lengua_Senas.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10675')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10675">Reconoce e incorpora la Lengua de Señas Argentina en el ámbito educativo.</div>
       </div>
     </div>
-  </div>
+     </div>
 </div>
+
 <!-- Categoría: Juventud -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Juventud</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Derechos de Juventud</h4>
       <p>Ley N° 10556</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Reconoce y protege los derechos de los jóvenes riojanos.</div>
+        <a href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10556')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10556">Reconoce y protege los derechos de los jóvenes riojanos.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Septiembre Joven</h4>
       <p>Ley N° 10657</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Establece el mes de septiembre como espacio para actividades culturales y educativas juveniles.</div>
+        <a href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10657')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10657">Establece el mes de septiembre como espacio para actividades culturales y educativas juveniles.</div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -322,24 +402,29 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Niñez</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Parlamento Juvenil</h4>
       <p>Ley N° 10544</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10544_Parlamento_Niñez.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Fomenta la participación de niños y adolescentes en espacios legislativos.</div>
+        <a href="proyectos_legislativos/L10544_Parlamento_Niñez.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10544_Parlamento_Niñez.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10544')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10544">Fomenta la participación de niños y adolescentes en espacios legislativos.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Protección Integral</h4>
       <p>Ley N° 10647</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Garantiza derechos integrales a niñas, niños y adolescentes.</div>
+        <a href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10647')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10647">Garantiza derechos integrales a niñas, niños y adolescentes.</div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -347,24 +432,29 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Cultura</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Consejo de Cultura</h4>
       <p>Ley N° 10563</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <a href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" download>Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver resumen</button>
         <div class="descripcion-extra">Crea el Consejo Provincial de Cultura para fomentar la actividad cultural local.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Bibliotecas Populares</h4>
       <p>Ley N° 10665</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <a href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" download>Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver resumen</button>
         <div class="descripcion-extra">Apoya y fomenta el desarrollo de bibliotecas populares.</div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -372,28 +462,71 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Deportes</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Régimen de Incentivo Deportivo</h4>
       <p>Ley N° 10589</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" download>Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver resumen</button>
         <div class="descripcion-extra">Brinda incentivos económicos y fiscales a deportistas y clubes.</div>
       </div>
     </div>
+
   </div>
 </div>
+
 <!-- Categoría: Género -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Género</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Diversidad y Género</h4>
       <p>Ley N° 10618</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
+        <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" download>Descargar PDF</a>
+        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver resumen</button>
         <div class="descripcion-extra">Promueve políticas públicas con perspectiva de género y diversidad sexual.</div>
+      </div>
+    </div>
+     </div>
+</div>
+
+<!-- Categoría: Deportes -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Deportes</div>
+  <div class="accordion-content">
+
+    <div class="ley-card">
+      <h4>Régimen de Incentivo Deportivo</h4>
+      <p>Ley N° 10589</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10589')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10589">Brinda incentivos económicos y fiscales a deportistas y clubes.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Categoría: Género -->
+<div class="accordion-item tarjeta">
+  <div class="accordion-header">Género</div>
+  <div class="accordion-content">
+
+    <div class="ley-card">
+      <h4>Diversidad y Género</h4>
+      <p>Ley N° 10618</p>
+      <div class="botones">
+        <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10618')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10618">Promueve políticas públicas con perspectiva de género y diversidad sexual.</div>
       </div>
     </div>
   </div>
@@ -403,24 +536,29 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Economía</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Impuesto Inmobiliario</h4>
       <p>Ley N° 10713</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Modifica el régimen del impuesto inmobiliario provincial.</div>
+        <a href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10713')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10713">Modifica el régimen del impuesto inmobiliario provincial.</div>
       </div>
     </div>
+
     <div class="ley-card">
       <h4>Aporte Extraordinario</h4>
       <p>Ley N° 10714</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Establece un aporte extraordinario destinado a políticas sociales.</div>
+        <a href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10714')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10714">Establece un aporte extraordinario destinado a políticas sociales.</div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -428,31 +566,37 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Infraestructura</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Parque Lineal Las Talas</h4>
       <p>Ley N° 10716</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Proyecto para la creación de un parque lineal en el oeste de la ciudad.</div>
+        <a href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10716')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10716">Proyecto para la creación de un parque lineal en el oeste de la ciudad.</div>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- Categoría: Energía -->
+<<!-- Categoría: Energía -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Energía</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Combustibles</h4>
       <p>Ley N° 10725</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10725_Combustibles.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Regula la comercialización y distribución de combustibles en la provincia.</div>
+        <a href="proyectos_legislativos/L10725_Combustibles.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10725_Combustibles.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10725')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10725">Regula la comercialización y distribución de combustibles en la provincia.</div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -460,30 +604,37 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Control Público</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Auditorías</h4>
       <p>Ley N° 10729</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10729_Auditorias.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Amplía las competencias de control y fiscalización del Estado.</div>
+        <a href="proyectos_legislativos/L10729_Auditorias.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10729_Auditorias.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10729')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10729">Amplía las competencias de control y fiscalización del Estado.</div>
       </div>
     </div>
+
   </div>
 </div>
+
 <!-- Categoría: Tecnología -->
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Tecnología</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Juego Online</h4>
       <p>Ley N° 10743</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10743_Juego_Online.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Regula las plataformas de apuestas y juegos en línea.</div>
+        <a href="proyectos_legislativos/L10743_Juego_Online.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10743_Juego_Online.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10743')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10743">Regula las plataformas de apuestas y juegos en línea.</div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -491,30 +642,56 @@
 <div class="accordion-item tarjeta">
   <div class="accordion-header">Discapacidad</div>
   <div class="accordion-content">
+
     <div class="ley-card">
       <h4>Perros de Asistencia</h4>
       <p>Ley N° 10754</p>
       <div class="botones">
-        <a href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Garantiza el acceso de perros de asistencia a espacios públicos y privados.</div>
+        <a href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" target="_blank">Ver PDF</a>
+        <a href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" download>Descargar PDF</a>
+        <button onclick="toggleDescripcion('desc-10754')">Ver resumen</button>
+        <div class="descripcion-extra" id="desc-10754">Garantiza el acceso de perros de asistencia a espacios públicos y privados.</div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Categoría: Profesionales de la Salud -->
-<div class="accordion-item tarjeta">
-  <div class="accordion-header">Profesionales de la Salud</div>
-  <div class="accordion-content">
-    <div class="ley-card">
-      <h4>Colegio de Kinesiólogos</h4>
-      <p>Ley N° 10757</p>
-      <div class="botones">
-        <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank">Descargar PDF</a>
-        <button onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">Ver</button>
-        <div class="descripcion-extra">Crea el Colegio de Kinesiólogos y regula su funcionamiento en la provincia.</div>
-      </div>
-    </div>
   </div>
 </div>
+    </main>
+
+    <!-- FOOTER -->
+   <footer>
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
+    <div class="marca">Creado por PB – © 2025</div>
+</footer>
+
+    <!-- SCRIPT FINAL -->
+    <script>
+      // Mostrar/ocultar tarjetas por categoría
+      const headers = document.querySelectorAll('.accordion-header');
+      headers.forEach(header => {
+        header.addEventListener('click', () => {
+          const content = header.nextElementSibling;
+          content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        });
+      });
+
+      // Mostrar/ocultar la descripción de cada ley
+      function toggleDescripcion(id) {
+        const descripcion = document.getElementById(id);
+        descripcion.style.display = descripcion.style.display === 'block' ? 'none' : 'block';
+      }
+
+      // Buscador por palabra clave o número de ley
+      function filtrarTarjetas() {
+        const input = document.getElementById('buscador').value.toLowerCase();
+        const tarjetas = document.querySelectorAll('.ley-card');
+
+        tarjetas.forEach(tarjeta => {
+          const texto = tarjeta.innerText.toLowerCase();
+          tarjeta.style.display = texto.includes(input) ? 'block' : 'none';
+        });
+      }
+    </script>
+
+</body>
+</html>
