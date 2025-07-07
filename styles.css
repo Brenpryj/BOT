@@ -70,6 +70,11 @@ footer {
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+footer img {
+    height: 40px;
 }
 
 .marca {
@@ -80,7 +85,6 @@ footer {
     background-color: var(--terciario);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-
 
 .marca {
   display: inline-block;
