@@ -25,22 +25,7 @@
       flex-direction: column;
     }
 
-    .vicuñita {
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 120px;
-      animation: flotar 3s ease-in-out infinite;
-      z-index: 999;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(-50%) translateY(0); }
-      50% { transform: translateY(-50%) translateY(-10px); }
-      100% { transform: translateY(-50%) translateY(0); }
-    }
-
+  
     header {
       text-align: center;
       color: var(--texto);
@@ -245,9 +230,6 @@ function filtrarTarjetas() {
 
 <body>
 
-<!-- IMAGEN FLOTANTE IZQUIERDA -->
-<img src="avatar.png" alt="Vicuñita avatar" class="vicuñita">
-
 <!-- ENCABEZADO -->
 <header>
   <h1>📚 Proyectos Legislativos</h1>
@@ -258,9 +240,11 @@ function filtrarTarjetas() {
 <a href="index.html" class="volver">⬅️ Volver al inicio</a>
 
 <!-- BUSCADOR DEBAJO DEL BOTÓN VOLVER -->
-<div class="buscador">
-  <input type="text" id="buscador" placeholder="Buscar por palabra o número..." onkeyup="filtrarTarjetas()">
-</div>
+<form id="form-busqueda" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin: 1.5rem 0;">
+  <input type="text" id="input-busqueda" placeholder="Buscar por palabra o número..." style="padding: 10px 15px; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; width: 250px; max-width: 80%;">
+  <button type="submit" class="boton-principal" style="padding: 10px 20px;">Buscar</button>
+</form>
+
 
 <!-- CONTENEDOR DE TARJETAS -->
 <main class="accordion" id="contenedor-proyectos">
@@ -687,11 +671,92 @@ function filtrarTarjetas() {
       }
     </script>
 <footer style="background-color: var(--secundario); color: white; padding: 1.2rem 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
-    <div style="font-size: 0.95rem; text-align: center;">
-        Creado por PB – © 2025
-    </div>
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
+  <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
 </footer>
+
+<!-- Vicuñita flotante -->
+<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante">
+
+<style>
+  .avatar-flotante {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 80px;
+    height: auto;
+    z-index: 999;
+    animation: flotar 3s ease-in-out infinite;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  @keyframes flotar {
+    0% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-55%) translateX(-3px); }
+    100% { transform: translateY(-50%) translateX(0); }
+  }
+</style>
+
+<script>
+  const vicuñita = document.getElementById('vicuñita');
+  let offsetX, offsetY, isDragging = false;
+
+  function updatePosition(x, y) {
+    vicuñita.style.left = `${x - offsetX}px`;
+    vicuñita.style.top = `${y - offsetY}px`;
+    vicuñita.style.transform = 'none';
+  }
+
+  vicuñita.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
+    offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (isDragging) updatePosition(e.clientX, e.clientY);
+  });
+
+  document.addEventListener('mouseup', function() {
+    isDragging = false;
+  });
+
+  vicuñita.addEventListener('touchstart', function(e) {
+    isDragging = true;
+    const touch = e.touches[0];
+    offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
+    offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
+  });
+
+  document.addEventListener('touchmove', function(e) {
+    if (isDragging) {
+      const touch = e.touches[0];
+      updatePosition(touch.clientX, touch.clientY);
+    }
+  });
+
+  document.addEventListener('touchend', function() {
+    isDragging = false;
+  });
+</script>
+<script>
+  const formBusqueda = document.getElementById("form-busqueda");
+  const inputBusqueda = document.getElementById("input-busqueda");
+
+  formBusqueda.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const valor = inputBusqueda.value.toLowerCase().trim();
+
+    const tarjetas = document.querySelectorAll(".tarjeta");
+
+    tarjetas.forEach(tarjeta => {
+      const textoTarjeta = tarjeta.textContent.toLowerCase();
+      tarjeta.style.display = textoTarjeta.includes(valor) ? "block" : "none";
+    });
+  });
+</script>
 
 </body>
 </html>

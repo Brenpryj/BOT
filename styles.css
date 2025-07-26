@@ -15,26 +15,23 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* VICUÑITA flotando */
-.avatar-flotante {
+#vicuñita {
   position: fixed;
+  left: 0;
   top: 50%;
-  left: 20px;
   transform: translateY(-50%);
-  width: 120px;
-  height: auto;
-  z-index: 1000;
-  animation: flotar 3s ease-in-out infinite;
+  width: 80px;
+  z-index: 9999;
   cursor: grab;
-  touch-action: none;
+  animation: flotar 3s ease-in-out infinite;
 }
 
 @keyframes flotar {
-  0% { transform: translateY(-50%) translateX(0); }
-  50% { transform: translateY(-55%) translateX(-3px); }
-  100% { transform: translateY(-50%) translateX(0); }
+  0% { transform: translateY(-50%) translateY(0); }
+  50% { transform: translateY(-50%) translateY(-10px); }
+  100% { transform: translateY(-50%) translateY(0); }
 }
+
 
 /* INTRO */
 .intro {
@@ -62,6 +59,7 @@ button:hover {
   background-color: #1A8689;
   transform: scale(1.05);
 }
+
 
 /* BOTONES PRINCIPALES CON FONDO BLANCO */
 .boton-principal {
@@ -133,13 +131,29 @@ a.volver:hover {
   background-color: var(--secundario);
   transform: scale(1.05);
 }
-.avatar-flotante {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 80px;
-  height: auto;
-  z-index: 1000;
-  cursor: grab;
-  touch-action: none; /* Evita que el navegador interrumpa el movimiento */
+.acordeon {
+  background-color: #0198A4;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.acordeon:hover {
+  background-color: #1A8689;
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  margin-top: 10px;
 }
