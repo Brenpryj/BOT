@@ -670,13 +670,14 @@ function filtrarTarjetas() {
         });
       }
     </script>
+
 <footer style="background-color: var(--secundario); color: white; padding: 1.2rem 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
   <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
 </footer>
 
 <!-- Vicuñita flotante -->
-<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante">
+<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante flotando">
 
 <style>
   .avatar-flotante {
@@ -687,9 +688,12 @@ function filtrarTarjetas() {
     width: 80px;
     height: auto;
     z-index: 999;
-    animation: flotar 3s ease-in-out infinite;
     cursor: grab;
     touch-action: none;
+  }
+
+  .flotando {
+    animation: flotar 3s ease-in-out infinite;
   }
 
   @keyframes flotar {
@@ -701,7 +705,7 @@ function filtrarTarjetas() {
 
 <script>
   const vicuñita = document.getElementById('vicuñita');
-  let offsetX, offsetY, isDragging = false;
+  let offsetX = 0, offsetY = 0, isDragging = false;
 
   function updatePosition(x, y) {
     vicuñita.style.left = `${x - offsetX}px`;
@@ -709,8 +713,10 @@ function filtrarTarjetas() {
     vicuñita.style.transform = 'none';
   }
 
+  // MOUSE
   vicuñita.addEventListener('mousedown', function(e) {
     isDragging = true;
+    vicuñita.classList.remove('flotando');
     offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
     offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
   });
@@ -721,10 +727,13 @@ function filtrarTarjetas() {
 
   document.addEventListener('mouseup', function() {
     isDragging = false;
+    vicuñita.classList.add('flotando');
   });
 
+  // TOUCH (CELULAR / TABLET)
   vicuñita.addEventListener('touchstart', function(e) {
     isDragging = true;
+    vicuñita.classList.remove('flotando');
     const touch = e.touches[0];
     offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
     offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
@@ -739,22 +748,7 @@ function filtrarTarjetas() {
 
   document.addEventListener('touchend', function() {
     isDragging = false;
-  });
-</script>
-<script>
-  const formBusqueda = document.getElementById("form-busqueda");
-  const inputBusqueda = document.getElementById("input-busqueda");
-
-  formBusqueda.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const valor = inputBusqueda.value.toLowerCase().trim();
-
-    const tarjetas = document.querySelectorAll(".tarjeta");
-
-    tarjetas.forEach(tarjeta => {
-      const textoTarjeta = tarjeta.textContent.toLowerCase();
-      tarjeta.style.display = textoTarjeta.includes(valor) ? "block" : "none";
-    });
+    vicuñita.classList.add('flotando');
   });
 </script>
 

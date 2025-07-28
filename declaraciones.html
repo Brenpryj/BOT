@@ -131,232 +131,191 @@ footer img {
     }
   </style>
 
-<div class="contenedor-acordeon">
-  
-  <button class="acordeon"></button>
-  <div class="panel">
-    <div class="tarjeta">
-  
-    <h2>Año 2022</h2>
-      <h3>Visitante Ilustre - Declaración N° 1001/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1001.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc1')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc1">
-        Reconocimiento como Visitante Ilustre por su trayectoria internacional en educación.
-      </div>
-    </div>
+<!-- TÍTULO PRINCIPAL -->
+<section style="padding: 2rem 1rem;">
+  <h2 style="font-size: 2rem; text-align: center; color: var(--principal); font-family: 'Montserrat', sans-serif;">Declaraciones de Interés</h2>
+  <p style="text-align: center; font-size: 1rem; margin-top: 0.5rem;">Reconocimientos otorgados por año, con descarga disponible.</p>
 
-    <div class="tarjeta">
-      <h3>Ciudadano Destacado - Declaración N° 1002/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1002.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc2')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc2">
-        Destacado ciudadano local por su compromiso social y ambiental en la provincia.
-      </div>
-    </div>
+  <!-- BOTÓN ACORDEÓN 2022 -->
 
-    <div class="tarjeta">
-      <h3>Personalidad Ilustre - Declaración N° 1003/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1003.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc3')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc3">
-        Reconocimiento a su aporte cultural en el ámbito de la literatura riojana.
-      </div>
-    </div>
+<!-- Acordeón 2022 -->
+<button class="accordion">📁 Declaraciones de Interés 2022</button>
+<div class="panel">
+</div>
 
-    <div class="tarjeta">
-      <h3>Reconocimiento Legislativo - Declaración N° 1004/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1004.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc4')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc4">
-        Reconocimiento legislativo a la labor científica y tecnológica en la región.
-      </div>
-    </div>
+  <!-- Declaración 1 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Gloria López</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Gloria_Lopez.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a Gloria López por su compromiso social y trayectoria como referente comunitaria en el ámbito barrial y solidario.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Visitante Ilustre - Declaración N° 1005/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1005.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc5')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc5">
-        Declaración como Visitante Ilustre a representante diplomático en visita oficial.
-      </div>
-    </div>
+  <!-- Declaración 2 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Mariana Maldonado</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Mariana_Maldonado.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a Mariana Maldonado por su participación en la formación de mujeres líderes en comunidades rurales.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Ciudadano Destacado - Declaración N° 1006/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1006.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc6')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc6">
-        Ciudadano destacado por su liderazgo en programas de inclusión social.
-      </div>
-    </div>
-    <div class="tarjeta">
-      <h3>Personalidad Ilustre - Declaración N° 1007/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1007.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc7')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc7">
-        Personalidad ilustre en la defensa de los derechos humanos y sociales.
-      </div>
-    </div>
+  <!-- Declaración 3 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Prof. Gustavo Mansur</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Prof_Gustavo_Mansur.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento al Profesor Gustavo Mansur por su destacada trayectoria educativa y aporte a la cultura riojana.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Reconocimiento Legislativo - Declaración N° 1008/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1008.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc8')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc8">
-        Reconocimiento por su aporte a la investigación histórica provincial.
-      </div>
-    </div>
+  <!-- Declaración 4 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Tania Milagros</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Tania_Milagros.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a Tania Milagros por su labor en el ámbito artístico y cultural, promoviendo valores de inclusión y equidad.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Visitante Ilustre - Declaración N° 1009/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1009.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc9')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc9">
-        Visitante Ilustre por su contribución científica en energías renovables.
-      </div>
-    </div>
+  <!-- Declaración 5 -->
+  <div class="card">
+    <h3>Foro de Mujeres Riojanas</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Foro_Mujeres_Riojanas.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Declaración de Interés al Foro de Mujeres Riojanas, espacio de reflexión y propuesta para la igualdad de género.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Ciudadano Destacado - Declaración N° 1010/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1010.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc10')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc10">
-        Ciudadano destacado por su labor educativa y social en zonas rurales.
-      </div>
-    </div>
+  <!-- Declaración 6 -->
+  <div class="card">
+    <h3>Jornada de Niños y Adolescentes</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Jornada_Niños_Adolescentes.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a la jornada de participación ciudadana de niños y adolescentes como impulso a la democracia temprana.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Personalidad Ilustre - Declaración N° 1011/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1011.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc11')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc11">
-        Reconocimiento por su trayectoria artística en el folklore riojano.
-      </div>
-    </div>
+  <!-- Declaración 7 -->
+  <div class="card">
+    <h3>Formación Integración Regional</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Formacion_Integracion_Regional.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a instancias formativas que promueven la integración federal y la participación ciudadana regional.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Reconocimiento Legislativo - Declaración N° 1012/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1012.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc12')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc12">
-        Reconocimiento legislativo a la defensa y protección del patrimonio natural.
-      </div>
-    </div>
+  <!-- Declaración 8 -->
+  <div class="card">
+    <h3>Maratón La Rioja 2022</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Marathon_LaRioja_2022.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento al evento deportivo inclusivo que promueve hábitos saludables y valores de superación personal.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Visitante Ilustre - Declaración N° 1013/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1013.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc13')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc13">
-        Declaración como Visitante Ilustre a personalidad destacada del ámbito académico.
-      </div>
-    </div>
+  <!-- Declaración 9 -->
+  <div class="card">
+    <h3>Ciudadano Destacado – Diego Emiliano Romero</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Ciudadano_Destacado_Diego_Romero.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a Diego Emiliano Romero por su contribución al deporte y la representación de la provincia a nivel nacional.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Ciudadano Destacado - Declaración N° 1014/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1014.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc14')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc14">
-        Reconocimiento por su dedicación al trabajo solidario en comedores comunitarios.
-      </div>
-    </div>
-    <div class="tarjeta">
-      <h3>Personalidad Ilustre - Declaración N° 1015/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1015.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc15')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc15">
-        Reconocimiento por su aporte a la educación y formación universitaria.
-      </div>
-    </div>
+  <!-- Declaración 10 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Ana Paula Pérez</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Ana_Paula_Perez.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a Ana Paula Pérez por su compromiso en proyectos de integración social y cultural.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Reconocimiento Legislativo - Declaración N° 1016/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1016.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc16')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc16">
-        Reconocimiento a instituciones que promueven la cultura local.
-      </div>
-    </div>
+  <!-- Declaración 11 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – José María Carrizo</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Jose_Maria_Carrizo.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a José María Carrizo por su labor periodística y compromiso con la información local.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Visitante Ilustre - Declaración N° 1017/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1017.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc17')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc17">
-        Visitante Ilustre por su trayectoria científica y educativa.
-      </div>
-    </div>
+  <!-- Declaración 12 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Hugo Leonardo Romero</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Hugo_Leonardo_Romero.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento por su trayectoria musical y contribución a la cultura riojana.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Ciudadano Destacado - Declaración N° 1018/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1018.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc18')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc18">
-        Ciudadano destacado por sus aportes a la protección del ambiente.
-      </div>
-    </div>
+  <!-- Declaración 13 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Patricia Pérez</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Patricia_Perez.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Reconocimiento a su trabajo comunitario y de asistencia a sectores vulnerables.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Personalidad Ilustre - Declaración N° 1019/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1019.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc19')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc19">
-        Reconocimiento a la trayectoria periodística en medios locales y nacionales.
-      </div>
-    </div>
+  <!-- Declaración 14 -->
+  <div class="card">
+    <h3>Visitante Ilustre – Dra. María García</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Visitante_Ilustre_Maria_Garcia.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Visita institucional de la Dra. María García en el marco del Congreso de Salud Pública.</p>
+  </div>
 
-    <div class="tarjeta">
-      <h3>Reconocimiento Legislativo - Declaración N° 1020/2022</h3>
-      <div class="botones">
-        <a href="declaraciones/2022/1020.pdf" download><button>Descargar PDF</button></a>
-        <button onclick="toggleDescripcion('desc20')">Ver resumen</button>
-      </div>
-      <div class="descripcion" id="desc20">
-        Reconocimiento por la promoción del deporte y actividades recreativas en la juventud riojana.
-      </div>
-    </div>
+  <!-- Declaración 15 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Fundación Techo</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Fundacion_Techo.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Por su trabajo sostenido en viviendas de emergencia para familias vulnerables.</p>
+  </div>
 
-  </div> <!-- FIN Año 2022 -->
+  <!-- Declaración 16 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Oscar Tello</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Oscar_Tello.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Por su labor artística en murales que recuperan la identidad riojana.</p>
+  </div>
+
+  <!-- Declaración 17 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Paola Gómez</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Paola_Gomez.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Por su militancia en derechos humanos y acompañamiento a víctimas de violencia de género.</p>
+  </div>
+
+  <!-- Declaración 18 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Sergio Luján</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Sergio_Lujan.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Por su impulso al deporte barrial y contención de jóvenes en situación de riesgo.</p>
+  </div>
+
+  <!-- Declaración 19 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Grupo EcoJóvenes</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Grupo_EcoJovenes.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Por sus campañas ambientales y acciones de concientización ecológica en escuelas.</p>
+  </div>
+
+  <!-- Declaración 20 -->
+  <div class="card">
+    <h3>Reconocimiento Legislativo – Escuela N°38</h3>
+    <button onclick="window.open('declaraciones_interes/Dcl2022/Reconocimiento_Escuela_38.pdf')">📄 Descargar PDF</button>
+    <button onclick="toggleResumen(this)">👁️ Ver resumen</button>
+    <p class="resumen" style="display:none;">Por sus proyectos de integración cultural con pueblos originarios.</p>
+  </div>
+
+</div>
+
+<script>
+function toggleResumen(button) {
+  const resumen = button.nextElementSibling;
+  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
+}
+</script>
+  </div>
  
+
+
+
   
   <button class="acordeon">2023</button>
   <div class="panel">
@@ -1108,6 +1067,87 @@ footer img {
       this.classList.toggle("activo");
       const panel = this.nextElementSibling;
       panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+  }
+</script>
+<script>
+function toggleResumen(button) {
+  const resumen = button.nextElementSibling;
+  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
+}
+
+// Código para abrir/cerrar acordeones
+const accordionsInternos = document.querySelectorAll(".accordion");
+accordionsInternos.forEach((acc) => {
+  acc.addEventListener("click", function () {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+<script>
+// mostrar u ocultar toda la sección por año
+function toggleSeccion(id) {
+  const section = document.getElementById(id);
+  section.style.display = section.style.display === "none" ? "block" : "none";
+}
+
+// acordeón interno
+const accordionsExternos = document.querySelectorAll(".accordion");
+accordionsExternos.forEach((acc) => {
+  acc.addEventListener("click", function () {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  });
+});
+
+// mostrar resumen
+function toggleResumen(button) {
+  const resumen = button.nextElementSibling;
+  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
+}
+</script>
+<script>
+  const accordionsElements = document.getElementsByClassName("accordion");
+  for (let i = 0; i < accordionsElements.length; i++) {
+    accordionsElements[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      const panel = this.nextElementSibling;
+      panel.style.display = (panel.style.display === "block") ? "none" : "block";
+    });
+  }
+
+  function mostrarResumen(boton) {
+    const resumen = boton.nextElementSibling;
+    if (resumen.style.display === "none") {
+      resumen.style.display = "block";
+      boton.innerText = "🔽 Ocultar resumen";
+    } else {
+      resumen.style.display = "none";
+      boton.innerText = "👁️‍🗨️ Ver resumen";
+    }
+  }
+
+  function descargarPDF(ruta) {
+    const link = document.createElement('a');
+    link.href = ruta;
+    link.download = '';
+    link.click();
+  }
+</script>
+<script>
+  const accordions = document.getElementsByClassName("accordion");
+  for (let i = 0; i < accordions.length; i++) {
+    accordions[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      const panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
     });
   }
 </script>
