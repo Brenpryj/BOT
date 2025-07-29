@@ -192,48 +192,43 @@ footer img {
     vicuñita.classList.add('flotando');
   });
 </script>
-<!-- SDKs Firebase -->
+<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
 <script>
   const firebaseConfig = {
-    apiKey: "AIzaSyC2g3tnxZpExfCvJTPZBDVZczA3wzW5UFo",
-    authDomain: "e3229.firebaseapp.com",
-    projectId: "e3229",
-    storageBucket: "e3229.appspot.com",
-    messagingSenderId: "410199646973",
-    appId: "1:410199646973:web:220f68b7aa97c387f7191f"
+    apiKey: "AIzaSyC2g3tnxZpExfCvJTPZBDVCzA3wzW5UFo",
+    authDomain: "boot-e3229.firebaseapp.com",
+    projectId: "boot-e3229",
+    storageBucket: "boot-e3229.appspot.com",
+    messagingSenderId: "796498771445",
+    appId: "1:796498771445:web:4a64cd26436211383c519b"
   };
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  document.getElementById("formulario").addEventListener("submit", function (e) {
+  document.getElementById("formulario").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const idea = document.getElementById("mensaje").value.trim();
-
-    if (!nombre || !email || !idea) {
-      alert("Por favor, completá todos los campos.");
-      return;
-    }
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+    const mensaje = document.getElementById("mensaje").value;
 
     db.collection("ideas").add({
-      nombre,
-      email,
-      idea,
-      fecha: new Date()
+      nombre: nombre,
+      email: email,
+      mensaje: mensaje,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(() => {
-      alert("✅ ¡Idea enviada correctamente!");
+      alert("¡Idea enviada con éxito!");
       document.getElementById("formulario").reset();
     })
     .catch((error) => {
-      console.error("Error al guardar la idea:", error);
-      alert("❌ Ocurrió un error al enviar el formulario.");
+      console.error("Error al enviar la idea: ", error);
+      alert("Hubo un error. Revisá la consola.");
     });
   });
 </script>
