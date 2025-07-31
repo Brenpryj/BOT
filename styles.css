@@ -257,3 +257,20 @@ a.volver:hover {
   font-style: italic;
   color: #333;
 }
+
+.btn-volver {
+  background-color: #017A87;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-volver:hover {
+  background-color: #0198A4;
+}
