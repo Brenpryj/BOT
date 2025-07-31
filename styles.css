@@ -211,3 +211,49 @@ a.volver:hover {
 .active {
   background-color: #bcebf2;
 }
+.tarjeta-declaracion {
+  background-color: #f8f8f8;
+  border: 2px solid #0198A4;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.tarjeta-declaracion h3 {
+  margin-top: 0;
+  color: #1A8689;
+}
+
+.botones {
+  margin-top: 10px;
+}
+
+.btn-descargar,
+.btn-ver {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0198A4;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-ver {
+  background-color: #1A8689;
+}
+
+.btn-descargar:hover,
+.btn-ver:hover {
+  background-color: #017A87;
+}
+
+.resumen {
+  margin-top: 10px;
+  font-style: italic;
+  color: #333;
+}
