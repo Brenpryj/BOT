@@ -202,6 +202,25 @@ form button:hover {
       width: 22px;
     }
   }
+  #logo-lourdes-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #logo-lourdes-mobile {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 10px;
+    width: 100px;
+    z-index: 999;
+  }
+
+  body {
+    padding-top: 110px;
+  }
+}
+
 </style>
 
 </head>
@@ -283,6 +302,7 @@ form button:hover {
       });
     });
   </script>
-  
+  <!-- Logo Lourdes solo para móviles -->
+<img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes">
 </body>
 </html>

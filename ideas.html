@@ -201,6 +201,27 @@ footer img {
     width: 22px;
   }
 }
+/* Ocultar logo en pantallas grandes */
+#logo-lourdes-mobile {
+  display: none;
+}
+
+/* Mostrar solo en celulares */
+@media (max-width: 768px) {
+  #logo-lourdes-mobile {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 10px;
+    width: 100px;
+    z-index: 999;
+  }
+
+  /* Agrega espacio arriba para que no lo tape */
+  body {
+    padding-top: 110px;
+  }
+}
   </style>
 </head>
 
@@ -236,7 +257,6 @@ footer img {
     <div>Creado por PB – © 2025</div>
   </footer>
 </body>
-
 
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -278,5 +298,7 @@ footer img {
     });
   });
 </script>
+<!-- Logo Lourdes solo para móviles -->
+<img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes">
 </body>
 </html>

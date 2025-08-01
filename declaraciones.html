@@ -157,7 +157,24 @@
   margin: 0 auto;
   padding: 1rem;
 }
+#logo-lourdes-mobile {
+  display: none;
+}
 
+@media (max-width: 768px) {
+  #logo-lourdes-mobile {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 10px;
+    width: 100px;
+    z-index: 999;
+  }
+
+  body {
+    padding-top: 110px;
+  }
+}
   </style>
   
   <script>
@@ -1290,6 +1307,8 @@ function toggleResumen(button) {
   }
 }
 </style>
+<!-- Logo Lourdes solo para móviles -->
+<img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes">
 </body>
 </main>
 </html>
