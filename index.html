@@ -1,11 +1,10 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bot de Lourdes Ortiz</title>
-  <link rel="preload" as="image" href="fondo-lourdes.png" />
+  <link rel="preload" as="image" href="fondos (2).png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -17,45 +16,49 @@
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background: url('fondo-lourdes.png') no-repeat center center fixed;
+      background: url('fondos (2).png') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
-    .vicuñita {
+    /* LOGO lateral Lourdes */
+    .logo-lourdes-lateral {
       position: fixed;
-      top: 50%;
-      left: 20px;
+      left: 15px;
+      top: 52%;
       transform: translateY(-50%);
-      width: 120px;
-      animation: flotar 3s ease-in-out infinite;
-      z-index: 50;
+      height: 72px;
+      z-index: 100;
     }
-
-    @keyframes flotar {
-      0% { transform: translateY(-50%) translateX(0); }
-      50% { transform: translateY(-55%) translateX(-3px); }
-      100% { transform: translateY(-50%) translateX(0); }
-    }
-
+     @media screen and (max-width: 768px) {
+  .logo-lourdes-lateral {
+    top: 20px;
+    left: 10px;
+    transform: none;
+    height: 22px;
+  }
+}
     header {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      background-color: rgba(1, 152, 164, 0.9);
-      color: var(--blanco);
-    }
+  text-align: center;
+  padding: 1.2rem 0.8rem;
+  background-color: rgba(1, 152, 164, 0.85);
+  color: var(--blanco);
+}
 
-    header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
-    }
+header h1 {
+  font-size: 2.8rem; /* Aumentado para igualar el otro */
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
 
-    header p {
-      font-size: 1.1rem;
-      margin: 0;
-    }
+header p {
+  font-size: 1.2rem; /* También igualado */
+  margin: 0;
+  font-weight: 500;
+}
+
 
     .botones {
       display: flex;
@@ -84,134 +87,80 @@
     }
 
     footer {
-        background-color: var(--secundario);
-        color: white;
-        padding: 1.2rem 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        margin-top: 2rem;
+      background-color: var(--secundario);
+      color: white;
+      padding: 0.4rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      margin-top: auto;
+      font-size: 0.85rem;
     }
 
-    footer img {
-        height: 40px;
+    footer .social-icons {
+      display: flex;
+      gap: 10px;
     }
 
-    .marca {
-        font-size: 14px;
-        border: 2px solid white;
-        border-radius: 50%;
-        padding: 0.5rem 1rem;
-        background-color: var(--terciario);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    footer .social-icons img {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.3s;
     }
 
-  </style>
+    footer .social-icons img:hover {
+      transform: scale(1.1);
+    }
+     @media screen and (max-width: 600px) {
+    header h1 {
+      font-size: 1.4rem;
+    }
+
+    header p {
+      font-size: 0.85rem;
+    }
+
+    .logo-lourdes-lateral {
+      height: 50px;
+      left: 5px;
+    }
+  }
+</style>
 </head>
+
 <body>
 
-  <!-- Encabezado -->
+  <!-- Logo lateral Lourdes -->
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-lateral">
+
+  <!-- ENCABEZADO -->
   <header>
     <h1>¡Hola! Soy Vicuñita</h1>
     <p>estoy acá para ayudarte y guiarte.</p>
     <p>Participá, consultá, proponé ideas y seguí proyectos en curso.</p>
   </header>
 
-  <!-- Menú de navegación -->
+  <!-- BOTONES -->
   <main>
-  <nav class="botones">
-    <button class="boton-principal" onclick="location.href='reclamos.html'">📌 Realizar una Sugerencia</button>
-    <button class="boton-principal" onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
-    <button class="boton-principal" onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
-    <button class="boton-principal" onclick="location.href='ideas.html'">💡 Proponer una Idea</button>
-    <button class="boton-principal" onclick="location.href='funcion-legislatura.html'">🏛️ ¿Conocés cuál es la función de la Legislatura?</button>
-  </nav>
-</main>
+    <nav class="botones">
+      <button onclick="location.href='reclamos.html'">📌 Realizar una Sugerencia</button>
+      <button onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
+      <button onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
+      <button onclick="location.href='ideas.html'">💡 Proponer una Idea</button>
+      <button onclick="location.href='funcion-legislatura.html'">🏛️ ¿Conocés cuál es la función de la Legislatura?</button>
+    </nav>
+  </main>
 
-
-<footer style="background-color: var(--secundario); color: white; padding: 1.2rem 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
-  <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
-</footer>
-
-<!-- Vicuñita flotante -->
-<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante flotando">
-
-<style>
-  .avatar-flotante {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    width: 80px;
-    height: auto;
-    z-index: 999;
-    cursor: grab;
-    touch-action: none;
-  }
-
-  .flotando {
-    animation: flotar 3s ease-in-out infinite;
-  }
-
-  @keyframes flotar {
-    0% { transform: translateY(-50%) translateX(0); }
-    50% { transform: translateY(-55%) translateX(-3px); }
-    100% { transform: translateY(-50%) translateX(0); }
-  }
-</style>
-
-<script>
-  const vicuñita = document.getElementById('vicuñita');
-  let offsetX = 0, offsetY = 0, isDragging = false;
-
-  function updatePosition(x, y) {
-    vicuñita.style.left = `${x - offsetX}px`;
-    vicuñita.style.top = `${y - offsetY}px`;
-    vicuñita.style.transform = 'none';
-  }
-
-  // MOUSE
-  vicuñita.addEventListener('mousedown', function(e) {
-    isDragging = true;
-    vicuñita.classList.remove('flotando');
-    offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isDragging) updatePosition(e.clientX, e.clientY);
-  });
-
-  document.addEventListener('mouseup', function() {
-    isDragging = false;
-    vicuñita.classList.add('flotando');
-  });
-
-  // TOUCH (CELULAR / TABLET)
-  vicuñita.addEventListener('touchstart', function(e) {
-    isDragging = true;
-    vicuñita.classList.remove('flotando');
-    const touch = e.touches[0];
-    offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('touchmove', function(e) {
-    if (isDragging) {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    }
-  });
-
-  document.addEventListener('touchend', function() {
-    isDragging = false;
-    vicuñita.classList.add('flotando');
-  });
-</script>
+  <!-- FOOTER -->
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram"></a>
+      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook"></a>
+      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="x"></a>
+    </div>
+    <div>Creado por PB – © 2025</div>
+  </footer>
 
 </body>
 </html>
-

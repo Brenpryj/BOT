@@ -15,24 +15,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-#vicuñita {
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 80px;
-  z-index: 9999;
-  cursor: grab;
-  animation: flotar 3s ease-in-out infinite;
-}
-
-@keyframes flotar {
-  0% { transform: translateY(-50%) translateY(0); }
-  50% { transform: translateY(-50%) translateY(-10px); }
-  100% { transform: translateY(-50%) translateY(0); }
-}
-
-
+ 
 /* INTRO */
 .intro {
   text-align: center;
@@ -105,7 +88,7 @@ footer img {
   display: inline-block;
   padding: 0.5rem 1.2rem;
   border: 2px solid white;
-  border-radius: 30px; /* si querés redondo como píldora */
+  border-radius: 30px; 
   font-size: 14px;
   font-weight: bold;
   color: white;
@@ -157,7 +140,7 @@ a.volver:hover {
   overflow: hidden;
   margin-top: 10px;
 }
-/* Removed invalid <style> block. If you need these styles, copy them outside of any <style> tags. */
+
 .accordion {
   background-color: #1A8689;
   color: white;
@@ -273,4 +256,12 @@ a.volver:hover {
 
 .btn-volver:hover {
   background-color: #0198A4;
+}
+.logo-lourdes-lateral {
+  position: fixed;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 28px; 
+  z-index: 100;
 }

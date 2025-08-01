@@ -6,13 +6,13 @@
   <title>Proponer una Idea</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
   <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: url('fondo-lourdes.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-    }
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: url("fondos (1).png") no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+  }
 
     .form-container {
       max-width: 600px;
@@ -25,7 +25,7 @@
 
     h1 {
       text-align: center;
-      color: #0198A4;
+      color: #ffffff;
     }
 
     form {
@@ -95,103 +95,108 @@ footer img {
     background-color: var(--terciario);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+.titulo-principal {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.titulo-principal h1 {
+  font-size: 2.8rem;         /* Tamaño grande como el ejemplo */
+  color: #ffffff;
+  font-weight: 700;          /* Más grueso */
+  margin-bottom: 10px;
+}
+
+.titulo-principal p {
+  font-size: 1.2rem;         /* Tamaño más grande para subtítulo */
+  font-weight: 500;
+  color: #ffffff;
+  margin-top: 0;
+}
+
+.logo-costado {
+  position: fixed;
+  top: 60%;
+  left: 10px;
+  transform: translateY(-30%);
+  height: 60px;
+  z-index: 999;
+}
+.formulario-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.formulario-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formulario-container input,
+.formulario-container textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.formulario-container button[type="submit"] {
+  background-color: var(--terciario);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.formulario-container button[type="submit"]:hover {
+  background-color: var(--primario);
+}
 
   </style>
 </head>
 
 <body>
+  <body>
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado">
+
+  <!-- TÍTULO FUERA DEL FORMULARIO -->
+  <div class="titulo-principal">
+    <h1> 💡 Contanos tu idea</h1>
+    <p> Es importante para nosotros. ¡Déjanos aqui tu idea!</p>
+  </div>
+
+  <!-- FORMULARIO CENTRADO -->
   <div class="form-container">
-    <h1>💡 Proponé una Idea</h1>
     <form id="formulario">
       <input type="text" id="nombre" placeholder="Tu nombre" required />
       <input type="email" id="email" placeholder="Tu email" required />
       <textarea id="mensaje" placeholder="Escribí tu idea" required></textarea>
-      <button type="submit">Enviar idea</button>
+      <button type="submit">Enviar sugerencia</button>
     </form>
 
     <a href="index.html" class="volver">⬅️ Volver al inicio</a>
   </div>
 
-<footer style="background-color: var(--secundario); color: white; padding: 1.2rem 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
-  <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
-</footer>
+  <!-- FOOTER SOLO REDES + AUTOR -->
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram"></a>
+      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook"></a>
+      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X"></a>
+    </div>
+    <div>Creado por PB – © 2025</div>
+  </footer>
+</body>
 
-<!-- Vicuñita flotante -->
-<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante flotando">
 
-<style>
-  .avatar-flotante {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    width: 80px;
-    height: auto;
-    z-index: 999;
-    cursor: grab;
-    touch-action: none;
-  }
-
-  .flotando {
-    animation: flotar 3s ease-in-out infinite;
-  }
-
-  @keyframes flotar {
-    0% { transform: translateY(-50%) translateX(0); }
-    50% { transform: translateY(-55%) translateX(-3px); }
-    100% { transform: translateY(-50%) translateX(0); }
-  }
-</style>
-
-<script>
-  const vicuñita = document.getElementById('vicuñita');
-  let offsetX = 0, offsetY = 0, isDragging = false;
-
-  function updatePosition(x, y) {
-    vicuñita.style.left = `${x - offsetX}px`;
-    vicuñita.style.top = `${y - offsetY}px`;
-    vicuñita.style.transform = 'none';
-  }
-
-  // MOUSE
-  vicuñita.addEventListener('mousedown', function(e) {
-    isDragging = true;
-    vicuñita.classList.remove('flotando');
-    offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isDragging) updatePosition(e.clientX, e.clientY);
-  });
-
-  document.addEventListener('mouseup', function() {
-    isDragging = false;
-    vicuñita.classList.add('flotando');
-  });
-
-  // TOUCH (CELULAR / TABLET)
-  vicuñita.addEventListener('touchstart', function(e) {
-    isDragging = true;
-    vicuñita.classList.remove('flotando');
-    const touch = e.touches[0];
-    offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('touchmove', function(e) {
-    if (isDragging) {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    }
-  });
-
-  document.addEventListener('touchend', function() {
-    isDragging = false;
-    vicuñita.classList.add('flotando');
-  });
-</script>
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>

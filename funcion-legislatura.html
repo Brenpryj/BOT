@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -17,8 +17,8 @@
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background: url('fondo-lourdes.png') no-repeat center center fixed;
-      background-size: cover;
+      background: url("fondos (1).png") no-repeat center center fixed;
+      background-size: 100%;
       color: var(--gris);
       min-height: 100vh;
       display: flex;
@@ -33,11 +33,11 @@
 
     .logo-lateral {
       position: fixed;
-      bottom: 30px;
-      left: 40px;
-      width: 180px;
-      opacity: 0.9;
-      z-index: 1000;
+      top: 40%; /* <-- SUBIDO */
+      left: 10px;
+      transform: translateY(-50%);
+      height: 80px;
+      z-index: 10;
     }
 
     header {
@@ -158,7 +158,7 @@
       .logo-lateral {
         width: 140px;
         left: 20px;
-        bottom: 20px;
+        top: 40%;
       }
 
       header h1 {
@@ -167,7 +167,11 @@
     }
   </style>
 </head>
+
 <body>
+  <!-- LOGO AL COSTADO IZQUIERDO -->
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
+
   <header>
     <h1>🏛️ ¿Cuál es la función de la Legislatura?</h1>
   </header>
@@ -179,7 +183,7 @@
         📌 ¿Qué hace la Legislatura Provincial?
       </div>
       <div class="contenido-tarjeta">
-        <p>La Legislatura de La Rioja es el poder encargado de dictar leyes, controlar al Poder Ejecutivo y representar los intereses del pueblo. Está compuesta por legisladores que debaten y votan proyectos que impactan en la vida cotidiana de los ciudadanos.</p>
+        <p>La Legislatura de La Rioja es el poder encargado de dictar leyes, controlar al Poder Ejecutivo y representar los intereses del pueblo...</p>
         <ul>
           <li>📄 Crear y modificar leyes provinciales.</li>
           <li>👁️‍🗨️ Controlar al gobierno provincial.</li>
@@ -217,7 +221,7 @@
           <li>🧹 Recolectar residuos o barrer calles.</li>
           <li>🎠 Reparar plazas o juegos infantiles.</li>
         </ul>
-        <p><em>Aunque no son responsabilidades de la función legislativa, trabajamos en equipo con compañeras y compañeros de distintas funciones del Estado para dar respuesta a las demandas y necesidades de nuestra comunidad.</em></p>
+        <p><em>Aunque no son responsabilidades de la función legislativa, trabajamos en equipo...</em></p>
       </div>
     </div>
   </main>
@@ -226,90 +230,21 @@
     <a href="index.html" class="volver">⬅️ Volver al inicio</a>
   </div>
 
+  <!-- FOOTER CON REDES -->
   <footer>
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
-    <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
+    <div class="social-icons" style="display: flex; gap: 15px;">
+      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram" style="height: 25px;"></a>
+      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook" style="height: 25px;"></a>
+      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X" style="height: 25px;"></a>
+    </div>
+    <div style="font-size: 14px;">Creado por PB – © 2025</div>
   </footer>
-
-  <img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante flotando">
-
-  <style>
-    .avatar-flotante {
-      position: fixed;
-      top: 50%;
-      left: 20px;
-      transform: translateY(-50%);
-      width: 80px;
-      height: auto;
-      z-index: 999;
-      cursor: grab;
-      touch-action: none;
-    }
-
-    .flotando {
-      animation: flotar 3s ease-in-out infinite;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(-50%) translateX(0); }
-      50% { transform: translateY(-55%) translateX(-3px); }
-      100% { transform: translateY(-50%) translateX(0); }
-    }
-  </style>
 
   <script>
     function toggleTarjeta(elemento) {
       const tarjeta = elemento.parentElement;
       tarjeta.classList.toggle('abierta');
     }
-
-    const vicuñita = document.getElementById('vicuñita');
-    let offsetX = 0, offsetY = 0, isDragging = false;
-
-    function updatePosition(x, y) {
-      vicuñita.style.left = `${x - offsetX}px`;
-      vicuñita.style.top = `${y - offsetY}px`;
-      vicuñita.style.transform = 'none';
-    }
-
-    vicuñita.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      vicuñita.classList.remove('flotando');
-      offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
-      offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (isDragging) updatePosition(e.clientX, e.clientY);
-    });
-
-    document.addEventListener('mouseup', function() {
-      isDragging = false;
-      vicuñita.classList.add('flotando');
-    });
-
-    vicuñita.addEventListener('touchstart', function(e) {
-      isDragging = true;
-      vicuñita.classList.remove('flotando');
-      const touch = e.touches[0];
-      offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
-      offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
-    });
-
-    document.addEventListener('touchmove', function(e) {
-      if (isDragging) {
-        const touch = e.touches[0];
-        updatePosition(touch.clientX, touch.clientY);
-      }
-    });
-
-    document.addEventListener('touchend', function() {
-      isDragging = false;
-      vicuñita.classList.add('flotando');
-    });
   </script>
 </body>
 </html>
-git add .
-git commit -m "subir modificacion de funcion legislativa"
-git push origin main

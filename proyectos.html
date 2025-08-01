@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyectos Legislativos</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       --primario: #0198A4;
@@ -17,7 +18,7 @@
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background: url('fondo-lourdes.png') no-repeat center center fixed;
+      background: url('fondos (1).png') no-repeat right bottom fixed;
       background-size: cover;
       color: var(--gris);
       min-height: 100vh;
@@ -25,12 +26,19 @@
       flex-direction: column;
     }
 
-  
     header {
       text-align: center;
       color: var(--texto);
       background-color: rgba(1, 152, 164, 0.9);
-      padding: 2rem 1rem;
+      padding: 0.6rem 0.8rem;
+      position: relative;
+    }
+
+    .logo-lourdes {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      height: 60px;
     }
 
     .volver {
@@ -54,7 +62,6 @@
       transform: scale(1.05);
     }
 
-    /* Estilo buscador */
     .buscador {
       margin: 20px auto;
       text-align: center;
@@ -151,15 +158,40 @@
     }
 
     footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
+     background-color: var(--secundario);
+     color: white;
+     padding: 1.2rem 1rem;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+      gap: 15px;
+     text-align: center;
+}
+
+     footer img {
+      height: 50px;
+}
+
+     footer p {
+     margin: 0;
+     font-size: 14px;
+}
+
+    .redes {
       display: flex;
-      justify-content: center;
-      align-items: center;
       gap: 1rem;
-      flex-wrap: wrap;
-    }
+}
+
+  .redes a {
+    color: white;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+    .redes a:hover {
+      transform: scale(1.2);
+}
 
     .marca {
       font-size: 14px;
@@ -170,33 +202,34 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    footer {
-    background-color: var(--secundario);
-    color: white;
-    padding: 1.2rem 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-}
+    .redes {
+      display: flex;
+      gap: 1rem;
+    }
 
-footer img {
-    height: 40px;
-}
+    .redes a {
+      color: white;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
 
-.marca {
-    font-size: 14px;
-    border: 2px solid white;
-    border-radius: 50%;
-    padding: 0.5rem 1rem;
-    background-color: var(--terciario);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
+    .redes a:hover {
+      transform: scale(1.2);
+    }
 
+    .logo-costado {
+    position: fixed;
+    top: 72%;
+    left: 10px;
+    transform: translateY(-50%);
+    height: 80px;
+    z-index: 999;
+}
   </style>
 </head>
+
+ <!-- Logo lateral Lourdes -->
+   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado">
 
 <script>
 // Mostrar/ocultar tarjetas por categoría
@@ -226,7 +259,6 @@ function filtrarTarjetas() {
   });
 }
 </script>
-
 
 <body>
 
@@ -670,87 +702,51 @@ function filtrarTarjetas() {
         });
       }
     </script>
-
-<footer style="background-color: var(--secundario); color: white; padding: 1.2rem 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
-  <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
+  
+<!-- FOOTER -->
+<footer style="background-color: var(--secundario); padding: 20px; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+  <div class="social-icons" style="display: flex; gap: 15px;">
+    <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram" style="height: 25px;"></a>
+    <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook" style="height: 25px;"></a>
+    <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X" style="height: 25px;"></a>
+  </div>
+  <div style="font-size: 14px;">Creado por PB – © 2025</div>
 </footer>
 
-<!-- Vicuñita flotante -->
-<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante flotando">
-
+<!-- ESTILOS RESPONSIVE -->
 <style>
-  .avatar-flotante {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    width: 80px;
-    height: auto;
-    z-index: 999;
-    cursor: grab;
-    touch-action: none;
-  }
+  @media screen and (max-width: 600px) {
+    .logo-costado {
+      display: none; /* Ocultamos el logo lateral en celular */
+    }
 
-  .flotando {
-    animation: flotar 3s ease-in-out infinite;
-  }
+    header {
+      padding: 1rem 0.5rem;
+    }
 
-  @keyframes flotar {
-    0% { transform: translateY(-50%) translateX(0); }
-    50% { transform: translateY(-55%) translateX(-3px); }
-    100% { transform: translateY(-50%) translateX(0); }
+    .accordion {
+      padding: 1rem;
+    }
+
+    .botones a,
+    .botones button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    footer {
+      padding: 1rem;
+      gap: 10px;
+    }
   }
 </style>
 
-<script>
-  const vicuñita = document.getElementById('vicuñita');
-  let offsetX = 0, offsetY = 0, isDragging = false;
-
-  function updatePosition(x, y) {
-    vicuñita.style.left = `${x - offsetX}px`;
-    vicuñita.style.top = `${y - offsetY}px`;
-    vicuñita.style.transform = 'none';
-  }
-
-  // MOUSE
-  vicuñita.addEventListener('mousedown', function(e) {
-    isDragging = true;
-    vicuñita.classList.remove('flotando');
-    offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isDragging) updatePosition(e.clientX, e.clientY);
-  });
-
-  document.addEventListener('mouseup', function() {
-    isDragging = false;
-    vicuñita.classList.add('flotando');
-  });
-
-  // TOUCH (CELULAR / TABLET)
-  vicuñita.addEventListener('touchstart', function(e) {
-    isDragging = true;
-    vicuñita.classList.remove('flotando');
-    const touch = e.touches[0];
-    offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('touchmove', function(e) {
-    if (isDragging) {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    }
-  });
-
-  document.addEventListener('touchend', function() {
-    isDragging = false;
-    vicuñita.classList.add('flotando');
-  });
-</script>
-
 </body>
 </html>
+

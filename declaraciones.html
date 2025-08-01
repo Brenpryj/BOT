@@ -6,14 +6,31 @@
   <title>Declaraciones de Interés</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+     --primario: #0198A4;
+     --secundario: #1A8689;
+     --terciario: #006B70;
+     --texto: #FFFFFF;
+     --gris: #46494A;
+}
+
     body {
       font-family: 'Montserrat', sans-serif;
-      background: url('fondo-lourdes.png') no-repeat center center fixed;
+      background: url("fondos (2).png") no-repeat center center fixed;
       background-size: cover;
       color: #333;
       margin: 0;
       padding: 20px;
     }
+  .logo-costado {
+     position: fixed;
+     top: 36%;
+     left: 10px;
+     transform: translateY(-50%);
+     height: 80px;
+     z-index: 999;
+}
+
     .seccion-ano {
       margin-bottom: 40px;
     }
@@ -67,18 +84,20 @@
     button.accordion {
       background-color: #0198A4;
       color: white;
-      cursor: pointer;
-      padding: 14px 20px;
-      width: 100%;
-      text-align: left;
-      border: none;
-      outline: none;
-      font-size: 18px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
+     cursor: pointer;
+     display: block;
+     padding: 14px 20px;
+     width: auto;
+     text-align: center;
+     border: 2px solid white;
+     outline: none;
+     font-size: 18px;
+     font-weight: 600;
+     transition: background-color 0.3s ease;
+     border-radius: 8px;
+     margin: 10px auto; 
+}
+
     button.accordion:hover {
       background-color: #017A87;
     }
@@ -124,7 +143,23 @@
     .volver-inicio:hover {
       background-color: #0198a4;
     }
+
+    .logo-costado {
+     position: fixed;
+      top: 60%;
+      left: 60px;
+      transform: translateY(-50%);
+      height: 70px;
+      z-index: 999;
+}
+.contenedor-declaraciones {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
   </style>
+  
   <script>
     function toggleDescripcion(id) {
       const desc = document.getElementById(id);
@@ -151,6 +186,9 @@
   </script>
 </head>
 <body>
+ <main>
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado">
+
   <div style="text-align: center; margin-top: 20px;">
     <a href="index.html" class="volver-inicio">⬅️ Volver al inicio</a>
   </div>
@@ -165,13 +203,11 @@
     <button type="submit" style="padding: 10px 20px; background-color: #0198A4; color: white; border: none; border-radius: 8px; cursor: pointer;">Buscar</button>
   </form>
 
-  <section style="padding: 2rem 1rem;">
-    <h2 style="font-size: 2rem; text-align: center; color: var(--principal); font-family: 'Montserrat', sans-serif;">Declaraciones de Interés</h2>
-    <p style="text-align: center; font-size: 1rem; margin-top: 0.5rem;">Reconocimientos otorgados por año, con descarga disponible.</p>
 
 <!-- Acordeón 2022 -->
  <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2022</button>
   <div class="panel">
+    <div class="contenedor-declaraciones">
 
 <!-- Declaración 1 -->
 <div class="tarjeta-declaracion">
@@ -425,7 +461,8 @@ function toggleResumen(button) {
  <!-- Año 2023 -->
  <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2023</button>
   <div class="panel">
-    
+    <div class="contenedor-declaraciones">
+
  <!-- Declaración 1 -->
 <div class="tarjeta-declaracion">
   <h3>Visitante Ilustre – Declaración Nº 2001/2023</h3>
@@ -686,13 +723,23 @@ function toggleResumen(button) {
   </div>
   <div class="resumen" style="display:none;">
     <p>Ciudadano destacado por su defensa de los derechos humanos y justicia social.</p>
-  </div>
+   </div>
 </div>
-  </div> <!-- FIN Año 2023 -->
+
+</div>
+
+<script>
+function toggleResumen(button) {
+  const resumen = button.nextElementSibling;
+  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
+}
+</script>
+  </div>
 
   <!-- Año 2024 -->
-<button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2024</button>
-<div class="panel">
+ <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2024</button>
+  <div class="panel">
+   <div class="contenedor-declaraciones">
 
  <!-- Declaración 3001 -->
 <div class="tarjeta-declaracion">
@@ -967,14 +1014,23 @@ function toggleResumen(button) {
   </div>
   <div class="resumen" style="display:none;">
     <p>Reconocimiento legislativo a instituciones que fomentan el acceso a la educación artística.</p>
-  </div>
+   </div>
 </div>
-</div> <!-- FIN Año 2024 -->
 
+</div>
+
+<script>
+function toggleResumen(button) {
+  const resumen = button.nextElementSibling;
+  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
+}
+</script>
+  </div>
 
 <!-- Año 2025 -->
 <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2025</button>
 <div class="panel">
+  <div class="contenedor-declaraciones">
 
 <!-- Declaración 4001 -->
 <div class="tarjeta-declaracion">
@@ -1060,81 +1116,9 @@ function toggleResumen(button) {
   </div>
 </div>
 
-</details> <!-- CIERRE del bloque <details> de Declaraciones 2025 -->
+</details> 
+</div>
 
-<!-- FOOTER -->
-<footer style="background-color: var(--secundario); color: white; padding: 1.2rem 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" style="height: 40px;">
-  <div style="font-size: 0.95rem; text-align: center;">Creado por PB – © 2025</div>
-</footer>
-
-<!-- Vicuñita flotante -->
-<img id="vicuñita" src="avatar.png" alt="Vicuñita" class="avatar-flotante">
-
-<style>
-  .avatar-flotante {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    width: 80px;
-    height: auto;
-    z-index: 999;
-    animation: flotar 3s ease-in-out infinite;
-    cursor: grab;
-    touch-action: none;
-  }
-
-  @keyframes flotar {
-    0% { transform: translateY(-50%) translateX(0); }
-    50% { transform: translateY(-55%) translateX(-3px); }
-    100% { transform: translateY(-50%) translateX(0); }
-  }
-  
-</style>
-
-<script>
-  const vicuñita = document.getElementById('vicuñita');
-  let offsetX, offsetY, isDragging = false;
-
-  function updatePosition(x, y) {
-    vicuñita.style.left = `${x - offsetX}px`;
-    vicuñita.style.top = `${y - offsetY}px`;
-    vicuñita.style.transform = 'none';
-  }
-
-  vicuñita.addEventListener('mousedown', function(e) {
-    isDragging = true;
-    offsetX = e.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = e.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isDragging) updatePosition(e.clientX, e.clientY);
-  });
-
-  document.addEventListener('mouseup', function() {
-    isDragging = false;
-  });
-
-  vicuñita.addEventListener('touchstart', function(e) {
-    isDragging = true;
-    const touch = e.touches[0];
-    offsetX = touch.clientX - vicuñita.getBoundingClientRect().left;
-    offsetY = touch.clientY - vicuñita.getBoundingClientRect().top;
-  });
-
-  document.addEventListener('touchmove', function(e) {
-    if (isDragging) {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    }
-  });
-
-  document.addEventListener('touchend', function() {
-    isDragging = false;
-  });
-</script>
 <script>
   const formBusqueda = document.getElementById("form-busqueda");
   const inputBusqueda = document.getElementById("input-busqueda");
@@ -1248,5 +1232,51 @@ function toggleResumen(button) {
     resumen.style.display = (resumen.style.display === "none") ? "block" : "none";
   }
 </script>
+</main>
+
+<!-- FOOTER -->
+<footer style="background-color: var(--secundario); padding: 20px; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+  <div class="social-icons" style="display: flex; gap: 15px;">
+    <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram logo in pink and orange gradient, circular camera icon, social media link for Lourdes Ortiz, neutral tone" style="height: 25px;"></a>
+    <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook" style="height: 25px;"></a>
+    <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X" style="height: 25px;"></a>
+  </div>
+  <div style="font-size: 14px;">Creado por PB – © 2025</div>
+</footer>
+
+<!-- ESTILOS RESPONSIVE -->
+<style>
+  @media screen and (max-width: 600px) {
+    .logo-costado {
+      display: none; /* Ocultamos el logo lateral en celular */
+    }
+
+    header {
+      padding: 1rem 0.5rem;
+    }
+
+    .accordion {
+      padding: 1rem;
+    }
+
+    .botones a,
+    .botones button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    footer {
+      padding: 1rem;
+      gap: 10px;
+    }
+  }
+</style>
 </body>
+</main>
 </html>
