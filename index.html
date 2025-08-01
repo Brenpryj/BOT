@@ -126,11 +126,51 @@ header p {
       left: 5px;
     }
   }
+  @media screen and (max-width: 768px) {
+  header {
+    padding-top: 30px;
+    text-align: center;
+  }
+
+  .logo-lourdes-lateral {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 38px;
+    transform: none;
+    z-index: 10;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  header p {
+    font-size: 1rem;
+    margin: 0 10px;
+  }
+
+  .botones button {
+    font-size: 1rem;
+    padding: 0.9rem;
+    margin: 8px 12px;
+    width: 90%;
+  }
+
+  #vicuñita-index {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    width: 80px;
+    opacity: 0.95;
+  }
+}
+
 </style>
 </head>
 
 <body>
-
   <!-- Logo lateral Lourdes -->
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-lateral">
 
@@ -162,5 +202,7 @@ header p {
     <div>Creado por PB – © 2025</div>
   </footer>
 
+ <img id="vicuñita-index" src="vicu.png" alt="Vicuñita">
+ 
 </body>
 </html>

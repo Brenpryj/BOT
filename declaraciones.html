@@ -1246,36 +1246,49 @@ function toggleResumen(button) {
 
 <!-- ESTILOS RESPONSIVE -->
 <style>
-  @media screen and (max-width: 600px) {
-    .logo-costado {
-      display: none; /* Ocultamos el logo lateral en celular */
-    }
-
-    header {
-      padding: 1rem 0.5rem;
-    }
-
-    .accordion {
-      padding: 1rem;
-    }
-
-    .botones a,
-    .botones button {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
-    }
-
-    .social-icons {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    footer {
-      padding: 1rem;
-      gap: 10px;
-    }
+  /* --- ESTILOS RESPONSIVOS PARA CELULAR --- */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 20px 10px 10px;
   }
+
+  h1 {
+    font-size: 1.6em;
+  }
+
+  p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+  }
+
+  .btn-volver {
+    font-size: 0.9em;
+    padding: 8px 16px;
+    margin-top: 10px;
+  }
+
+  .tarjeta-declaracion {
+    margin: 15px 10px;
+    padding: 15px;
+    font-size: 0.9em;
+  }
+
+  .tarjeta-declaracion h3 {
+    font-size: 1em;
+  }
+
+  .tarjeta-declaracion .descripcion {
+    font-size: 0.9em;
+  }
+
+  .contenedor-declaraciones {
+    padding: 0 10px;
+  }
+
+  #vicuñita {
+    display: none; /* Oculta la vicuña en celulares si molesta */
+  }
+}
 </style>
 </body>
 </main>

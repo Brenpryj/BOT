@@ -160,24 +160,50 @@ form button:hover {
     }
 
     @media (max-width: 768px) {
-      .form-container {
-        margin: 20px;
-        padding: 2rem;
-      }
+    .form-container {
+      margin: 20px;
+      padding: 2rem;
+      width: auto;
+    }
 
-      .form-container::before {
-        display: none;
-      }
+    .form-container::before {
+      display: none;
     }
+
     .logo-costado {
-      position: fixed;
-      top: 60%;
-      left: 10px;
-      transform: translateY(-30%);
-      height: 60px;
-      z-index: 999;
+      display: none; /* Oculta el logo en pantallas pequeñas */
     }
-  </style>
+
+    .titulo-principal h1 {
+      font-size: 1.4rem;
+    }
+
+    .titulo-principal p {
+      font-size: 1rem;
+      padding: 0 10px;
+    }
+
+    form input,
+    form textarea {
+      font-size: 0.95rem;
+    }
+
+    form button {
+      font-size: 1rem;
+    }
+
+    footer {
+      font-size: 14px;
+      padding: 1rem;
+    }
+
+    .social-icons img {
+      height: 22px;
+      width: 22px;
+    }
+  }
+</style>
+
 </head>
 
 <body>
