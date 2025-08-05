@@ -166,13 +166,38 @@ header p {
     opacity: 0.95;
   }
 }
+/* Logo para móviles (abajo al lado de la vicuña) */
+.logo-lourdes-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  #logo-lourdes-desktop {
+    display: none !important; /* Oculta el logo lateral */
+  }
+
+  .logo-lourdes-mobile {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 95px; /* ajustá este valor para alinear con la vicuña */
+    width: 90px;
+    opacity: 0.95;
+    z-index: 5;
+  }
+
+  footer {
+    position: relative;
+    padding-bottom: 60px; /* espacio para que no se superponga */
+  }
+}
 
 </style>
 </head>
 
 <body>
   <!-- Logo lateral Lourdes -->
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-lateral">
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-lateral" id="logo-lourdes-desktop">
 
   <!-- ENCABEZADO -->
   <header>
@@ -200,6 +225,9 @@ header p {
       <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="x"></a>
     </div>
     <div>Creado por PB – © 2025</div>
+    <!-- Logo Lourdes abajo solo para móviles -->
+    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-mobile">
+
   </footer>
 
  <img id="vicuñita-index" src="avatar.png" alt="Vicuñita">
