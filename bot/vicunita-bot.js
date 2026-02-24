@@ -1,6 +1,4 @@
 (function () {
-  const root = document.getElementById("vicunita-bot-root");
-  if (!root) return;
 
   // ======================
   // Config / Data fallback
@@ -24,7 +22,7 @@
   // ======================
   // UI
   // ======================
-  root.innerHTML = `
+  rootElement.innerHTML = `
     <div class="vb-panel" id="vbPanel" aria-live="polite">
       <div class="vb-header">
         <div class="vb-avatar" title="Vicuñita">🦙</div>
@@ -857,7 +855,7 @@ function option5_ActivitiesFormInChat() {
 
       <form class="form-actividades-chat">
         <label>Nombre y apellido *</label>
-        <input type="text" name="nombre" placeholder="Ej: Brenda Pryjmaczuk" required>
+        <input type="text" name="nombre" placeholder="Ej: romina diaz" required>
 
         <label>Número de teléfono *</label>
         <input type="tel" name="telefono" placeholder="Ej: 3804..." required>
