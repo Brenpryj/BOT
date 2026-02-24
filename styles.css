@@ -69,19 +69,19 @@ button:hover {
 
 /* FOOTER */
 footer {
-    background-color: var(--secundario);
-    color: white;
-    padding: 1.2rem 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
+  background-color: var(--secundario);
+  color: white;
+  padding: 1.2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
 footer img {
-    height: 40px;
+  height: 40px;
 }
 
 .marca {
@@ -114,6 +114,7 @@ a.volver:hover {
   background-color: var(--secundario);
   transform: scale(1.05);
 }
+
 .acordeon {
   background-color: #0198A4;
   color: white;
@@ -167,6 +168,7 @@ a.volver:hover {
   background-color: #f7f7f7;
   border-radius: 10px;
 }
+
 .accordion {
   background-color: #d6f4f8;
   color: #333;
@@ -194,6 +196,7 @@ a.volver:hover {
 .active {
   background-color: #bcebf2;
 }
+
 .tarjeta-declaracion {
   background-color: #f8f8f8;
   border: 2px solid #0198A4;
@@ -257,11 +260,56 @@ a.volver:hover {
 .btn-volver:hover {
   background-color: #0198A4;
 }
-.logo-lourdes-lateral {
+
+/* =========================================================
+   ✅ LOGO LATERAL LOURDES — ELEGANTE + MARCA DE AGUA
+   - No bloquea clicks
+   - Se ve "institucional" y prolijo
+   - Responsive
+========================================================= */
+
+.logo-lourdes-lateral{
   position: fixed;
-  left: 15px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  height: 28px; 
-  z-index: 100;
+
+  /* tamaño prolijo */
+  height: 56px; /* antes: 28px (muy chico) / ajustable */
+
+  /* capas */
+  z-index: 2;
+  pointer-events: none;
+
+  /* marca de agua elegante */
+  opacity: 0.30;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.18)) blur(0.15px);
+  transition: opacity .25s ease, transform .25s ease, filter .25s ease;
+
+  /* "capsulita" sutil para que no se vea tosco */
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(6px);
+}
+
+/* Si querés que al pasar el mouse se marque un poquito (solo desktop) */
+.logo-lourdes-lateral:hover{
+  opacity: 0.42;
+  transform: translateY(-50%) scale(1.02);
+  filter: drop-shadow(0 14px 26px rgba(0,0,0,.22)) blur(0px);
+}
+
+/* Mobile: arriba, más chico, sin tapar */
+@media (max-width: 768px){
+  .logo-lourdes-lateral{
+    top: 12px;
+    left: 10px;
+    transform: none;
+    height: 34px;
+    padding: 7px 9px;
+    border-radius: 14px;
+    opacity: 0.26;
+  }
 }
