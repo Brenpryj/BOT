@@ -746,29 +746,33 @@ function option3() {
   }
 
   // ======================
-  // ======================
-// Opción 5 
+// ======================
+// Opción 5 - Contactar equipo
+// ======================
 function option5() {
   pushMsg("📞 Para contactar al equipo, podés elegir una opción:");
 
   setQuickButtons([
     {
       label: "✉️ Mail institucional",
-      onClick: () => openMailDirect({
-        to: "equipolourdesortiz1@gmail.com",
-        subject: "Contacto desde Vicuñita",
-        body: "Hola equipo, les escribo por lo siguiente:\n\n"
-      }),
-      _divider: "Mail"
+      onClick: () =>
+        openMailDirect({
+          to: "equipolourdesortiz1@gmail.com",
+          subject: "Contacto desde Vicuñita",
+          body: "Hola equipo, les escribo por lo siguiente:\n\n",
+        }),
+      _divider: "Mail",
     },
     {
       label: "🤝 Participar en actividades",
       onClick: () => option5_ActivitiesFormInChat(),
-      _divider: "Actividades"
+      _divider: "Actividades",
     },
-    { label: "🏠 Menú", onClick: backToMenu, _isMenu: true }
+    { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
   ]);
 }
+
+// ✅ Mail directo (evita pestaña en blanco)
 function openMailDirect({ to, subject = "", body = "" }) {
   const mailto =
     `mailto:${encodeURIComponent(to)}` +
@@ -778,68 +782,19 @@ function openMailDirect({ to, subject = "", body = "" }) {
   window.location.href = mailto;
 }
 
-/** Encuentra el contenedor de mensajes del chat (robusto) */
+// ✅ Contenedor real de mensajes (funciona en PC y celular)
 function getChatMessagesContainerSmart() {
-  // 1) Intentos comunes por id/class
-  const direct =
-    document.querySelector("#chatMessages") ||
-    document.querySelector(".chat-messages") ||
-    document.querySelector(".messages") ||
-    document.querySelector(".chat-body") ||
-    document.querySelector(".chat__messages");
-
-  if (direct) return direct;
-
-  // 2) Heurística: buscar el input "Escribí aquí..." y desde ahí subir al root del chat
-  const input =
-    document.querySelector('input[placeholder*="Escribí"]') ||
-    document.querySelector('textarea[placeholder*="Escribí"]') ||
-    document.querySelector('input[placeholder*="Escribi"]') ||
-    document.querySelector('textarea[placeholder*="Escribi"]');
-
-  if (!input) return null;
-
-  // Subimos buscando un contenedor “grande” del chat
-  let root = input.parentElement;
-  for (let i = 0; i < 10 && root; i++) {
-    // si dentro hay botones rápidos + área de scroll, es muy probable que sea el chat
-    const hasButtons = root.querySelector("button");
-    const hasScrollable = Array.from(root.querySelectorAll("div")).some(d => {
-      const st = getComputedStyle(d);
-      return (st.overflowY === "auto" || st.overflowY === "scroll") && d.scrollHeight > d.clientHeight;
-    });
-
-    if (hasButtons && hasScrollable) break;
-    root = root.parentElement;
-  }
-  if (!root) return null;
-
-  // 3) Dentro del root, elegimos el div más “scrollable” (donde se ven los mensajes)
-  const candidates = Array.from(root.querySelectorAll("div")).filter(d => {
-    const st = getComputedStyle(d);
-    const scrollable = (st.overflowY === "auto" || st.overflowY === "scroll");
-    return scrollable && d.scrollHeight >= d.clientHeight;
-  });
-
-  // Elegimos el más alto (normalmente es el contenedor de mensajes)
-  candidates.sort((a, b) => b.clientHeight - a.clientHeight);
-
-  return candidates[0] || null;
+  return document.getElementById("vbBody");
 }
 
-function scrollChatToBottomSmart(container) {
-  if (!container) return;
-  container.scrollTop = container.scrollHeight;
-}
-
-/** ✅ Formulario DENTRO del chat */
-function option5_ActivitiesFormInChat() {
-  pushMsg("🤝 Contame qué actividad te interesa y te guío para sumarte. También podés escribir al mail.");
-
+// ✅ Formulario DENTRO del chat (sin mensajes de error)
+function option5_ActivitiesFormInChat(retries = 10) {
   const container = getChatMessagesContainerSmart();
+
+  // En móvil puede tardar en estar listo: reintento silencioso
   if (!container) {
-    pushMsg("⚠️ No encuentro el contenedor de mensajes del chat. Pasame una captura del código del HTML del chat (la parte del panel) y lo ajusto en 1 minuto.");
-    return;
+    if (retries > 0) return setTimeout(() => option5_ActivitiesFormInChat(retries - 1), 120);
+    return; // ❌ no mostramos error
   }
 
   // Evitar duplicado si ya existe
@@ -848,27 +803,27 @@ function option5_ActivitiesFormInChat() {
 
   const bubble = document.createElement("div");
   bubble.id = "formActividadesEnChat";
-  bubble.className = "msg bot actividad-bubble"; // usa tus clases de burbuja bot si ya existen
+  bubble.className = "vb-msg vb-bot actividad-bubble";
 
   bubble.innerHTML = `
     <div class="actividad-card">
       <div class="actividad-title">🤝 Participar en actividades</div>
 
-      <form class="form-actividades-chat">
+      <form class="form-actividades-chat" autocomplete="on">
         <label>Nombre y apellido *</label>
-        <input type="text" name="nombre" placeholder="Ej: romina diaz" required>
+        <input type="text" name="nombre" placeholder="Ej: Romina Díaz" required />
 
         <label>Número de teléfono *</label>
-        <input type="tel" name="telefono" placeholder="Ej: 3804..." required>
+        <input type="tel" name="telefono" placeholder="Ej: 3804..." required />
 
         <label>Email *</label>
-        <input type="email" name="email" placeholder="Ej: tuemail@gmail.com" required>
+        <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
 
         <label>¿En qué actividades te gustaría participar? *</label>
         <textarea name="actividades" rows="3" placeholder="Ej: rondas de servicios, eventos barriales, voluntariado..." required></textarea>
 
         <label>Disponibilidad horaria *</label>
-        <input type="text" name="disponibilidad" placeholder="Ej: Lun a Vie 9 a 12 / Sáb por la tarde..." required>
+        <input type="text" name="disponibilidad" placeholder="Ej: Lun a Vie 9 a 12 / Sáb por la tarde..." required />
 
         <div class="form-actions">
           <button type="submit" class="btn-enviar-form">Enviar</button>
@@ -881,15 +836,14 @@ function option5_ActivitiesFormInChat() {
   `;
 
   container.appendChild(bubble);
-  scrollChatToBottomSmart(container);
+  container.scrollTop = container.scrollHeight;
 
   const form = bubble.querySelector("form");
   const cancel = bubble.querySelector(".btn-cancelar-form");
 
   cancel.addEventListener("click", () => {
     bubble.remove();
-    pushMsg("👌 Listo. Si querés, podés escribirle directo al mail institucional.");
-    scrollChatToBottomSmart(container);
+    container.scrollTop = container.scrollHeight;
   });
 
   form.addEventListener("submit", (e) => {
@@ -902,10 +856,8 @@ function option5_ActivitiesFormInChat() {
     const actividades = (data.get("actividades") || "").toString().trim();
     const disponibilidad = (data.get("disponibilidad") || "").toString().trim();
 
-    if (!nombre || !telefono || !email || !actividades || !disponibilidad) {
-      pushMsg("⚠️ Por favor completá todos los campos obligatorios (*).");
-      return;
-    }
+    // Si falta algo, no hacemos nada (sin mensajes extra)
+    if (!nombre || !telefono || !email || !actividades || !disponibilidad) return;
 
     const subject = "Participación en actividades (Vicuñita)";
     const body =
@@ -921,15 +873,9 @@ Quiero participar en actividades. Mis datos son:
 ¡Gracias!`;
 
     bubble.remove();
-    pushMsg("✅ Perfecto. Te abro el mail listo para enviar…");
-    scrollChatToBottomSmart(container);
-
     openMailDirect({ to: "equipolourdesortiz1@gmail.com", subject, body });
-
-    setQuickButtons([{ label: "🏠 Volver al menú", onClick: backToMenu, _isMenu: true }]);
   });
 }
-
 // ======================
 // Opción 6 - Información Ciudadana Útil
 // ======================
