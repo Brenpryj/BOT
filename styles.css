@@ -1,292 +1,353 @@
-/* RESET */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* =========================================================
+   RESET
+========================================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* =========================================================
+   VARIABLES (NO CAMBIAN COLORES)
+========================================================= */
+:root{
+  --primario: #0198A4;
+  --secundario: #1A8689;
+
+  /* neutros (solo para prolijidad visual) */
+  --texto: #0f172a;
+  --muted: #475569;
+  --blanco: #ffffff;
+
+  /* superficies */
+  --surface: rgba(255,255,255,0.92);
+  --surface-2: rgba(255,255,255,0.86);
+
+  /* bordes y sombras minimal */
+  --border: rgba(15, 23, 42, 0.10);
+  --shadow: 0 10px 24px rgba(2, 6, 23, 0.12);
+  --shadow-soft: 0 6px 16px rgba(2, 6, 23, 0.10);
+
+  --radius: 14px;
+  --radius-sm: 10px;
 }
 
-/* GENERAL */
-body {
+/* =========================================================
+   GENERAL
+========================================================= */
+body{
   font-family: 'Montserrat', sans-serif;
-  color: #000;
+  color: var(--texto);
   background: url('fondo-lourdes.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
- 
+
+/* contenedor general opcional (si ya tenés uno, ignoralo) */
+.section-container{
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
 /* INTRO */
-.intro {
+.intro{
   text-align: center;
-  padding: 100px 20px 40px;
-}
-
-/* BOTONES */
-button {
-  display: block;
-  margin: 15px auto;
-  padding: 15px 25px;
-  border: 2px solid white;
-  border-radius: 12px;
-  background-color: #0198A4;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background-color: #1A8689;
-  transform: scale(1.05);
-}
-
-
-/* BOTONES PRINCIPALES CON FONDO BLANCO */
-.boton-principal {
-  background-color: #ffffff;
-  color: #4a4a4a;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 15px 25px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-  display: block;
-  margin: 15px auto;
-}
-
-.boton-principal:hover {
-  background-color: #f2f2f2;
-  color: #2e2e2e;
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-}
-
-/* FOOTER */
-footer {
-  background-color: var(--secundario);
-  color: white;
-  padding: 1.2rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
-footer img {
-  height: 40px;
-}
-
-.marca {
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
-  border: 2px solid white;
-  border-radius: 30px; 
-  font-size: 14px;
-  font-weight: bold;
-  color: white;
-  background-color: var(--terciario);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-a.volver {
-  display: inline-block;
-  margin: 2rem auto 0;
-  background-color: var(--terciario);
-  color: white;
-  padding: 0.8em 1.2em;
-  border-radius: 8px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  border: 2px solid white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-a.volver:hover {
-  background-color: var(--secundario);
-  transform: scale(1.05);
-}
-
-.acordeon {
-  background-color: #0198A4;
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  width: 100%;
-  text-align: left;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  transition: 0.3s;
-  margin-top: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.acordeon:hover {
-  background-color: #1A8689;
-}
-
-.panel {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.accordion {
-  background-color: #1A8689;
-  color: white;
-  cursor: pointer;
-  padding: 12px;
-  width: 100%;
-  text-align: left;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  transition: 0.4s;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.active, .accordion:hover {
-  background-color: #0198A4;
-}
-
-.panel {
-  padding: 0 15px;
-  display: none;
-  overflow: hidden;
-  background-color: #f7f7f7;
-  border-radius: 10px;
-}
-
-.accordion {
-  background-color: #d6f4f8;
-  color: #333;
-  cursor: pointer;
-  padding: 1rem;
-  width: 100%;
-  text-align: left;
-  font-weight: bold;
-  border: 2px solid #0198A4;
-  border-radius: 10px;
-  margin: 1rem 0;
-  transition: 0.3s ease;
-  font-size: 1rem;
-}
-
-.accordion:hover {
-  background-color: #bcebf2;
-}
-
-.panel {
-  display: none;
-  padding: 0.5rem 1rem;
-}
-
-.active {
-  background-color: #bcebf2;
-}
-
-.tarjeta-declaracion {
-  background-color: #f8f8f8;
-  border: 2px solid #0198A4;
-  border-radius: 12px;
-  padding: 15px;
-  margin: 15px 0;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-.tarjeta-declaracion h3 {
-  margin-top: 0;
-  color: #1A8689;
-}
-
-.botones {
-  margin-top: 10px;
-}
-
-.btn-descargar,
-.btn-ver {
-  display: inline-block;
-  margin-right: 10px;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  background-color: #0198A4;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn-ver {
-  background-color: #1A8689;
-}
-
-.btn-descargar:hover,
-.btn-ver:hover {
-  background-color: #017A87;
-}
-
-.resumen {
-  margin-top: 10px;
-  font-style: italic;
-  color: #333;
-}
-
-.btn-volver {
-  background-color: #017A87;
-  color: white;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: none;
-  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.btn-volver:hover {
-  background-color: #0198A4;
+  padding: 90px 20px 36px;
 }
 
 /* =========================================================
-   ✅ LOGO LATERAL LOURDES — ELEGANTE + MARCA DE AGUA
-   - No bloquea clicks
-   - Se ve "institucional" y prolijo
-   - Responsive
+   BOTONES (MODERNO + MINIMAL, MISMO LOOK EN TODO)
+   - NO tocamos colores, solo forma/sombra/espaciado
 ========================================================= */
 
+/* Base: botones genéricos del sitio (menu, formularios, etc.) */
+button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin: 12px auto;
+  padding: 12px 18px;
+
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(255,255,255,0.85);
+
+  background: var(--primario);
+  color: white;
+
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  user-select: none;
+}
+
+button:hover{
+  background-color: var(--secundario);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* Botón principal blanco (lo conservamos pero más minimal) */
+.boton-principal{
+  background: rgba(255,255,255,0.95);
+  color: #334155;
+  border: 1.5px solid rgba(15, 23, 42, 0.10);
+  box-shadow: 0 10px 22px rgba(2,6,23,.10);
+}
+
+.boton-principal:hover{
+  background: #ffffff;
+  color: #0f172a;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(2,6,23,.14);
+}
+
+/* Botón volver (cuando es <a>) */
+a.volver{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 22px auto 0;
+  padding: 12px 18px;
+
+  background-color: var(--primario);
+  color: white;
+
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,0.85);
+
+  box-shadow: var(--shadow-soft);
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+a.volver:hover{
+  background-color: var(--secundario);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* =========================================================
+   ACORDEONES
+   ⚠️ Importantísimo: acá limpiamos duplicados.
+   - Usás .acordeon (uno) y .accordion (otro)
+   - Los dejamos coherentes y minimal.
+========================================================= */
+
+/* Acordeón tipo "institucional" (clase .acordeon) */
+.acordeon{
+  width: 100%;
+  margin-top: 18px;
+
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.55);
+
+  background: var(--primario);
+  color: white;
+
+  cursor: pointer;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 800;
+
+  box-shadow: var(--shadow-soft);
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.acordeon:hover{
+  background: var(--secundario);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* Acordeón “tarjeta” (clase .accordion) */
+.accordion{
+  width: 100%;
+  margin: 14px 0;
+
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 2px solid var(--primario);
+
+  background: rgba(214, 244, 248, 0.92);
+  color: #0f172a;
+
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 800;
+
+  box-shadow: 0 8px 18px rgba(2,6,23,.08);
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.accordion:hover{
+  background: rgba(188, 235, 242, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(2,6,23,.10);
+}
+
+/* estado active (si tu JS agrega .active, lo respetamos) */
+.active{
+  background: rgba(188, 235, 242, 0.95);
+}
+
+/* Panel (solo 1 definición) */
+.panel{
+  display: none;          /* tu JS lo cambia cuando abre */
+  overflow: hidden;
+  margin-top: 10px;
+
+  padding: 12px 14px;
+  border-radius: var(--radius);
+
+  background: rgba(247,247,247,0.92);
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+/* =========================================================
+   TARJETAS (Declaraciones)
+========================================================= */
+.tarjeta-declaracion{
+  background: rgba(248,248,248,0.92);
+  border: 2px solid var(--primario);
+  border-radius: 14px;
+
+  padding: 16px;
+  margin: 14px 0;
+
+  box-shadow: 0 10px 22px rgba(2,6,23,.10);
+}
+
+.tarjeta-declaracion h3{
+  margin-top: 0;
+  color: var(--secundario);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.botones{ margin-top: 12px; }
+
+/* botones de tarjeta */
+.btn-descargar,
+.btn-ver{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 10px;
+  padding: 10px 14px;
+
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 10px;
+
+  background: var(--primario);
+  color: white;
+
+  text-decoration: none;
+  font-weight: 800;
+
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(2,6,23,.10);
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.btn-ver{ background: var(--secundario); }
+
+.btn-descargar:hover,
+.btn-ver:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(2,6,23,.14);
+}
+
+/* Resumen */
+.resumen{
+  margin-top: 10px;
+  font-style: italic;
+  color: #334155;
+}
+
+/* Botón volver (si lo usás como <button>) */
+.btn-volver{
+  background: var(--secundario);
+  color: white;
+  font-weight: 900;
+  padding: 12px 18px;
+
+  border-radius: 12px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  font-size: 1rem;
+}
+
+.btn-volver:hover{
+  background: var(--primario);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* =========================================================
+   FOOTER (Minimal + prolijo, sin tocar colores)
+========================================================= */
+footer{
+  background-color: var(--secundario);
+  color: white;
+
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+
+  margin-top: 2rem;
+}
+
+footer img{ height: 40px; }
+
+.marca{
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+
+  /* mantenemos tu intención, pero sin depender de terciario inexistente */
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 6px 14px rgba(2,6,23,.16);
+}
+
+/* =========================================================
+   LOGO LATERAL LOURDES (MISMO, PERO MÁS MINIMAL)
+========================================================= */
 .logo-lourdes-lateral{
   position: fixed;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
 
-  /* tamaño prolijo */
-  height: 56px; /* antes: 28px (muy chico) / ajustable */
+  height: 56px;
 
-  /* capas */
   z-index: 2;
   pointer-events: none;
 
-  /* marca de agua elegante */
   opacity: 0.30;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.18)) blur(0.15px);
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.18)) blur(0.10px);
   transition: opacity .25s ease, transform .25s ease, filter .25s ease;
 
-  /* "capsulita" sutil para que no se vea tosco */
   padding: 10px 12px;
   border-radius: 18px;
   background: rgba(255,255,255,.10);
@@ -294,15 +355,21 @@ a.volver:hover {
   backdrop-filter: blur(6px);
 }
 
-/* Si querés que al pasar el mouse se marque un poquito (solo desktop) */
 .logo-lourdes-lateral:hover{
   opacity: 0.42;
   transform: translateY(-50%) scale(1.02);
   filter: drop-shadow(0 14px 26px rgba(0,0,0,.22)) blur(0px);
 }
 
-/* Mobile: arriba, más chico, sin tapar */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 @media (max-width: 768px){
+  .intro{ padding: 76px 16px 28px; }
+
+  button{ width: min(520px, 92%); }
+  a.volver{ width: min(520px, 92%); }
+
   .logo-lourdes-lateral{
     top: 12px;
     left: 10px;
@@ -312,4 +379,6 @@ a.volver:hover {
     border-radius: 14px;
     opacity: 0.26;
   }
+
+  footer img{ height: 34px; }
 }

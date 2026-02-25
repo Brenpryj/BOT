@@ -4,258 +4,350 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Realizar una Sugerencia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <style>
-    :root {
-      --primario: #ffffff;
-      --secundario: #1A8689;
-      --terciario: #006B70;
-      --texto: #FFFFFF;
-      --gris: #333333;
-    }
+  :root{
+    --primario:#0198A4;
+    --secundario:#1A8689;
+    --terciario:#006B70;
 
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: url("fondos (1).png") no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .titulo-principal {
-      text-align: center;
-      font-size: 2rem;
-      color: white;
-      margin-top: 40px;
-      font-weight: bold;
-    }
-
-    .form-container {
-      max-width: 800px;
-      margin: 30px auto;
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-      position: relative;
-      z-index: 2;
-    }
-
-  .form-container {
-  position: relative;
-  background-color: #f1f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 40px;
-  width: 700px;
-  margin: auto;
-  background-image: #ffffff;
-  background-repeat: no-repeat;
-  background-position: right 40px bottom -170px;
-  background-size: 300px auto;
-}
-
-
-/* Imagen de la vicuña adentro del formulario */
-.vicunita-inside {
-  position: absolute;
-  left: 10px;
-  bottom: 10;
-  width: 80px;
-  height: auto;
-  z-index: 0;
-}
-
-/* Campos ocupando todo el ancho */
-form input,
-form textarea {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-/* Botón Enviar */
-form button {
-  width: 100%;
-  padding: 1rem;
-  background-color: var(--secundario);
-  color: white;
-  border: none;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-form button:hover {
-  background-color: var(--terciario);
-}
-
-/* Botón Volver al inicio separado */
-.volver {
-  display: inline-block;
-  margin-top: 2rem;
-  background-color: var(--terciario);
-  padding: 0.7rem 1rem;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.volver:hover {
-  background-color: var(--secundario);
-}
-
-    .volver {
-      margin-top: 1rem;
-      display: inline-block;
-      text-align: center;
-      background-color: var(--terciario);
-      padding: 0.7rem;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-
-    .volver:hover {
-      background-color: var(--primario);
-      color: #000;
-    }
-
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    footer img.logo-lourdes {
-      height: 40px;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .social-icons img {
-      height: 28px;
-      width: 28px;
-      transition: transform 0.3s ease;
-    }
-
-    .social-icons img:hover {
-      transform: scale(1.2);
-    }
-
-    @media (max-width: 768px) {
-    .form-container {
-      margin: 20px;
-      padding: 2rem;
-      width: auto;
-    }
-
-    .form-container::before {
-      display: none;
-    }
-
-    .logo-costado {
-      display: none; /* Oculta el logo en pantallas pequeñas */
-    }
-
-    .titulo-principal h1 {
-      font-size: 1.4rem;
-    }
-
-    .titulo-principal p {
-      font-size: 1rem;
-      padding: 0 10px;
-    }
-
-    form input,
-    form textarea {
-      font-size: 0.95rem;
-    }
-
-    form button {
-      font-size: 1rem;
-    }
-
-    footer {
-      font-size: 14px;
-      padding: 1rem;
-    }
-
-    .social-icons img {
-      height: 22px;
-      width: 22px;
-    }
+    --shadow: 0 18px 50px rgba(2, 6, 23, 0.26);
+    --radius: 18px;
   }
-  #logo-lourdes-mobile {
-  display: none;
-}
 
-@media (max-width: 768px) {
-  #logo-lourdes-mobile {
-    display: block;
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    font-family:'Montserrat', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    color:#eaf6f7;
+    background:#061416;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* Marca de agua */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background: url("fondos (1).png") no-repeat right bottom;
+    background-size:cover;
+    opacity:.10;
+    z-index:0;
+    pointer-events:none;
+    filter:saturate(1.05) contrast(1.05);
+  }
+
+  /* Overlay institucional */
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(900px 520px at 25% 10%, rgba(1,152,164,.30), transparent 65%),
+      radial-gradient(900px 620px at 90% 70%, rgba(26,134,137,.28), transparent 65%),
+      linear-gradient(180deg,
+        rgba(0, 8, 10, .92),
+        rgba(1,152,164,.22),
+        rgba(0, 8, 10, .95)
+      );
+    z-index:0;
+    pointer-events:none;
+  }
+
+  /* ✅ LOGO REAL AL COSTADO (como IDEAS) */
+  .logo-costado{
     position: fixed;
-    top: 15px;
+    top: 60%;
     left: 10px;
-    width: 100px;
+    transform: translateY(-30%);
+    height: 60px;          /* antes 80px: quedaba enorme */
     z-index: 999;
+    opacity:.95;
+    pointer-events:none;   /* no bloquea clicks */
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,.28));
   }
 
-  body {
-    padding-top: 110px;
-  }
-}
+  /* Logo móvil (si lo usás, queda) */
+  #logo-lourdes-mobile{ display:none; }
 
+  /* Contenido por arriba del overlay */
+  .page{
+    position:relative;
+    z-index:1;
+    padding: 28px 18px 0;
+    flex:1;
+  }
+
+  /* Header */
+  .hero{
+    max-width: 980px;
+    margin: 18px auto 18px;
+    padding: 22px 22px 18px;
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align:center;
+  }
+
+  .hero h1{
+    margin:0 0 8px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color:#fff;
+    letter-spacing:.2px;
+    text-shadow: 0 2px 16px rgba(0,0,0,.35);
+  }
+
+  .hero p{
+    margin:0 0 14px;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,.92);
+    font-weight: 500;
+  }
+
+  /* ✅ Si el link “volver” NO tiene clase, igual queda pro */
+  .hero a{
+    color:#ffffff;
+    text-decoration:none;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:10px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.35);
+    background: rgba(0,0,0,.26);
+    transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .hero a:hover{
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.34);
+    border-color: rgba(255,255,255,.45);
+  }
+
+  /* Botón volver (si lo usás con clase) */
+  .btn-volver{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:10px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.35);
+    background: rgba(0,0,0,.26);
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .btn-volver:hover{
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.34);
+    border-color: rgba(255,255,255,.45);
+  }
+
+  /* Form container */
+  .form-container{
+    max-width: 640px;
+    margin: 18px auto 0;
+    background: rgba(255,255,255,.96);
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 16px 44px rgba(2, 6, 23, 0.28);
+    color:#0f172a;
+    border: 1px solid rgba(255,255,255,.40);
+  }
+
+  form{
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+  }
+
+  input, textarea{
+    padding: 12px 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(2,132,199,.22);
+    outline: none;
+    background: rgba(255,255,255,.98);
+    color:#0f172a;
+  }
+  input:focus, textarea:focus{
+    border-color: rgba(1,152,164,.80);
+    box-shadow: 0 0 0 4px rgba(1,152,164,.14);
+  }
+
+  textarea{ min-height: 120px; resize: vertical; }
+
+  /* ✅ Botón enviar (si tu submit tiene class btn-primary) */
+  .btn-primary{
+    padding: 12px 14px;
+    background: linear-gradient(135deg, var(--primario), var(--secundario));
+    color:#fff;
+    border:none;
+    border-radius: 12px;
+    font-weight:800;
+    cursor:pointer;
+    transition: transform .18s ease, filter .18s ease;
+    box-shadow: 0 10px 22px rgba(1,152,164,.22);
+  }
+  .btn-primary:hover{
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+
+  /* ✅ Si el botón submit NO tiene clase, igual lo dejamos lindo */
+  form button{
+    padding: 12px 14px;
+    background: linear-gradient(135deg, var(--primario), var(--secundario));
+    color:#fff;
+    border:none;
+    border-radius: 12px;
+    font-weight:800;
+    cursor:pointer;
+    transition: transform .18s ease, filter .18s ease;
+    box-shadow: 0 10px 22px rgba(1,152,164,.22);
+  }
+  form button:hover{
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+
+  /* Volver (bloque) */
+  .volver{
+    margin-top: 14px;
+    display:block;
+    text-align:center;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-decoration:none;
+    color:#fff;
+    background: rgba(0,0,0,.28);
+    border: 1px solid rgba(255,255,255,.30);
+    transition: background .18s ease, transform .18s ease;
+  }
+  .volver:hover{
+    background: rgba(0,0,0,.36);
+    transform: translateY(-1px);
+  }
+
+  /* Footer */
+  footer{
+    margin-top: 26px;
+    background-color: rgba(26,134,137,.92);
+    color: white;
+    padding: 18px 14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap: 12px;
+    flex-wrap: wrap;
+    text-align:center;
+    position:relative;
+    z-index:1;
+    border-top: 1px solid rgba(255,255,255,.14);
+  }
+
+  footer img{
+    height: 22px;
+    width: 22px;
+    opacity: .95;
+    transition: transform .18s ease, opacity .18s ease;
+  }
+  footer a:hover img{
+    transform: translateY(-1px) scale(1.06);
+    opacity: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px){
+    .logo-costado{ display:none; }
+
+    /* si querés mantener logo en mobile, queda prolijo */
+    #logo-lourdes-mobile{
+      display:block;
+      position: fixed;
+      top: 14px;
+      left: 10px;
+      width: 95px;
+      z-index: 12;
+      opacity: .95;
+      pointer-events:none;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.28));
+    }
+
+    body{ padding-top: 88px; }
+
+    .page{ padding-top: 18px; }
+
+    .hero{
+      margin: 10px auto 14px;
+      padding: 18px 14px 14px;
+      border-radius: 18px;
+    }
+    .hero h1{ font-size: 1.65rem; }
+    .hero p{ font-size: 1rem; }
+
+    .form-container{
+      margin: 14px 10px 0;
+      padding: 18px;
+    }
+
+    .btn-volver{ width: 100%; }
+    .hero a{ width: 100%; }
+  }
 </style>
-
 </head>
 
 <body>
-  <!-- LOGO AL COSTADO IZQUIERDO -->
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado" style="position: fixed; top: 50%; left: 10px; transform: translateY(-50%); height: 80px; z-index: 10;">
+  <!-- Logo Lourdes lateral -->
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado">
+  <!-- Logo Lourdes móvil -->
+  <img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes">
 
-  <!-- TÍTULO PRINCIPAL -->
-  <div class="titulo-principal" style="text-align: center; color: white; margin-top: 40px;">
-    <h1>📩 Realizá una Sugerencia</h1>
-    <p>Tu opinión es importante para nosotros. ¡Contanos qué sucede en tu barrio!</p>
-  </div>
+  <main class="page">
+    <!-- Encabezado -->
+    <section class="hero">
+      <h1>📩 Realizá una Sugerencia</h1>
+      <p>Tu opinión es importante para nosotros. ¡Contanos qué sucede en tu barrio!</p>
+      <a class="btn-volver" href="index.html">⬅️ Volver al inicio</a>
+    </section>
 
-  <!-- FORMULARIO CENTRAL -->
-  <div class="form-container" style="max-width: 700px; margin: 30px auto; background-color: #ffffff; padding: 2rem; border-radius: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);">
-    <form id="form-sugerencia">
-      <input type="text" id="nombre" placeholder="Tu nombre" required style="width: 100%; padding: 0.8rem; font-size: 1rem; margin-bottom: 1rem; border-radius: 6px; border: 1px solid #ccc;">
-      <input type="email" id="email" placeholder="Tu email" required style="width: 100%; padding: 0.8rem; font-size: 1rem; margin-bottom: 1rem; border-radius: 6px; border: 1px solid #ccc;">
-      <textarea id="mensaje" placeholder="Escribí tu sugerencia" rows="4" required style="width: 100%; padding: 0.8rem; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 1.5rem;"></textarea>
-      <button type="submit" style="width: 100%; padding: 1rem; background-color: #1A8689; color: white; border: none; font-weight: bold; border-radius: 8px; cursor: pointer;">Enviar sugerencia</button>
-    </form>
-    <a href="index.html" class="volver" style="display: block; margin-top: 1.5rem; text-align: center; background-color: #006B70; padding: 0.7rem; color: white; border-radius: 8px; text-decoration: none;">⬅️ Volver al inicio</a>
-  </div>
+    <!-- Formulario -->
+    <section class="form-container">
+      <form id="form-sugerencia">
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+        <input type="email" id="email" placeholder="Tu email" required>
+        <textarea id="mensaje" placeholder="Escribí tu sugerencia" rows="4" required></textarea>
+        <button class="btn-primary" type="submit">Enviar sugerencia</button>
+      </form>
 
-  <!-- FOOTER CON REDES -->
-  <footer style="background-color: #1A8689; padding: 20px; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-    <div class="social-icons" style="display: flex; gap: 15px;">
-      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram" style="height: 25px;"></a>
-      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook" style="height: 25px;"></a>
-      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X" style="height: 25px;"></a>
-    </div>
-    <div style="font-size: 14px;">Creado por PB – © 2025</div>
-  </footer>
-</body>
+      <a href="index.html" class="volver">⬅️ Volver al inicio</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-icons" style="display:flex; gap:14px; align-items:center; justify-content:center;">
+        <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener"><img src="logo ig.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener"><img src="logo fb.png" alt="Facebook"></a>
+        <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener"><img src="logo x.png" alt="X"></a>
+      </div>
+      <div style="font-weight:600; font-size:14px;">Creado por PB – © 2025</div>
+    </footer>
+  </main>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -302,7 +394,5 @@ form button:hover {
       });
     });
   </script>
-  <!-- Logo Lourdes solo para móviles -->
-<img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes">
 </body>
 </html>

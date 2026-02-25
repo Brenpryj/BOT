@@ -4,185 +4,306 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>¿Cuál es la función de la Legislatura?</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primario: #0198A4;
-      --secundario: #1A8689;
-      --terciario: #006B70;
-      --texto: #FFFFFF;
-      --gris: #46494A;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: url("fondos (1).png") no-repeat center center fixed;
-      background-size: 100%;
-      color: var(--gris);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+<style>
+  :root{
+    --primario:#0198A4;
+    --secundario:#1A8689;
+    --terciario:#006B70;
 
-    @keyframes flotar {
-      0% { transform: translateY(-50%) translateY(0); }
-      50% { transform: translateY(-50%) translateY(-10px); }
-      100% { transform: translateY(-50%) translateY(0); }
-    }
+    --texto:#ffffff;
+    --muted:rgba(255,255,255,.86);
 
-    .logo-lateral {
-      position: fixed;
-      top: 40%; /* <-- SUBIDO */
-      left: 10px;
-      transform: translateY(-50%);
-      height: 80px;
-      z-index: 10;
-    }
+    --borde: rgba(255,255,255,.18);
+    --shadow: 0 16px 42px rgba(0,0,0,.18);
+    --shadowSm: 0 10px 28px rgba(0,0,0,.14);
+    --radius: 18px;
 
-    header {
-      text-align: center;
-      color: var(--texto);
-      padding: 2rem 1rem;
-      background-color: rgba(1, 152, 164, 0.9);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.2rem;
-    }
-
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem;
-      z-index: 10;
-    }
-
-    .tarjeta-colapsable {
-      border-radius: 10px;
-      background-color: #ffffffcc;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: 0.3s ease;
-    }
-
-    .titulo-tarjeta {
-      padding: 15px 20px;
-      font-weight: bold;
-      cursor: pointer;
-      background-color: var(--secundario);
-      color: white;
-      border-bottom: 1px solid white;
-      transition: background-color 0.3s ease;
-      text-align: center;
-      font-size: 1.1rem;
-    }
-
-    .titulo-tarjeta:hover {
-      background-color: var(--primario);
-    }
-
-    .contenido-tarjeta {
-      display: none;
-      padding: 15px 20px;
-      animation: aparecer 0.3s ease-in-out;
-      background-color: white;
-    }
-
-    .tarjeta-colapsable.abierta .contenido-tarjeta {
-      display: block;
-    }
-
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    ul {
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    ul li {
-      margin-bottom: 8px;
-    }
-
-    em {
-      font-size: 14px;
-      color: #555;
-    }
-
-    .volver {
-      display: inline-block;
-      margin: 2rem auto;
-      padding: 10px 20px;
-      border: 2px solid var(--primario);
-      background-color: white;
-      color: var(--primario);
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-      transition: 0.3s ease;
-      text-align: center;
-    }
-
-    .volver:hover {
-      background-color: var(--primario);
-      color: white;
-    }
-
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: auto;
-    }
-
-    .marca {
-      font-size: 14px;
-      border: 2px solid white;
-      border-radius: 50%;
-      padding: 0.5rem 1rem;
-      background-color: var(--terciario);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    @media screen and (max-width: 768px) {
-  body {
-    background-size: cover !important;
-    background-position: center center !important;
+    --fs-h1: clamp(1.6rem, 3.6vw, 2.3rem);
+    --fs-p:  clamp(.95rem, 1.25vw, 1.08rem);
   }
 
-  .btn-volver {
-    font-size: 0.9em;
-    padding: 10px 20px;
-    margin: 15px auto;
+  *{ box-sizing:border-box; }
+
+  /* =========================
+     FONDO (misma línea que IDEAS)
+     ========================= */
+  body{
+    margin:0;
+    font-family:'Montserrat', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    color:var(--texto);
+    overflow-x:hidden;
+    background:#061416;
+    position:relative;
   }
 
-  h1 {
-    font-size: 1.5em;
-    margin: 20px 10px;
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background: url("fondos (1).png") no-repeat right bottom;
+    background-size: cover;
+    opacity:.12;
+    z-index:0;
+    pointer-events:none;
+    filter: saturate(1.05) contrast(1.05);
   }
 
-  .boton-acordeon {
-    font-size: 0.95em;
-    padding: 15px;
-    margin: 10px 20px;
-    line-height: 1.4em;
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(900px 520px at 25% 10%, rgba(1,152,164,.28), transparent 65%),
+      radial-gradient(900px 620px at 90% 70%, rgba(26,134,137,.26), transparent 65%),
+      linear-gradient(180deg,
+        rgba(0, 8, 10, .92),
+        rgba(1,152,164,.22),
+        rgba(0, 8, 10, .95)
+      );
+    z-index:0;
+    pointer-events:none;
   }
 
-  #vicuñita {
-    display: none; /* Oculta en celular si se superpone */
+  header, main, footer, .volver-wrap{ position:relative; z-index:2; }
+
+  /* =========================
+     LOGO LATERAL (unificado)
+     ========================= */
+  .logo-lateral{
+    position: fixed;
+    top: 60%;
+    left: 10px;
+    transform: translateY(-30%);
+    height: 60px;
+    opacity: .95;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,.28));
+    z-index:2;
+    pointer-events:none;
   }
-}
-  </style>
+
+  /* =========================
+     HEADER
+     ========================= */
+  header{
+    text-align:center;
+    padding: 18px 14px 10px;
+  }
+
+  .topbar{
+    width:min(980px, 92vw);
+    margin: 0 auto;
+    padding: 18px 16px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(0,0,0,.22);
+    box-shadow: 0 18px 46px rgba(0,0,0,.20);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  header h1{
+    margin:0 0 8px;
+    font-size: var(--fs-h1);
+    font-weight: 800;
+    letter-spacing:.2px;
+    text-shadow: 0 12px 26px rgba(0,0,0,.28);
+  }
+
+  header p{
+    margin:0;
+    font-size: var(--fs-p);
+    color: rgba(255,255,255,.90);
+    font-weight: 500;
+  }
+
+  /* Botón volver arriba (pill unificado) */
+  .btn-volver-top{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin: 12px auto 0;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.35);
+    background: rgba(0,0,0,.26);
+    color:#fff;
+    text-decoration:none;
+    font-weight:800;
+    box-shadow: var(--shadowSm);
+    transition: transform .18s ease, background .18s ease;
+    width: fit-content;
+  }
+  .btn-volver-top:hover{
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.34);
+  }
+
+  /* =========================
+     MAIN
+     ========================= */
+  main{
+    width:min(980px, 92vw);
+    margin: 10px auto 0;
+    padding: 10px 0 18px;
+  }
+
+  /* Tarjetas colapsables */
+  .tarjeta-colapsable{
+    width: min(820px, 94vw);
+    margin: 0 auto 12px auto;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.20);
+    box-shadow: var(--shadowSm);
+    overflow:hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .tarjeta-colapsable:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(0,0,0,.16);
+    border-color: rgba(255,255,255,.24);
+  }
+
+  .titulo-tarjeta{
+    padding: 14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    cursor:pointer;
+    user-select:none;
+    font-weight:800;
+    font-size: 1rem;
+    color:#fff;
+    background: linear-gradient(135deg, rgba(0,107,112,.78), rgba(1,152,164,.56));
+    border-bottom: 1px solid rgba(255,255,255,.10);
+    text-align:left;
+  }
+
+  .titulo-tarjeta::after{
+    content:"▾";
+    opacity:.95;
+    transition: transform .2s ease;
+    font-size: 1.1rem;
+  }
+  .tarjeta-colapsable.abierta .titulo-tarjeta::after{ transform: rotate(180deg); }
+
+  .contenido-tarjeta{
+    display:none;
+    padding: 12px 14px 14px;
+    background: rgba(0,0,0,.22);
+    color: rgba(255,255,255,.90);
+    line-height: 1.45;
+    animation: aparecer 0.25s ease-in-out;
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+
+  .tarjeta-colapsable.abierta .contenido-tarjeta{
+    display:block;
+  }
+
+  @keyframes aparecer{
+    from{ opacity:0; transform: translateY(-5px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  ul{
+    padding-left: 20px;
+    margin-top: 10px;
+  }
+  ul li{ margin-bottom: 8px; }
+
+  em{
+    font-size: 14px;
+    color: rgba(255,255,255,.78);
+  }
+
+  /* Botón volver abajo */
+  .volver-wrap{
+    text-align:center;
+    padding: 6px 0 0;
+  }
+  .volver{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin: 12px auto 18px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.35);
+    background: rgba(0,0,0,.26);
+    color:#fff;
+    text-decoration:none;
+    font-weight:800;
+    box-shadow: var(--shadowSm);
+    transition: transform .18s ease, background .18s ease;
+    width: fit-content;
+  }
+  .volver:hover{
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.34);
+  }
+
+  /* =========================
+     FOOTER PILL (igual Declaraciones/Proyectos)
+     ========================= */
+  footer{
+    margin-top:auto;
+    padding: 18px 12px;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+
+  .footer-pill{
+    width:min(980px, 92vw);
+    margin: 0 auto;
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.26);
+    box-shadow: var(--shadowSm);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap:wrap;
+    color: rgba(255,255,255,.92);
+    font-weight: 700;
+    font-size: .92rem;
+  }
+
+  .social-icons{
+    display:flex;
+    gap: 12px;
+    align-items:center;
+    justify-content:center;
+  }
+  .social-icons img{
+    height: 18px;
+    width: 18px;
+    opacity:.95;
+    transition: transform .16s ease;
+  }
+  .social-icons img:hover{ transform: scale(1.08); }
+
+  /* Responsive */
+  @media (max-width: 600px){
+    .logo-lateral{ display:none; }
+    .topbar{ padding: 16px 14px; }
+    .footer-pill{ border-radius: 16px; }
+    .titulo-tarjeta{ font-size: .98rem; }
+  }
+</style>
 </head>
 
 <body>
@@ -190,7 +311,11 @@
   <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lateral">
 
   <header>
-    <h1>🏛️ ¿Cuál es la función de la Legislatura?</h1>
+    <div class="topbar">
+      <h1>🏛️ ¿Cuál es la función de la Legislatura?</h1>
+      <p>Información clara sobre el rol legislativo provincial y qué gestiones corresponden a cada poder.</p>
+      <a href="index.html" class="btn-volver-top">⬅️ Volver al inicio</a>
+    </div>
   </header>
 
   <main>
@@ -243,21 +368,23 @@
     </div>
   </main>
 
-  <div style="text-align:center;">
+  <div class="volver-wrap">
     <a href="index.html" class="volver">⬅️ Volver al inicio</a>
   </div>
 
-  <!-- FOOTER CON REDES -->
   <footer>
-    <div class="social-icons" style="display: flex; gap: 15px;">
-      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram" style="height: 25px;"></a>
-      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook" style="height: 25px;"></a>
-      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X" style="height: 25px;"></a>
+    <div class="footer-pill">
+      <div class="social-icons">
+        <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener"><img src="logo ig.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener"><img src="logo fb.png" alt="Facebook"></a>
+        <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener"><img src="logo x.png" alt="X"></a>
+      </div>
+      <div>Creado por PB – © 2025</div>
     </div>
-    <div style="font-size: 14px;">Creado por PB – © 2025</div>
   </footer>
 
   <script>
+    // ✅ MISMA FUNCIONALIDAD (solo abre/cierra)
     function toggleTarjeta(elemento) {
       const tarjeta = elemento.parentElement;
       tarjeta.classList.toggle('abierta');

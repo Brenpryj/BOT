@@ -1,1309 +1,968 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Declaraciones de Interés</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-     --primario: #0198A4;
-     --secundario: #1A8689;
-     --terciario: #006B70;
-     --texto: #FFFFFF;
-     --gris: #46494A;
-}
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: url("fondos (2).png") no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-    }
-  .logo-costado {
-     position: fixed;
-     top: 36%;
-     left: 10px;
-     transform: translateY(-50%);
-     height: 80px;
-     z-index: 999;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
-    .seccion-ano {
-      margin-bottom: 40px;
-    }
-    h2 {
-      color: #0198A4;
-      border-bottom: 2px solid #1A8689;
-      padding-bottom: 5px;
-    }
-    .tarjeta-declaracion {
-      background-color: #f8f8f8;
-      border: 2px solid #0198A4;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 15px 0;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease-in-out;
-    }
-    .tarjeta-declaracion h3 {
-      margin: 0 0 10px;
-      color: #1A8689;
-      font-weight: 600;
-    }
-    .botones {
-      margin-top: 10px;
-    }
-    .btn-descargar, .btn-ver {
-      display: inline-block;
-      margin-right: 10px;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 8px;
-      background-color: #0198A4;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
-    }
-    .btn-ver {
-      background-color: #1A8689;
-    }
-    .btn-descargar:hover, .btn-ver:hover {
-      background-color: #017A87;
-    }
-    .resumen {
-      margin-top: 10px;
-      font-style: italic;
-      color: #333;
-      line-height: 1.4;
-    }
-    button.accordion {
-      background-color: #0198A4;
-      color: white;
-     cursor: pointer;
-     display: block;
-     padding: 14px 20px;
-     width: auto;
-     text-align: center;
-     border: 2px solid white;
-     outline: none;
-     font-size: 18px;
-     font-weight: 600;
-     transition: background-color 0.3s ease;
-     border-radius: 8px;
-     margin: 10px auto; 
-}
-
-    button.accordion:hover {
-      background-color: #017A87;
-    }
-    .panel {
-      display: none;
-      padding: 0 15px;
-      overflow: hidden;
-      transition: all 0.3s ease-in-out;
-    }
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 2rem;
-    }
-    footer img {
-      height: 40px;
-    }
-    .marca {
-      font-size: 14px;
-      border: 2px solid white;
-      border-radius: 50%;
-      padding: 0.5rem 1rem;
-      background-color: var(--terciario);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    .volver-inicio {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #007c91;
-      color: white;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      margin-bottom: 10px;
-    }
-    .volver-inicio:hover {
-      background-color: #0198a4;
-    }
-
-    .logo-costado {
-     position: fixed;
-      top: 60%;
-      left: 60px;
-      transform: translateY(-50%);
-      height: 70px;
-      z-index: 999;
-}
-.contenedor-declaraciones {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-#logo-lourdes-mobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  #logo-lourdes-mobile {
-    display: block;
-    position: fixed;
-    top: 15px;
-    left: 10px;
-    width: 100px;
-    z-index: 999;
-  }
-
-  body {
-    padding-top: 110px;
-  }
-}
-  </style>
-  
-  <script>
-    function toggleDescripcion(id) {
-      const desc = document.getElementById(id);
-      desc.style.display = desc.style.display === 'none' ? 'block' : 'none';
-    }
-    function filtrarTarjetas() {
-      const input = document.getElementById('buscador').value.toLowerCase();
-      const tarjetas = document.getElementsByClassName('tarjeta-declaracion');
-      for (let tarjeta of tarjetas) {
-        const texto = tarjeta.innerText.toLowerCase();
-        tarjeta.style.display = texto.includes(input) ? 'block' : 'none';
-      }
-    }
-    function toggleResumen(button) {
-      const resumen = button.parentElement.nextElementSibling;
-      resumen.style.display = (resumen.style.display === "none") ? "block" : "none";
-    }
-    function togglePanel(btn) {
-      const panel = btn.nextElementSibling;
-      const isVisible = panel.style.display === "block";
-      document.querySelectorAll('.panel').forEach(p => p.style.display = "none");
-      panel.style.display = isVisible ? "none" : "block";
-    }
-  </script>
-</head>
-<body>
- <main>
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado">
-
-  <div style="text-align: center; margin-top: 20px;">
-    <a href="index.html" class="volver-inicio">⬅️ Volver al inicio</a>
-  </div>
-
-  <h1 style="text-align: center; font-size: 2.5rem; margin: 20px 0 10px; color: white;">📜 Declaraciones de Interés</h1>
-  <p class="subtitulo" style="text-align: center; font-size: 1.1rem; color: white; margin-bottom: 20px;">
-    Explorá las declaraciones organizadas por tema y año.
-  </p>
-
-  <form id="form-busqueda" onsubmit="event.preventDefault(); filtrarTarjetas();" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px;">
-    <input type="text" id="buscador" placeholder="Buscar por palabra o número..." style="padding: 10px 15px; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; width: 250px; max-width: 80%;">
-    <button type="submit" style="padding: 10px 20px; background-color: #0198A4; color: white; border: none; border-radius: 8px; cursor: pointer;">Buscar</button>
-  </form>
-
-
-<!-- Acordeón 2022 -->
- <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2022</button>
-  <div class="panel">
-    <div class="contenedor-declaraciones">
-
-<!-- Declaración 1 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Gloria López</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Gloria_Lopez.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a Gloria López por su compromiso social y trayectoria como referente comunitaria en el ámbito barrial y solidario.</p>
-  </div>
-</div>
-
-<!-- Declaración 2 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Mariana Maldonado</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Mariana_Maldonado.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a Mariana Maldonado por su participación en la formación de mujeres líderes en comunidades rurales.</p>
-  </div>
-</div>
-
-<!-- Declaración 3 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Prof. Gustavo Mansur</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Prof_Gustavo_Mansur.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento al Profesor Gustavo Mansur por su destacada trayectoria educativa y aporte a la cultura riojana.</p>
-  </div>
-</div>
-
-<!-- Declaración 4 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Tania Milagros</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Tania_Milagros.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a Tania Milagros por su labor en el ámbito artístico y cultural, promoviendo valores de inclusión y equidad.</p>
-  </div>
-</div>
-
-<!-- Declaración 5 -->
-<div class="tarjeta-declaracion">
-  <h3>Foro de Mujeres Riojanas</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Foro_Mujeres_Riojanas.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración de Interés al Foro de Mujeres Riojanas, espacio de reflexión y propuesta para la igualdad de género.</p>
-  </div>
-</div>
-
-<!-- Declaración 6 -->
-<div class="tarjeta-declaracion">
-  <h3>Jornada de Niños y Adolescentes</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Jornada_Niños_Adolescentes.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a la jornada de participación ciudadana de niños y adolescentes como impulso a la democracia temprana.</p>
-  </div>
-</div>
-
-<!-- Declaración 7 -->
-<div class="tarjeta-declaracion">
-  <h3>Formación Integración Regional</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Formacion_Integracion_regional.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a instancias formativas que promueven la integración federal y la participación ciudadana regional.</p>
-  </div>
-</div>
-
-<!-- Declaración 8 -->
-<div class="tarjeta-declaracion">
-  <h3>Maratón La Rioja 2022</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Maratón_LaRioja_2022.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento al evento deportivo inclusivo que promueve hábitos saludables y valores de superación personal.</p>
-  </div>
-</div>
-
-<!-- Declaración 9 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Diego Emiliano Romero</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Ciudadano_Destacado_Diego_Romero.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a Diego Emiliano Romero por su contribución al deporte y la representación de la provincia a nivel nacional.</p>
-  </div>
-</div>
-
-<!-- Declaración 10 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Ana Paula Pérez</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Ana_Paula_Perez.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a Ana Paula Pérez por su compromiso en proyectos de integración social y cultural.</p>
-  </div>
-</div>
-<!-- Declaración 11 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – José María Carrizo</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Jose_Maria_Carrizo.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a José María Carrizo por su labor periodística y compromiso con la información local.</p>
-  </div>
-</div>
-
-<!-- Declaración 12 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Hugo Leonardo Romero</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Hugo_Leonardo_Romero.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento por su trayectoria musical y contribución a la cultura riojana.</p>
-  </div>
-</div>
-
-<!-- Declaración 13 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Patricia Pérez</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Patricia_Perez.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a su trabajo comunitario y de asistencia a sectores vulnerables.</p>
-  </div>
-</div>
-
-<!-- Declaración 14 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Dra. María García</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Visitante_Ilustre_Maria_Garcia.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visita institucional de la Dra. María García en el marco del Congreso de Salud Pública.</p>
-  </div>
-</div>
-
-<!-- Declaración 15 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Fundación Techo</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Fundacion_Techo.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Por su trabajo sostenido en viviendas de emergencia para familias vulnerables.</p>
-  </div>
-</div>
-
-<!-- Declaración 16 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Oscar Tello</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Oscar_Tello.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Por su labor artística en murales que recuperan la identidad riojana.</p>
-  </div>
-</div>
-
-<!-- Declaración 17 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Paola Gómez</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Paola_Gomez.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Por su militancia en derechos humanos y acompañamiento a víctimas de violencia de género.</p>
-  </div>
-</div>
-
-<!-- Declaración 18 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Sergio Luján</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Sergio_Lujan.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Por su impulso al deporte barrial y contención de jóvenes en situación de riesgo.</p>
-  </div>
-</div>
-
-<!-- Declaración 19 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Grupo EcoJóvenes</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Grupo_EcoJovenes.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Por sus campañas ambientales y acciones de concientización ecológica en escuelas.</p>
-  </div>
-</div>
-
-<!-- Declaración 20 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Escuela N°38</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2022/Reconocimiento_Escuela_38.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Por sus proyectos de integración cultural con pueblos originarios.</p>
-  </div>
-</div>
-
-</div>
-
-<script>
-function toggleResumen(button) {
-  const resumen = button.nextElementSibling;
-  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
-}
-</script>
-  </div>
-
- <!-- Año 2023 -->
- <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2023</button>
-  <div class="panel">
-    <div class="contenedor-declaraciones">
-
- <!-- Declaración 1 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 2001/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/40_Años_Democracia.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento como Visitante Ilustre a un destacado referente de la educación popular latinoamericana.</p>
-  </div>
-</div>
-
-<!-- Declaración 2 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 2002/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Aniversario_Ciudad.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a un joven emprendedor por la creación de soluciones tecnológicas locales.</p>
-  </div>
-</div>
-
-<!-- Declaración 3 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 2003/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Aniversario_Escuela_Normal.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su trayectoria artística en la música folklórica argentina.</p>
-  </div>
-</div>
-
-<!-- Declaración 4 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 2004/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Aniversario_Fallecimiento_General.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a un proyecto de desarrollo turístico sostenible en La Rioja.</p>
-  </div>
-</div>
-
-<!-- Declaración 5 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 2005/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Capacitación_Asperger.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración como Visitante Ilustre a un conferencista internacional en economía social.</p>
-  </div>
-</div>
-
-<!-- Declaración 6 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 2006/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/CientizArte.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su trayectoria deportiva en ciclismo adaptado.</p>
-  </div>
-</div>
-
-<!-- Declaración 7 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 2007/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Coleccionistas_Minerales.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su contribución a la medicina comunitaria en la provincia.</p>
-  </div>
-</div>
-
-<!-- Declaración 8 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 2008/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Congreso_Estudiantes_Ingenieria.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo por la promoción de la cultura ancestral de los pueblos originarios.</p>
-  </div>
-</div>
-
-<!-- Declaración 9 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 2009/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Congreso_REDCOM.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre por su aporte al desarrollo de la inteligencia artificial en América Latina.</p>
-  </div>
-</div>
-
-<!-- Declaración 10 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 2010/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Derechos_Politicos_Mujer.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento por su compromiso con la educación ambiental en comunidades rurales.</p>
-  </div>
-</div>
-<!-- Declaración 11 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 2011/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Día_Arbol.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su aporte a la concientización ambiental en escuelas públicas.</p>
-  </div>
-</div>
-
-<!-- Declaración 12 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 2012/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Día del Educador y del Profesor.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo por iniciativas de formación docente continua.</p>
-  </div>
-</div>
-
-<!-- Declaración 13 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 2013/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Día_Hábitat.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre por su activismo en el acceso a la vivienda digna.</p>
-  </div>
-</div>
-
-<!-- Declaración 14 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 2014/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Encuentro_Flamencos.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su gestión ambiental en humedales y reservas naturales.</p>
-  </div>
-</div>
-
-<!-- Declaración 15 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 2015/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Encuentro Holístico.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a referentes de terapias complementarias y bienestar comunitario.</p>
-  </div>
-</div>
-
-<!-- Declaración 16 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 2016/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Fallecimiento_General_SanMartin.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo conmemorativo al General San Martín por su legado histórico.</p>
-  </div>
-</div>
-
-<!-- Declaración 17 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 2017/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Feria_Libro_2023.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre en el marco de la Feria del Libro por su trayectoria en literatura social.</p>
-  </div>
-</div>
-
-<!-- Declaración 18 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 2018/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Fiestas_Virgen_Merced.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su labor religiosa y comunitaria en torno a la Virgen de la Merced.</p>
-  </div>
-</div>
-
-<!-- Declaración 19 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 2019/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Gendarmería_Nacional.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su labor en la prevención del delito en zonas rurales.</p>
-  </div>
-</div>
-
-<!-- Declaración 20 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 2020/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Gira_Teatro_2023.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a la gira de teatro federal por su impacto cultural y educativo.</p>
-  </div>
-</div>
-
-<!-- Declaración 21 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 2021/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/Industrias_Creativas.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre por su trabajo en la economía naranja y emprendimientos culturales.</p>
-  </div>
-</div>
-
-<!-- Declaración 22 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 2022/2023</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2023/José Santos Salinas.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su defensa de los derechos humanos y justicia social.</p>
-   </div>
-</div>
-
-</div>
-
-<script>
-function toggleResumen(button) {
-  const resumen = button.nextElementSibling;
-  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
-}
-</script>
-  </div>
-
-  <!-- Año 2024 -->
- <button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2024</button>
-  <div class="panel">
-   <div class="contenedor-declaraciones">
-
- <!-- Declaración 3001 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 3001/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Aniversario_Corazon.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre por su destacada labor en educación ambiental.</p>
-  </div>
-</div>
-
-<!-- Declaración 3002 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 3002/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Aniversario_Radio_Publica.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento por su dedicación a la integración social de jóvenes en situación de vulnerabilidad.</p>
-  </div>
-</div>
-
-<!-- Declaración 3003 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 3003/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Derechos_Politicos_Mujer.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su trayectoria en la medicina pediátrica regional.</p>
-  </div>
-</div>
-
-<!-- Declaración 3004 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 3004/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Día_Infancia.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a organizaciones locales que promueven la cultura riojana.</p>
-  </div>
-</div>
-
-<!-- Declaración 3005 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 3005/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Día_Mujer_Rioja.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración como Visitante Ilustre a representante internacional de derechos civiles.</p>
-  </div>
-</div>
-
-<!-- Declaración 3006 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 3006/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Encuentro_Los_Vaivenes.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su aporte solidario en campañas contra el hambre infantil.</p>
-  </div>
-</div>
-
-<!-- Declaración 3007 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 3007/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Festival_Cortos.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su trayectoria en la danza folklórica riojana.</p>
-  </div>
-</div>
-
-<!-- Declaración 3008 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 3008/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Formación_Líderes.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo por su labor educativa en el ámbito rural.</p>
-  </div>
-</div>
-
-<!-- Declaración 3009 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 3009/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Fronteras Abiertas.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre por su trabajo humanitario en zonas de conflicto internacional.</p>
-  </div>
-</div>
-
-<!-- Declaración 3010 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 3010/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Grupo Vocal Norte.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a su trayectoria en la defensa de los derechos de los trabajadores locales.</p>
-  </div>
-</div>
-
-<!-- Declaración 3011 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 3011/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Jornadas_SAC_LaRioja.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre en el ámbito de la investigación científica provincial.</p>
-  </div>
-</div>
-
-<!-- Declaración 3012 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 3012/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Jóvenes_Democracia.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a proyectos de desarrollo económico local.</p>
-  </div>
-</div>
-
-<!-- Declaración 3013 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 3013/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Lactancia Materna.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración como Visitante Ilustre por su trayectoria en derechos de la niñez.</p>
-  </div>
-</div>
-
-<!-- Declaración 3014 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 3014/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Lazos Dorados.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su aporte a la innovación tecnológica educativa.</p>
-  </div>
-</div>
-
-<!-- Declaración 3015 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 3015/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Mujer_Policia.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su legado artístico en la pintura contemporánea.</p>
-  </div>
-</div>
-
-<!-- Declaración 3016 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 3016/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Prevención_Abuso_Infantil.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a asociaciones que promueven la salud mental.</p>
-  </div>
-</div>
-
-<!-- Declaración 3017 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 3017/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Rally_Argentino.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Visitante Ilustre por su colaboración en programas de alfabetización digital.</p>
-  </div>
-</div>
-
-<!-- Declaración 3018 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 3018/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Rechazo_Proyecto_Derecho.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a su contribución en la organización de eventos solidarios comunitarios.</p>
-  </div>
-</div>
-
-<!-- Declaración 3019 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 3019/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Recuperacion_Archivos.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Personalidad ilustre por su trayectoria en el periodismo local.</p>
-  </div>
-</div>
-
-<!-- Declaración 3020 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 3020/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Reunión_Secretariado.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a proyectos de desarrollo turístico rural.</p>
-  </div>
-</div>
-
-<!-- Declaración 3021 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 3021/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Serie_Contra_El_Olvido.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración como Visitante Ilustre por su compromiso con la educación inclusiva.</p>
-  </div>
-</div>
-
-<!-- Declaración 3022 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 3022/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Gira Riojana 2024.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su participación activa en campañas de vacunación provincial.</p>
-  </div>
-</div>
-
-<!-- Declaración 3023 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 3023/2024</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2024/Trata_Explotacion.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a instituciones que fomentan el acceso a la educación artística.</p>
-   </div>
-</div>
-
-</div>
-
-<script>
-function toggleResumen(button) {
-  const resumen = button.nextElementSibling;
-  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
-}
-</script>
-  </div>
-
-<!-- Año 2025 -->
-<button class="accordion" onclick="togglePanel(this)">📁 Declaraciones de Interés 2025</button>
-<div class="panel">
-  <div class="contenedor-declaraciones">
-
-<!-- Declaración 4001 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 4001/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Curso_Abordaje_Integral.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración como Visitante Ilustre por su compromiso internacional en derechos sociales.</p>
-  </div>
-</div>
-
-<!-- Declaración 4002 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 4002/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Curso_Abordaje_Integral.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su labor voluntaria en emergencias sanitarias.</p>
-  </div>
-</div>
-
-<!-- Declaración 4003 -->
-<div class="tarjeta-declaracion">
-  <h3>Personalidad Ilustre – Declaración Nº 4003/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Encuentro_Artesanos.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento a su trayectoria en la investigación biomédica aplicada.</p>
-  </div>
-</div>
-
-<!-- Declaración 4004 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 4004/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Feriado_12_Octubre.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo por la implementación de programas de empleabilidad juvenil.</p>
-  </div>
-</div>
-
-<!-- Declaración 4005 -->
-<div class="tarjeta-declaracion">
-  <h3>Visitante Ilustre – Declaración Nº 4005/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Liga_NOA_Encuentro.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Declaración como Visitante Ilustre a un referente global en sustentabilidad ambiental.</p>
-  </div>
-</div>
-
-<!-- Declaración 4006 -->
-<div class="tarjeta-declaracion">
-  <h3>Ciudadano Destacado – Declaración Nº 4006/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Victoria_Para_Amar.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Ciudadano destacado por su compromiso en la organización de actividades culturales inclusivas.</p>
-  </div>
-</div>
-
-<!-- Declaración 4007 -->
-<div class="tarjeta-declaracion">
-  <h3>Reconocimiento Legislativo – Declaración Nº 4007/2025</h3>
-  <div class="botones">
-    <a href="declaraciones_interes/Dcl2025/Victoria_Para_Amar.pdf.pdf" target="_blank" class="btn-descargar">📄 Descargar PDF</a>
-    <button class="btn-ver" onclick="toggleResumen(this)">👁️ Ver resumen</button>
-  </div>
-  <div class="resumen" style="display:none;">
-    <p>Reconocimiento legislativo a proyectos de innovación social en zonas rurales.</p>
-  </div>
-</div>
-
-</details> 
-</div>
-
-<script>
-  const formBusqueda = document.getElementById("form-busqueda");
-  const inputBusqueda = document.getElementById("input-busqueda");
-
-  formBusqueda.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const valor = inputBusqueda.value.toLowerCase().trim();
-
-    const tarjetas = document.querySelectorAll(".tarjeta");
-
-    tarjetas.forEach(tarjeta => {
-      const textoTarjeta = tarjeta.textContent.toLowerCase();
-      tarjeta.style.display = textoTarjeta.includes(valor) ? "block" : "none";
-    });
-  });
-</script>
-<script>
-  const acordeones = document.getElementsByClassName("acordeon");
-  for (let i = 0; i < acordeones.length; i++) {
-    acordeones[i].addEventListener("click", function () {
-      this.classList.toggle("activo");
-      const panel = this.nextElementSibling;
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    });
-  }
-</script>
-<script>
-function toggleResumen(button) {
-  const resumen = button.nextElementSibling;
-  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
-}
-
-// Código para abrir/cerrar acordeones
-const accordionsInternos = document.querySelectorAll(".accordion");
-accordionsInternos.forEach((acc) => {
-  acc.addEventListener("click", function () {
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
-  });
-});
-</script>
-<script>
-// mostrar u ocultar toda la sección por año
-function toggleSeccion(id) {
-  const section = document.getElementById(id);
-  section.style.display = section.style.display === "none" ? "block" : "none";
-}
-
-// acordeón interno
-const accordionsExternos = document.querySelectorAll(".accordion");
-accordionsExternos.forEach((acc) => {
-  acc.addEventListener("click", function () {
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
-  });
-});
-
-// mostrar resumen
-function toggleResumen(button) {
-  const resumen = button.nextElementSibling;
-  resumen.style.display = resumen.style.display === "none" ? "block" : "none";
-}
-</script>
-<script>
-  const accordionsElements = document.getElementsByClassName("accordion");
-  for (let i = 0; i < accordionsElements.length; i++) {
-    accordionsElements[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      const panel = this.nextElementSibling;
-      panel.style.display = (panel.style.display === "block") ? "none" : "block";
-    });
-  }
-
-  function mostrarResumen(boton) {
-    const resumen = boton.nextElementSibling;
-    if (resumen.style.display === "none") {
-      resumen.style.display = "block";
-      boton.innerText = "🔽 Ocultar resumen";
-    } else {
-      resumen.style.display = "none";
-      boton.innerText = "👁️‍🗨️ Ver resumen";
-    }
-  }
-
-  function descargarPDF(ruta) {
-    const link = document.createElement('a');
-    link.href = ruta;
-    link.download = '';
-    link.click();
-  }
-</script>
-<script>
-  const accordions = document.getElementsByClassName("accordion");
-  for (let i = 0; i < accordions.length; i++) {
-    accordions[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      const panel = this.nextElementSibling;
-      if (panel.style.display === "block") {
-        panel.style.display = "none";
-      } else {
-        panel.style.display = "block";
-      }
-    });
-  }
-</script>
-<script>
-  function toggleResumen(button) {
-    const resumen = button.parentElement.nextElementSibling;
-    resumen.style.display = (resumen.style.display === "none") ? "block" : "none";
-  }
-</script>
-</main>
-
-<!-- FOOTER -->
-<footer style="background-color: var(--secundario); padding: 20px; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-  <div class="social-icons" style="display: flex; gap: 15px;">
-    <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png" alt="Instagram logo in pink and orange gradient, circular camera icon, social media link for Lourdes Ortiz, neutral tone" style="height: 25px;"></a>
-    <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png" alt="Facebook" style="height: 25px;"></a>
-    <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png" alt="X" style="height: 25px;"></a>
-  </div>
-  <div style="font-size: 14px;">Creado por PB – © 2025</div>
-</footer>
-
-<!-- ESTILOS RESPONSIVE -->
 <style>
-  /* --- ESTILOS RESPONSIVOS PARA CELULAR --- */
-  @media screen and (max-width: 768px) {
-    header {
-      padding: 20px 10px 10px;
-    }
+  :root{
+    --primario:#0198A4;
+    --secundario:#1A8689;
+    --terciario:#006B70;
 
-    h1 {
-      font-size: 1.6em;
-    }
+    --texto:#ffffff;
+    --muted:rgba(255,255,255,.86);
 
-    p {
-      font-size: 0.95em;
-      margin-bottom: 15px;
-    }
+    --borde: rgba(255,255,255,.18);
+    --shadow: 0 16px 42px rgba(0,0,0,.18);
+    --shadowSm: 0 10px 28px rgba(0,0,0,.14);
+    --radius: 18px;
 
-    .btn-volver {
-      font-size: 0.9em;
-      padding: 8px 16px;
-      margin-top: 10px;
-    }
+    --fs-h1: clamp(1.6rem, 3.6vw, 2.3rem);
+    --fs-p:  clamp(.95rem, 1.25vw, 1.08rem);
+  }
 
-    .tarjeta-declaracion {
-      margin: 15px 10px;
-      padding: 15px;
-      font-size: 0.9em;
-    }
+  *{ box-sizing:border-box; }
 
-    .tarjeta-declaracion h3 {
-      font-size: 1em;
-    }
+  /* =========================
+     FONDO (misma línea que IDEAS)
+     ========================= */
+  body{
+    margin:0;
+    font-family:'Montserrat',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    color:var(--texto);
+    overflow-x:hidden;
+    background:#061416;
+    position:relative;
+  }
 
-    .tarjeta-declaracion .descripcion {
-      font-size: 0.9em;
-    }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background: url('fondos (2).png') no-repeat right bottom;
+    background-size: cover;
+    opacity:.12;
+    z-index:0;
+    pointer-events:none;
+    filter: saturate(1.05) contrast(1.05);
+  }
 
-    .contenedor-declaraciones {
-      padding: 0 10px;
-    }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(900px 520px at 25% 10%, rgba(1,152,164,.28), transparent 65%),
+      radial-gradient(900px 620px at 90% 70%, rgba(26,134,137,.26), transparent 65%),
+      linear-gradient(180deg,
+        rgba(0, 8, 10, .92),
+        rgba(1,152,164,.22),
+        rgba(0, 8, 10, .95)
+      );
+    z-index:0;
+    pointer-events:none;
+  }
 
-    #vicuñita {
-      display: none; 
-    }
+  /* =========================
+     LOGO LATERAL (igual que el resto)
+     ========================= */
+  .logo-costado{
+    position: fixed;
+    top: 60%;
+    left: 10px;
+    transform: translateY(-30%);
+    height: 60px;
+    opacity: .95;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,.28));
+    z-index:2;
+    pointer-events:none;
+  }
+
+  header, #form-busqueda, main, footer{ position:relative; z-index:2; }
+
+  /* =========================
+     HEADER
+     ========================= */
+  header{
+    text-align:center;
+    padding: 18px 14px 10px;
+  }
+
+  .topbar{
+    width:min(980px, 92vw);
+    margin: 0 auto;
+    padding: 18px 16px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(0,0,0,.22);
+    box-shadow: 0 18px 46px rgba(0,0,0,.20);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  header h1{
+    margin:0 0 8px;
+    font-size: var(--fs-h1);
+    font-weight: 800;
+    letter-spacing:.2px;
+    text-shadow: 0 12px 26px rgba(0,0,0,.28);
+  }
+
+  header p{
+    margin:0;
+    font-size: var(--fs-p);
+    color: rgba(255,255,255,.90);
+    font-weight: 500;
+  }
+
+  /* Volver (pill) */
+  .volver{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin: 12px auto 0;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.35);
+    background: rgba(0,0,0,.26);
+    color: #fff;
+    text-decoration:none;
+    font-weight:800;
+    transition: transform .18s ease, background .18s ease;
+    width: fit-content;
+  }
+  .volver:hover{
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.34);
+  }
+
+  /* =========================
+     BUSCADOR
+     ========================= */
+  #form-busqueda{
+    width:min(980px, 92vw);
+    margin: 14px auto 8px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding: 0 6px;
+  }
+
+  #buscador{
+    flex: 1 1 520px;
+    max-width: 720px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.22);
+    outline: none;
+    font-size: 16px;
+    color: rgba(255,255,255,.92);
+    background: rgba(0,0,0,.28);
+    box-shadow: var(--shadowSm);
+  }
+  #buscador::placeholder{ color: rgba(255,255,255,.72); }
+
+  .boton-principal{
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.22);
+    background: linear-gradient(135deg, var(--terciario), var(--secundario));
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow: var(--shadowSm);
+    transition: transform .18s ease;
+  }
+  .boton-principal:hover{ transform: translateY(-1px); }
+
+  /* =========================
+     CONTENIDO
+     ========================= */
+  main{
+    width:min(980px, 92vw);
+    margin: 10px auto 0;
+    padding: 10px 0 24px;
+  }
+
+  .year-item{
+    width: min(820px, 94vw);
+    margin: 0 auto 12px auto;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.20);
+    box-shadow: var(--shadowSm);
+    overflow:hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .year-header{
+    padding: 14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    cursor:pointer;
+    user-select:none;
+    font-weight:800;
+    font-size: 1rem;
+    color:#fff;
+    background: linear-gradient(135deg, rgba(0,107,112,.78), rgba(1,152,164,.56));
+    border-bottom: 1px solid rgba(255,255,255,.10);
+  }
+
+  .year-header::after{
+    content:"▾";
+    opacity:.95;
+    transition: transform .2s ease;
+    font-size: 1.1rem;
+  }
+  .year-item.is-open .year-header::after{ transform: rotate(180deg); }
+
+  .year-content{
+    display:none;
+    padding: 12px 12px 14px;
+    background: rgba(0,0,0,.22);
+    border-top: 1px solid rgba(255,255,255,.12);
+  }
+
+  .tarjeta-declaracion{
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 14px;
+    padding: 12px;
+    margin: 10px 0;
+    box-shadow: 0 10px 26px rgba(0,0,0,.12);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .tarjeta-declaracion:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(0,0,0,.16);
+    border-color: rgba(255,255,255,.24);
+  }
+
+  .tarjeta-declaracion h3{
+    margin:0 0 8px;
+    color:#fff;
+    font-weight:800;
+    letter-spacing:.2px;
+    font-size: 1.02rem;
+  }
+
+  .botones{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    margin-top: 6px;
+  }
+
+  .btn-descargar, .btn-ver{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding: 9px 12px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: .92rem;
+    color:#fff;
+    background: rgba(0,0,0,.30);
+    border: 1px solid rgba(255,255,255,.20);
+    transition: transform .16s ease, background .16s ease, filter .16s ease;
+  }
+  .btn-descargar:hover, .btn-ver:hover{
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.38);
+    filter: saturate(1.08);
+  }
+
+  .btn-descargar{
+    background: linear-gradient(135deg, rgba(0,107,112,.92), rgba(26,134,137,.92)) !important;
+    border-color: rgba(255,255,255,.22) !important;
+  }
+  .btn-ver{
+    background: linear-gradient(135deg, rgba(1,152,164,.92), rgba(26,134,137,.92)) !important;
+    border-color: rgba(255,255,255,.22) !important;
+  }
+
+  .resumen{
+    display:none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(0,0,0,.28);
+    color: rgba(255,255,255,.88);
+    font-size: .95rem;
+    line-height: 1.35;
+  }
+
+  /* =========================
+     FOOTER
+     ========================= */
+  footer{
+    margin-top:auto;
+    padding: 18px 12px;
+    text-align:center;
+  }
+
+  .footer-pill{
+    width:min(980px, 92vw);
+    margin: 0 auto;
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.26);
+    box-shadow: var(--shadowSm);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap:wrap;
+    color: rgba(255,255,255,.92);
+    font-weight: 700;
+    font-size: .92rem;
+  }
+
+  .social-icons{
+    display:flex;
+    gap: 12px;
+    align-items:center;
+    justify-content:center;
+  }
+  .social-icons img{
+    height: 18px;
+    width: 18px;
+    opacity:.95;
+    transition: transform .16s ease;
+  }
+  .social-icons img:hover{ transform: scale(1.08); }
+
+  @media (max-width: 600px){
+    .logo-costado{ display:none; }
+    .topbar{ padding: 16px 14px; }
+    #buscador{ flex: 1 1 100%; }
+    .boton-principal{ width: 100%; }
+    .botones{ justify-content:stretch; }
+    .btn-descargar, .btn-ver{ width: 100%; }
+    .footer-pill{ border-radius: 16px; }
   }
 </style>
+</head>
+
+<body>
+
+  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-costado" />
+
+  <header>
+    <div class="topbar">
+      <h1>📜 Declaraciones de Interés</h1>
+      <p>Explorá las declaraciones organizadas por año.</p>
+      <a href="index.html" class="volver">⬅️ Volver al inicio</a>
+    </div>
+  </header>
+
+  <form id="form-busqueda">
+    <input id="buscador" type="text" placeholder="Buscar por palabra o número…" autocomplete="off" />
+    <button class="boton-principal" type="submit">Buscar</button>
+  </form>
+
+  <main id="contenedor-declaraciones">
+
+    <!-- 2022 -->
+    <section class="year-item">
+      <div class="year-header">📁 Declaraciones de Interés 2022</div>
+      <div class="year-content">
+
+        <div class="tarjeta-declaracion">
+          <h3>Agenda Septiembre – Juventud</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Agenda_Septiembre_Juventud.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración vinculada a actividades de juventud y agenda institucional del mes de septiembre.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Aniversario – Escuela 190</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Aniversario_Escuela_190.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Reconocimiento por un aniversario institucional en el ámbito educativo.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Aniversario – Los Auténticos</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Aniversario_Los_Autenticos.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés por conmemoración/aniversario de institución o agrupación local.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Calendario – Fiestas Religiosas</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Calendario_Fiestas_Religiosas.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración vinculada a calendario y actividades de festividades religiosas.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Congreso – Estudiantes Federal</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Congreso_Estudiantes_Federal.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés a un congreso/encuentro de estudiantes con alcance federal.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Demencia – ADI</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Demencia_ADI.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración relacionada a concientización y abordaje de la demencia y acciones institucionales.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Día Contra la Explotación Sexual</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Dia_Contra_Explotacion_Sexual.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés por acciones de prevención y concientización contra la explotación sexual.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Día de la Memoria Trans</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Dia_Memoria_Trans.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés por jornada de memoria y visibilización de derechos.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Encuentro – ODS y Desarrollo</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Encuentro_ODS_Desarrollo.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés vinculada a los Objetivos de Desarrollo Sostenible y acciones locales.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Encuentro – Parlamento</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Encuentro_Parlamento.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés por encuentro institucional/parlamentario y participación ciudadana.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Festival Latinoamericano</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Festival_Latinoamericano.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés por festival cultural con participación latinoamericana.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Formación – Integración Regional</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Formacion_Integracion_Regional.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Reconocimiento a instancias formativas orientadas a la integración regional y participación.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Foro – Mujeres Riojanas</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Foro_Mujeres_Riojanas.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés al Foro de Mujeres Riojanas y su aporte a la igualdad y participación.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Jornada – Niños y Adolescentes</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Jornada_Niños_Adolescentes.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés por actividades de participación y protección de derechos de NNyA.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Libro – Memoria SELAR</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Libro_Memoria_SELAR.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración vinculada a una publicación/libro de memoria institucional o cultural.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Marathón La Rioja 2022</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Marathon_LaRioja_2022.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Declaración de interés a evento deportivo que promueve vida saludable y participación comunitaria.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Reconocimiento – Gloria López</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Reconocimiento_Gloria_Lopez.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Reconocimiento a Gloria López por su compromiso social y trayectoria comunitaria.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Reconocimiento – Mariana Maldonado</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Reconocimiento_Mariana_Maldonado.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Reconocimiento a Mariana Maldonado por su aporte social y acciones comunitarias.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Reconocimiento – Prof. Gustavo Mansur</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Reconocimiento_Prof_Gustavo_Mansur.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Reconocimiento al Prof. Gustavo Mansur por su trayectoria y contribución educativa/cultural.</p></div>
+        </div>
+
+        <div class="tarjeta-declaracion">
+          <h3>Reconocimiento – Tania Milagros</h3>
+          <div class="botones">
+            <a href="declaraciones_interes/Dcl2022/Reconocimiento_Tania_Milagros.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+            <button class="btn-ver" type="button">👁️ Ver resumen</button>
+          </div>
+          <div class="resumen"><p>Reconocimiento a Tania Milagros por su labor y aporte a la comunidad.</p></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2023 -->
+    <section class="year-item">
+      <div class="year-header">📁 Declaraciones de Interés 2023</div>
+      <div class="year-content">
+
+        <div class="tarjeta-declaracion"><h3>40 Años Democracia</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/40_Años_Democracia.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración vinculada a actividades conmemorativas por los 40 años de democracia.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Aniversario Ciudad</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Aniversario_Ciudad.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por aniversario y actividades institucionales de la ciudad.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Aniversario Escuela Normal</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Aniversario_Escuela_Normal.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a una institución educativa por su aniversario y trayectoria.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Aniversario Fallecimiento (General)</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Aniversario_Fallecimiento_General.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración conmemorativa por aniversario de fallecimiento de figura histórica.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Capacitación Asperger</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Capacitacion_Asperger.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por capacitación y sensibilización sobre condición Asperger/TEA.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>CientizArte</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/CientizArte.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por actividad que integra ciencia y arte con impacto educativo.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Coleccionistas de Minerales</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Coleccionistas_Minerales.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a actividad/exhibición vinculada a minerales y patrimonio natural.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Congreso Estudiantes Ingeniería</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Congreso_Estudiantes_Ingenieria.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés a congreso académico de estudiantes de ingeniería.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Congreso REDCOM</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Congreso_REDCOM.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por congreso/encuentro de comunicación (REDCOM).</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Derechos Políticos de la Mujer</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Derechos_Politicos_Mujer.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés en el marco de derechos políticos y participación de mujeres.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Día del Árbol</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Dia_Arbol.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por acciones de concientización ambiental en el Día del Árbol.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Día del Educador y del Profesor</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Dia_Educador_Profesor.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por jornada de reconocimiento y actividades del ámbito educativo.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Día del Hábitat</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Dia_Habitat.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por iniciativas vinculadas al hábitat y vivienda digna.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Encuentro Flamencos</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Encuentro_Flamencos.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por encuentro cultural/artístico denominado “Flamencos”.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Encuentro Holístico</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Encuentro_Holistico.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a encuentro de bienestar, salud integral y actividades comunitarias.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Fallecimiento General San Martín</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Fallecimiento_General_SanMartin.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración conmemorativa por el legado histórico del General San Martín.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Feria del Libro 2023</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Feria_Libro_2023.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por feria cultural/literaria con participación provincial.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Fiestas Virgen de la Merced</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Fiestas_Virgen_Merced.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por festividades religiosas y actividades comunitarias.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Gendarmería Nacional</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Gendarmeria_Nacional.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés vinculada a reconocimiento institucional y labor de seguridad.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Gira Teatro 2023</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Gira_Teatro_2023.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a gira cultural/teatral por su impacto social y educativo.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Industrias Creativas</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Industrias_Creativas.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por eventos o políticas vinculadas a industrias creativas.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>José Santos Salinas</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Jose_Santos_Salinas.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento/Declaración vinculada a la figura de José Santos Salinas.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Literaria – Ser Mujer</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Literaria_Ser_Mujer.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por actividad literaria/cultural centrada en “Ser Mujer”.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Motorock Festival</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Motorock_Festival.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por festival musical/cultural Motorock.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Olimpíadas Matemática</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Olimpiadas_Matematica.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por competencia educativa y promoción de matemáticas.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Reconocimiento – Marlene R</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Reconocimiento_Marlene_R.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a Marlene (archivo “Marlene R”).</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Reconocimiento – Marlene SANC</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Reconocimiento_Marlene_SANC.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a Marlene (archivo “Marlene SANC”).</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Región Centro – COMIREGON</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2023/Region_Centro_COMIREGON.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración vinculada a Región Centro y COMIREGON (integración y cooperación regional).</p></div></div>
+
+      </div>
+    </section>
+
+    <!-- 2024 -->
+    <section class="year-item">
+      <div class="year-header">📁 Declaraciones de Interés 2024</div>
+      <div class="year-content">
+
+        <div class="tarjeta-declaracion"><h3>Aniversario Corazón</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Aniversario_Corazon.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por conmemoración/aniversario institucional.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Aniversario Radio Pública</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Aniversario_Radio_Publica.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento por aniversario y aporte comunicacional de radio pública.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Derechos Políticos de la Mujer</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Derechos_Politicos_Mujer.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés sobre derechos políticos y participación de mujeres.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Día de la Infancia</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Dia_Infancia.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por acciones destinadas a niñez y adolescencia.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Día de la Mujer – Rioja</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Dia_Mujer_Rioja.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por conmemoración y actividades por el Día de la Mujer en La Rioja.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Encuentro Los Vaivenes</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Encuentro_Los_Vaivenes.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por encuentro cultural/comunitario “Los Vaivenes”.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Festival de Cortos</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Festival_Cortos.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento a festival audiovisual por su aporte cultural.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Formación de Líderes</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Formacion_Lideres.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por instancia de formación y liderazgo comunitario.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Fronteras Abiertas</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Fronteras_Abiertas.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por actividad/encuentro denominado “Fronteras Abiertas”.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Grupo Vocal Norte</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Grupo_Vocal_Norte.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Reconocimiento cultural a agrupación vocal por su trayectoria y aporte artístico.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Jornadas SAC La Rioja</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Jornadas_SAC_LaRioja.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por jornadas vinculadas a SAC y actividades institucionales.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Jóvenes Democracia</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Jovenes_Democracia.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por acciones de formación y participación democrática juvenil.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Lactancia Materna</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Lactancia_Materna.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por promoción de la lactancia materna y salud integral.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Lazos Dorados</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Lazos_Dorados.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por campaña/actividad “Lazos Dorados”.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Mujer Policía</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Mujer_Policia.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés vinculada a reconocimiento en ámbito de seguridad y perspectiva de género.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Prevención Abuso Infantil</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Prevencion_Abuso_Infantil.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por acciones de prevención y concientización sobre abuso infantil.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Rally Argentino</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Rally_Argentino.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por evento deportivo y su impacto turístico/deportivo.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Rechazo Proyecto Derecho</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Rechazo_Proyecto_Derecho.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración vinculada a posicionamiento institucional y rechazo de proyecto.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Recuperación de Archivos</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Recuperacion_Archivos.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por acciones de preservación y recuperación documental/archivos.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Reunión Secretariado</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Reunion_Secretariado.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por reunión institucional y coordinación de agenda.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Serie Contra el Olvido</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Serie_Contra_El_Olvido.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por producción/serie de memoria y concientización social.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Tour Riojano 2024</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Tour_Riojano_2024.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por evento/tour provincial con proyección turística y cultural.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Trata y Explotación</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2024/Trata_Explotacion.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por prevención y concientización sobre trata y explotación.</p></div></div>
+
+      </div>
+    </section>
+
+    <!-- 2025 -->
+    <section class="year-item">
+      <div class="year-header">📁 Declaraciones de Interés 2025</div>
+      <div class="year-content">
+
+        <div class="tarjeta-declaracion"><h3>Curso Abordaje Integral </h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2025/Curso_Abordaje_Integral.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración vinculada a curso o capacitación de abordaje integral.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Encuentro Artesanos</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2025/Encuentro_Artesanos.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por encuentro de artesanos y fortalecimiento cultural/emprendedor.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Feriado 12 de Octubre</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2025/Feriado_12_Octubre.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración vinculada a conmemoración y actividades en torno al 12 de octubre.</p></div></div>
+
+        <div class="tarjeta-declaracion"><h3>Liga NOA – Encuentro</h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2025/Liga_NOA_Encuentro.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés por encuentro deportivo/regional de la Liga NOA.</p></div></div>
+
+    
+
+        <div class="tarjeta-declaracion"><h3>Victoria Para Amar </h3><div class="botones">
+          <a href="declaraciones_interes/Dcl2025/Victoria_Para_Amar.pdf" target="_blank" class="btn-descargar" rel="noopener">📄 Descargar PDF</a>
+          <button class="btn-ver" type="button">👁️ Ver resumen</button></div>
+          <div class="resumen"><p>Declaración de interés vinculada a “Victoria Para Amar”.</p></div></div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-pill">
+      <div class="social-icons">
+        <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener"><img src="logo ig.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener"><img src="logo fb.png" alt="Facebook"></a>
+        <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener"><img src="logo x.png" alt="X"></a>
+      </div>
+      <div>Creado por PB – © 2025</div>
+    </div>
+  </footer>
+
+  <script>
+    function normalizar(txt){
+      return (txt || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    document.querySelectorAll(".year-header").forEach(h => {
+      h.addEventListener("click", () => {
+        const item = h.closest(".year-item");
+        const content = h.nextElementSibling;
+        const isOpen = content.style.display === "block";
+        content.style.display = isOpen ? "none" : "block";
+        item.classList.toggle("is-open", !isOpen);
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-ver");
+      if (!btn) return;
+
+      const card = btn.closest(".tarjeta-declaracion");
+      if (!card) return;
+
+      const resumen = card.querySelector(".resumen");
+      if (!resumen) return;
+
+      resumen.style.display = (resumen.style.display === "block") ? "none" : "block";
+    });
+
+    function filtrar(){
+      const q = normalizar(document.getElementById("buscador").value);
+      const years = document.querySelectorAll(".year-item");
+
+      if (!q){
+        document.querySelectorAll(".tarjeta-declaracion").forEach(t => t.style.display = "block");
+        years.forEach(y => y.style.display = "block");
+        return;
+      }
+
+      years.forEach(year => {
+        const cards = Array.from(year.querySelectorAll(".tarjeta-declaracion"));
+        let any = false;
+
+        cards.forEach(card => {
+          const text = normalizar(card.innerText);
+          const match = text.includes(q);
+          card.style.display = match ? "block" : "none";
+          if (match) any = true;
+        });
+
+        year.style.display = any ? "block" : "none";
+
+        const content = year.querySelector(".year-content");
+        if (content){
+          content.style.display = any ? "block" : "none";
+          year.classList.toggle("is-open", any);
+        }
+      });
+    }
+
+    document.getElementById("form-busqueda").addEventListener("submit", (e) => {
+      e.preventDefault();
+      filtrar();
+    });
+
+    document.getElementById("buscador").addEventListener("input", filtrar);
+  </script>
+
+</body>
+</html>

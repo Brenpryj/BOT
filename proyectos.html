@@ -5,210 +5,364 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proyectos Legislativos</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    :root {
-      --primario: #0198A4;
-      --secundario: #1A8689;
-      --terciario: #006B70;
-      --texto: #FFFFFF;
-      --gris: #46494A;
-    }
+  :root{
+    --primario:#0198A4;
+    --secundario:#1A8689;
+    --terciario:#006B70;
 
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: url('fondos (1).png') no-repeat right bottom fixed;
-      background-size: cover;
-      color: var(--gris);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    --texto:#ffffff;
+    --muted:rgba(255,255,255,.86);
 
-    header {
-      text-align: center;
-      color: var(--texto);
-      background-color: rgba(1, 152, 164, 0.9);
-      padding: 0.6rem 0.8rem;
-      position: relative;
-    }
+    --glass: rgba(0,0,0,.22);
+    --glass2: rgba(0,0,0,.16);
 
-    .volver {
-      display: block;
-      text-align: center;
-      margin: 1rem auto;
-      font-weight: bold;
-      background-color: var(--terciario);
-      color: white;
-      padding: 0.8em 1.5em;
-      text-decoration: none;
-      border-radius: 8px;
-      border: 2px solid white;
-      width: fit-content;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    }
-    .volver:hover { background-color: var(--primario); transform: scale(1.05); }
+    --borde: rgba(255,255,255,.18);
+    --bordeSoft: rgba(255,255,255,.12);
 
-    .accordion {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem;
-      z-index: 10;
-    }
+    --shadow: 0 18px 46px rgba(0,0,0,.22);
+    --shadowSm: 0 10px 28px rgba(0,0,0,.16);
 
-    .accordion-item {
-      background-color: #ffffffcc;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+    --radius: 18px;
 
-    .accordion-header {
-      padding: 1rem;
-      font-weight: bold;
-      background-color: var(--terciario);
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 2px solid white;
-      font-size: 1.1em;
-      text-align: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      user-select: none;
-    }
-    .accordion-header:hover { background-color: var(--primario); transform: scale(1.03); }
+    --fs-h1: clamp(1.6rem, 3.6vw, 2.3rem);
+    --fs-p:  clamp(.95rem, 1.25vw, 1.08rem);
+    --fs-chip: .98rem;
+    --fs-cardTitle: 1.05rem;
+    --fs-mini: .92rem;
+  }
 
-    .accordion-content {
-      display: none;
-      padding: 1rem;
-      background-color: white;
-      border-top: 1px solid #ccc;
-    }
+  *{ box-sizing:border-box; }
 
-    .ley-card {
-      background-color: #f4f4f4;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .ley-card h4 { margin: 0 0 0.5em; }
+  /* =========================
+     FONDO (MISMO CRITERIO QUE IDEAS)
+     ========================= */
+  body{
+    margin:0;
+    font-family:'Montserrat',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    color:var(--texto);
+    overflow-x:hidden;
+    background:#061416;
+    position:relative;
+  }
 
-    .botones { margin-top: 1rem; }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url('fondos (1).png') no-repeat right bottom;
+    background-size:cover;
+    opacity:.12;
+    z-index:0;
+    pointer-events:none;
+    filter:saturate(1.05) contrast(1.05);
+  }
 
-    .botones a, .botones button {
-      background-color: var(--terciario);
-      color: white;
-      padding: 0.5em 1em;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid white;
-      margin-right: 0.5em;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
-      display: inline-block;
-    }
-    .botones a:hover, .botones button:hover { background-color: var(--primario); transform: scale(1.03); }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(900px 520px at 25% 10%, rgba(1,152,164,.28), transparent 65%),
+      radial-gradient(900px 620px at 90% 70%, rgba(26,134,137,.26), transparent 65%),
+      linear-gradient(180deg,
+        rgba(0, 8, 10, .92),
+        rgba(1,152,164,.22),
+        rgba(0, 8, 10, .95)
+      );
+    z-index:0;
+    pointer-events:none;
+  }
 
-    .descripcion-extra {
-      margin-top: 0.5em;
-      display: none;
-      font-size: 0.95em;
-      color: #333;
-      line-height: 1.35;
-    }
+  /* =========================
+     LOGO LATERAL (igual que las otras páginas)
+     ========================= */
+  .logo-costado{
+    position:fixed;
+    top:60%;
+    left:10px;
+    transform:translateY(-30%);
+    height:60px;
+    opacity:.95;
+    z-index:2;
+    pointer-events:none;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,.28));
+  }
 
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 1.2rem 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      text-align: center;
-      margin-top: auto;
-    }
+  /* Contenido arriba del overlay */
+  header, #form-busqueda, main.accordion, footer{
+    position:relative;
+    z-index:2;
+  }
 
-    .social-icons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .social-icons img { height: 25px; }
+  /* =========================
+     HEADER
+     ========================= */
+  header{
+    text-align:center;
+    padding:18px 14px 10px;
+  }
 
-    .logo-costado {
-      position: fixed;
-      top: 72%;
-      left: 10px;
-      transform: translateY(-50%);
-      height: 80px;
-      z-index: 999;
-    }
+  .topbar{
+    width:min(980px, 92vw);
+    margin:0 auto;
+    padding:20px 18px;
+    border-radius:var(--radius);
+    border:1px solid var(--borde);
+    background:rgba(0,0,0,.22);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
 
-    /* buscador */
-    #form-busqueda{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex-wrap:wrap;
-      gap:10px;
-      margin: 1.5rem 0;
-      padding: 0 10px;
-    }
-    #buscador{
-      padding: 10px 15px;
-      font-size: 16px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      width: 380px;
-      max-width: 90%;
-    }
-    .boton-principal{
-      padding: 10px 20px;
-      background-color: var(--terciario);
-      color: white;
-      border-radius: 8px;
-      border: 2px solid white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    }
-    .boton-principal:hover{
-      background-color: var(--primario);
-      transform: scale(1.03);
-    }
+  header h1{
+    margin:0 0 8px;
+    font-size:var(--fs-h1);
+    font-weight:800;
+    letter-spacing:.2px;
+    text-shadow:0 14px 26px rgba(0,0,0,.32);
+  }
 
-    /* Para resaltar la card encontrada desde el bot */
-    .ley-card.vb-highlight {
-      outline: 3px solid rgba(1, 152, 164, 0.8);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
-      transform: translateY(-2px);
-    }
+  header p{
+    margin:0;
+    font-size:var(--fs-p);
+    color:rgba(255,255,255,.92);
+    font-weight:500;
+  }
 
-    @media screen and (max-width: 600px) {
-      .logo-costado { display: none; }
-      header { padding: 1rem 0.5rem; }
-      .accordion { padding: 1rem; }
-      .botones a, .botones button {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-        margin-right: 0;
-        text-align: center;
-      }
-      #logo-lourdes-mobile{ display:block !important; }
-    }
-  </style>
+  /* BOTÓN VOLVER (mismo estilo que ideas/sugerencias) */
+  .volver{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin:12px auto 0;
+    padding:10px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.35);
+    background:rgba(0,0,0,.26);
+    color:#fff;
+    text-decoration:none;
+    font-weight:800;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .volver:hover{
+    transform:translateY(-1px);
+    background:rgba(0,0,0,.34);
+  }
+
+  /* =========================
+     BUSCADOR
+     ========================= */
+  #form-busqueda{
+    width:min(980px, 92vw);
+    margin:16px auto 8px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  #buscador{
+    flex:1 1 520px;
+    max-width:720px;
+    padding:12px 14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.20);
+    outline:none;
+    font-size:16px;
+    color:#fff;
+    background:rgba(0,0,0,.28);
+    box-shadow:var(--shadowSm);
+  }
+
+  #buscador::placeholder{
+    color:rgba(255,255,255,.70);
+  }
+
+  .boton-principal{
+    padding:12px 16px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.20);
+    background:linear-gradient(135deg,var(--terciario),var(--secundario));
+    color:#fff;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:var(--shadowSm);
+    transition:transform .18s ease;
+  }
+  .boton-principal:hover{
+    transform:translateY(-1px);
+  }
+
+  /* =========================
+     ACORDEÓN
+     ========================= */
+  main.accordion{
+    width:min(980px, 92vw);
+    margin:10px auto 0;
+    padding:10px 0 24px;
+  }
+
+  .accordion-item{
+    width:min(760px, 94vw);
+    margin:0 auto 14px;
+    border-radius:16px;
+    border:1px solid var(--bordeSoft);
+    background:rgba(0,0,0,.20);
+    box-shadow:var(--shadowSm);
+    overflow:hidden;
+    backdrop-filter:blur(10px);
+  }
+
+  .accordion-header{
+    padding:14px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    font-weight:900;
+    font-size:var(--fs-chip);
+    color:#fff;
+    background:linear-gradient(135deg, rgba(0,107,112,.85), rgba(1,152,164,.55));
+  }
+
+  .accordion-content{
+    display:none;
+    padding:12px;
+    background:rgba(0,0,0,.22);
+  }
+
+  /* =========================
+     TARJETAS
+     ========================= */
+  .ley-card{
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:14px;
+    padding:12px;
+    margin:10px 0;
+    transition:transform .15s ease;
+  }
+
+  .ley-card:hover{
+    transform:translateY(-1px);
+  }
+
+  .ley-card h4{
+    margin:0 0 6px;
+    font-size:var(--fs-cardTitle);
+    font-weight:900;
+  }
+
+  .ley-card p{
+    margin:0;
+    color:rgba(255,255,255,.84);
+    font-size:var(--fs-mini);
+  }
+
+  .botones{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    margin-top:8px;
+  }
+
+  .botones a,
+  .botones button{
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    padding:9px 12px;
+    border-radius:999px;
+    font-weight:900;
+    font-size:.92rem;
+    color:#fff;
+    background:rgba(0,0,0,.30);
+    border:1px solid rgba(255,255,255,.20);
+    transition:transform .16s ease, background .16s ease;
+  }
+
+  .botones a:hover,
+  .botones button:hover{
+    transform:translateY(-1px);
+    background:rgba(0,0,0,.38);
+  }
+
+  .btn-ver{
+    background:linear-gradient(135deg,var(--primario),var(--secundario)) !important;
+  }
+
+  .btn-desc{
+    background:linear-gradient(135deg,var(--terciario),var(--secundario)) !important;
+  }
+
+  .descripcion-extra{
+    display:none;
+    margin-top:10px;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(0,0,0,.28);
+    font-size:.95rem;
+  }
+
+  /* =========================
+     FOOTER
+     ========================= */
+  footer{
+    margin-top:auto;
+    padding:18px 12px;
+    text-align:center;
+  }
+
+  .footer-pill{
+    width:min(980px, 92vw);
+    margin:0 auto;
+    padding:12px 14px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(0,0,0,.26);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+    font-weight:800;
+    font-size:.92rem;
+  }
+
+  .social-icons{
+    display:flex;
+    gap:12px;
+  }
+
+  .social-icons img{
+    height:18px;
+    width:18px;
+    transition:transform .16s ease;
+  }
+
+  .social-icons img:hover{
+    transform:scale(1.08);
+  }
+
+  /* MOBILE */
+  @media (max-width:600px){
+    .logo-costado{ display:none; }
+    #buscador{ flex:1 1 100%; }
+    .boton-principal{ width:100%; }
+    .botones a, .botones button{ width:100%; }
+    .footer-pill{ border-radius:16px; }
+  }
+</style>
 </head>
 
 <body>
@@ -218,12 +372,12 @@
 
   <!-- ENCABEZADO -->
   <header>
-    <h1>📚 Proyectos Legislativos</h1>
-    <p>Explorá las leyes propuestas organizadas por temas.</p>
+    <div class="topbar">
+      <h1>📚 Proyectos Legislativos</h1>
+      <p>Explorá las leyes propuestas organizadas por temas.</p>
+      <a href="index.html" class="volver">⬅️ Volver al inicio</a>
+    </div>
   </header>
-
-  <!-- BOTÓN VOLVER -->
-  <a href="index.html" class="volver">⬅️ Volver al inicio</a>
 
   <!-- BUSCADOR -->
   <form id="form-busqueda">
@@ -245,81 +399,108 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10490" data-tags="endometriosis salud">
-          <h4>Endometriosis</h4>
-          <p>Ley N° 10490</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10490_Endometriosis.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10490_Endometriosis.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10490')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10490">Promueve la concientización y tratamiento de la endometriosis en la provincia.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Endometriosis</h4>
+              <p>Ley N° 10490</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10490_Endometriosis.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10490_Endometriosis.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10490')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10490">Promueve la concientización y tratamiento de la endometriosis en la provincia.</div>
         </div>
 
         <div class="ley-card" data-ley="10549" data-tags="salud digital tecnologia salud">
-          <h4>Salud Digital</h4>
-          <p>Ley N° 10549</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10549_Salud_Digital.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10549_Salud_Digital.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10549')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10549">Regula y fomenta el uso de tecnologías digitales en la atención sanitaria.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Salud Digital</h4>
+              <p>Ley N° 10549</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10549_Salud_Digital.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10549_Salud_Digital.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10549')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10549">Regula y fomenta el uso de tecnologías digitales en la atención sanitaria.</div>
         </div>
 
         <div class="ley-card" data-ley="10585" data-tags="odontologos colegio salud">
-          <h4>Colegio de Odontólogos</h4>
-          <p>Ley N° 10585</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10585')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10585">Crea el Colegio de Odontólogos y regula su funcionamiento en la provincia.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Colegio de Odontólogos</h4>
+              <p>Ley N° 10585</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10585_Colegio_Odontologos.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10585')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10585">Crea el Colegio de Odontólogos y regula su funcionamiento en la provincia.</div>
         </div>
 
-        <!-- NUEVO (10.836) -->
         <div class="ley-card" data-ley="10836" data-tags="odontologos modificacion ley 10585 salud colegio">
-          <h4>Colegio de Odontólogos – Modificación</h4>
-          <p>Ley N° 10836</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/ODONTOLOGOS.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/ODONTOLOGOS.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10836')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10836">Modifica disposiciones vinculadas al Colegio de Odontólogos (actualiza artículos de la normativa).</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Colegio de Odontólogos – Modificación</h4>
+              <p>Ley N° 10836</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/ODONTOLOGOS.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/ODONTOLOGOS.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10836')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10836">Modifica disposiciones vinculadas al Colegio de Odontólogos (actualiza artículos de la normativa).</div>
         </div>
 
         <div class="ley-card" data-ley="10731" data-tags="rayos x salud radiologia">
-          <h4>Rayos X</h4>
-          <p>Ley N° 10731</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10731_Rayos_X.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10731_Rayos_X.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10731')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10731">Establece normas para el uso seguro de equipos de rayos X en instituciones sanitarias.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Rayos X</h4>
+              <p>Ley N° 10731</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10731_Rayos_X.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10731_Rayos_X.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10731')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10731">Establece normas para el uso seguro de equipos de rayos X en instituciones sanitarias.</div>
         </div>
 
         <div class="ley-card" data-ley="10733" data-tags="sodio alimentacion salud">
-          <h4>Reducción de Sodio</h4>
-          <p>Ley N° 10733</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10733')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10733">Busca disminuir el contenido de sodio en alimentos procesados.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Reducción de Sodio</h4>
+              <p>Ley N° 10733</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10733_Reduccion_Sodio.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10733')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10733">Busca disminuir el contenido de sodio en alimentos procesados.</div>
         </div>
 
         <div class="ley-card" data-ley="10757" data-tags="kinesiologos colegio salud">
-          <h4>Colegio de Kinesiólogos</h4>
-          <p>Ley N° 10757</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10757')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10757">Crea y regula el Colegio de Kinesiólogos en la provincia.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Colegio de Kinesiólogos</h4>
+              <p>Ley N° 10757</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10757_Colegio_Kinesiologos.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10757')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10757">Crea y regula el Colegio de Kinesiólogos en la provincia.</div>
         </div>
 
       </div>
@@ -331,38 +512,69 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10492" data-tags="reconocimiento legislativo educacion">
-          <h4>Reconocimiento Legislativo</h4>
-          <p>Ley N° 10492</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10492')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10492">Otorga reconocimientos legislativos a iniciativas educativas destacadas.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Reconocimiento Legislativo</h4>
+              <p>Ley N° 10492</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10492_Reconocimiento_Legislativo.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10492')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10492">Otorga reconocimientos legislativos a iniciativas educativas destacadas.</div>
         </div>
 
         <div class="ley-card" data-ley="10675" data-tags="lengua de senas educacion discapacidad">
-          <h4>Lengua de Señas</h4>
-          <p>Ley N° 10675</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10675_Lengua_Senas.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10675_Lengua_Senas.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10675')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10675">Reconoce e incorpora la Lengua de Señas Argentina en el ámbito educativo.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Lengua de Señas</h4>
+              <p>Ley N° 10675</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10675_Lengua_Senas.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10675_Lengua_Senas.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10675')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10675">Reconoce e incorpora la Lengua de Señas Argentina en el ámbito educativo.</div>
         </div>
 
-        <!-- NUEVO (10.768) -->
         <div class="ley-card" data-ley="10768" data-tags="tecnologia educativa educacion innovacion docentes escuelas">
-          <h4>Tecnología Educativa</h4>
-          <p>Ley N° 10768</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/TECNOLOG%C3%8DA%20EDUCACTIVA.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/TECNOLOG%C3%8DA%20EDUCACTIVA.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10768')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10768">Crea/organiza lineamientos para el desarrollo de profesionales y acciones vinculadas a tecnología educativa en la provincia.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Tecnología Educativa</h4>
+              <p>Ley N° 10768</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/TECNOLOG%C3%8DA%20EDUCACTIVA.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/TECNOLOG%C3%8DA%20EDUCACTIVA.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10768')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10768">Crea/organiza lineamientos para el desarrollo de profesionales y acciones vinculadas a tecnología educativa en la provincia.</div>
         </div>
+
+        <div class="ley-card" data-ley="10824" data-tags="educacion financiera economia ahorro credito inversion consumidores">
+  <div class="ley-head">
+    <div class="ley-txt">
+      <h4>Educación Financiera</h4>
+      <p>Ley N° 10824</p>
+    </div>
+    <div class="botones">
+      <a class="btn-ver" href="proyectos_legislativos/EDUCACION_FINANCIERA.pdf" target="_blank" rel="noopener">Ver PDF</a>
+      <a class="btn-desc" href="proyectos_legislativos/EDUCACION_FINANCIERA.pdf" download>Descargar</a>
+      <button type="button" onclick="toggleDescripcion('desc-10824')">Ver resumen</button>
+    </div>
+  </div>
+  <div class="descripcion-extra" id="desc-10824">
+    Crea el Programa Provincial de Educación Financiera y Derechos de Consumidores y Usuarios, 
+    destinado a instituciones educativas públicas y privadas. Promueve conocimientos sobre 
+    ahorro, inversión, crédito, consumo responsable, digitalización financiera y protección 
+    del consumidor, fortaleciendo la toma de decisiones económicas responsables.
+  </div>
+</div>
 
       </div>
     </div>
@@ -373,37 +585,48 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10556" data-tags="juventud derechos 12 agosto">
-          <h4>Derechos de Juventud</h4>
-          <p>Ley N° 10556</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10556')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10556">Reconoce y protege los derechos de los jóvenes riojanos.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Derechos de Juventud</h4>
+              <p>Ley N° 10556</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10556_12_Agosto_Derechos_Juventud.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10556')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10556">Reconoce y protege los derechos de los jóvenes riojanos.</div>
         </div>
 
         <div class="ley-card" data-ley="10657" data-tags="septiembre joven juventud cultura educacion">
-          <h4>Septiembre Joven</h4>
-          <p>Ley N° 10657</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10657')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10657">Establece septiembre como mes para actividades culturales y educativas juveniles.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Septiembre Joven</h4>
+              <p>Ley N° 10657</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10657_Septiembre_Joven.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10657')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10657">Establece septiembre como mes para actividades culturales y educativas juveniles.</div>
         </div>
 
-        <!-- NUEVO (10.826) -->
         <div class="ley-card" data-ley="10826" data-tags="juventudes juventud inclusion participacion derechos humanos">
-          <h4>Juventudes</h4>
-          <p>Ley N° 10826</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/JUVENTUDES.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/JUVENTUDES.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10826')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10826">Establece disposiciones para la inclusión, participación y garantía de derechos de las juventudes en la provincia.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Juventudes</h4>
+              <p>Ley N° 10826</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/JUVENTUDES.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/JUVENTUDES.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10826')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10826">Establece disposiciones para la inclusión, participación y garantía de derechos de las juventudes en la provincia.</div>
         </div>
 
       </div>
@@ -415,25 +638,33 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10544" data-tags="parlamento ninez participacion">
-          <h4>Parlamento Juvenil</h4>
-          <p>Ley N° 10544</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10544_Parlamento_Ninez.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10544_Parlamento_Ninez.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10544')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10544">Fomenta la participación de niños y adolescentes en espacios legislativos.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Parlamento Juvenil</h4>
+              <p>Ley N° 10544</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10544_Parlamento_Ninez.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10544_Parlamento_Ninez.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10544')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10544">Fomenta la participación de niños y adolescentes en espacios legislativos.</div>
         </div>
 
         <div class="ley-card" data-ley="10647" data-tags="proteccion integral derechos ninez">
-          <h4>Protección Integral</h4>
-          <p>Ley N° 10647</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10647')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10647">Garantiza derechos integrales a niñas, niños y adolescentes.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Protección Integral</h4>
+              <p>Ley N° 10647</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10647_Proteccion_Integral.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10647')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10647">Garantiza derechos integrales a niñas, niños y adolescentes.</div>
         </div>
 
       </div>
@@ -445,37 +676,48 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10563" data-tags="consejo cultura">
-          <h4>Consejo de Cultura</h4>
-          <p>Ley N° 10563</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10563')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10563">Crea el Consejo Provincial de Cultura para fomentar la actividad cultural local.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Consejo de Cultura</h4>
+              <p>Ley N° 10563</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10563_Consejo_Cultura.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10563')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10563">Crea el Consejo Provincial de Cultura para fomentar la actividad cultural local.</div>
         </div>
 
         <div class="ley-card" data-ley="10665" data-tags="bibliotecas populares cultura">
-          <h4>Bibliotecas Populares</h4>
-          <p>Ley N° 10665</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10665')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10665">Apoya y fomenta el desarrollo de bibliotecas populares.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Bibliotecas Populares</h4>
+              <p>Ley N° 10665</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10665_Bibliotecas_Populares.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10665')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10665">Apoya y fomenta el desarrollo de bibliotecas populares.</div>
         </div>
 
-        <!-- NUEVO (10.492) -->
         <div class="ley-card" data-ley="10492" data-tags="reconocimiento victoria romero cultura derechos mujer">
-          <h4>Reconocimiento Legislativo – Victoria Romero</h4>
-          <p>Ley N° 10492</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/VICTORIA%20ROMERO.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/VICTORIA%20ROMERO.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-victoria-10492')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-victoria-10492">Instituye la distinción “Reconocimiento Legislativo – Victoria Romero”, para destacar trayectorias y aportes relevantes.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Reconocimiento Legislativo – Victoria Romero</h4>
+              <p>Ley N° 10492</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/VICTORIA%20ROMERO.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/VICTORIA%20ROMERO.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-victoria-10492')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-victoria-10492">Instituye la distinción “Reconocimiento Legislativo – Victoria Romero”, para destacar trayectorias y aportes relevantes.</div>
         </div>
 
       </div>
@@ -487,14 +729,18 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10589" data-tags="incentivo deporte clubes deportistas">
-          <h4>Régimen de Incentivo Deportivo</h4>
-          <p>Ley N° 10589</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10589')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10589">Brinda incentivos económicos y fiscales a deportistas y clubes.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Régimen de Incentivo Deportivo</h4>
+              <p>Ley N° 10589</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10589_Regimen_Incentivo_Deporte.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10589')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10589">Brinda incentivos económicos y fiscales a deportistas y clubes.</div>
         </div>
 
       </div>
@@ -506,26 +752,33 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10618" data-tags="diversidad genero derechos">
-          <h4>Diversidad y Género</h4>
-          <p>Ley N° 10618</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10618')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10618">Promueve políticas públicas con perspectiva de género y diversidad sexual.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Diversidad y Género</h4>
+              <p>Ley N° 10618</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10618_Diversidad_Sexo_Genero.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10618')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10618">Promueve políticas públicas con perspectiva de género y diversidad sexual.</div>
         </div>
 
-        <!-- NUEVO (10.800) -->
         <div class="ley-card" data-ley="10800" data-tags="protocolo violencia de genero genero denuncias proteccion">
-          <h4>Protocolo de Violencia de Género</h4>
-          <p>Ley N° 10800</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/PROTOCOLO%20VIOLENCIA%20DE%20GENERO.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/PROTOCOLO%20VIOLENCIA%20DE%20GENERO.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10800')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10800">Aprueba el Protocolo de intervención y el formulario único de denuncias ante situaciones de violencia por motivos de género.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Protocolo de Violencia de Género</h4>
+              <p>Ley N° 10800</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/PROTOCOLO%20VIOLENCIA%20DE%20GENERO.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/PROTOCOLO%20VIOLENCIA%20DE%20GENERO.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10800')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10800">Aprueba el Protocolo de intervención y el formulario único de denuncias ante situaciones de violencia por motivos de género.</div>
         </div>
 
       </div>
@@ -537,25 +790,33 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10713" data-tags="impuesto inmobiliario economia">
-          <h4>Impuesto Inmobiliario</h4>
-          <p>Ley N° 10713</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10713')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10713">Modifica el régimen del impuesto inmobiliario provincial.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Impuesto Inmobiliario</h4>
+              <p>Ley N° 10713</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10713_Impuesto_Inmobiliario.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10713')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10713">Modifica el régimen del impuesto inmobiliario provincial.</div>
         </div>
 
         <div class="ley-card" data-ley="10714" data-tags="aporte extraordinario economia social">
-          <h4>Aporte Extraordinario</h4>
-          <p>Ley N° 10714</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10714')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10714">Establece un aporte extraordinario destinado a políticas sociales.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Aporte Extraordinario</h4>
+              <p>Ley N° 10714</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10714_Aporte_Extraordinario.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10714')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10714">Establece un aporte extraordinario destinado a políticas sociales.</div>
         </div>
 
       </div>
@@ -567,14 +828,18 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10716" data-tags="parque lineal talas infraestructura">
-          <h4>Parque Lineal Las Talas</h4>
-          <p>Ley N° 10716</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10716')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10716">Proyecto para la creación de un parque lineal en el oeste de la ciudad.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Parque Lineal Las Talas</h4>
+              <p>Ley N° 10716</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10716_Parque_Las_Talas.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10716')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10716">Proyecto para la creación de un parque lineal en el oeste de la ciudad.</div>
         </div>
 
       </div>
@@ -586,14 +851,18 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10725" data-tags="combustibles energia">
-          <h4>Combustibles</h4>
-          <p>Ley N° 10725</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10725_Combustibles.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10725_Combustibles.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10725')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10725">Regula la comercialización y distribución de combustibles en la provincia.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Combustibles</h4>
+              <p>Ley N° 10725</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10725_Combustibles.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10725_Combustibles.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10725')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10725">Regula la comercialización y distribución de combustibles en la provincia.</div>
         </div>
 
       </div>
@@ -605,14 +874,18 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10729" data-tags="auditorias control publico">
-          <h4>Auditorías</h4>
-          <p>Ley N° 10729</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10729_Auditorias.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10729_Auditorias.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10729')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10729">Amplía las competencias de control y fiscalización del Estado.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Auditorías</h4>
+              <p>Ley N° 10729</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10729_Auditorias.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10729_Auditorias.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10729')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10729">Amplía las competencias de control y fiscalización del Estado.</div>
         </div>
 
       </div>
@@ -624,14 +897,18 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10743" data-tags="juego online apuestas tecnologia">
-          <h4>Juego Online</h4>
-          <p>Ley N° 10743</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10743_Juego_Online.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10743_Juego_Online.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10743')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10743">Regula las plataformas de apuestas y juegos en línea.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Juego Online</h4>
+              <p>Ley N° 10743</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10743_Juego_Online.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10743_Juego_Online.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10743')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10743">Regula las plataformas de apuestas y juegos en línea.</div>
         </div>
 
       </div>
@@ -643,120 +920,148 @@
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10754" data-tags="perros asistencia discapacidad">
-          <h4>Perros de Asistencia</h4>
-          <p>Ley N° 10754</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10754')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10754">Garantiza el acceso de perros de asistencia a espacios públicos y privados.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Perros de Asistencia</h4>
+              <p>Ley N° 10754</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/L10754_Perro_Asistencia.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10754')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10754">Garantiza el acceso de perros de asistencia a espacios públicos y privados.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- NUEVA Categoría: Derechos Humanos -->
+    <!-- Derechos Humanos -->
     <div class="accordion-item tarjeta">
       <div class="accordion-header">Derechos Humanos</div>
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10816" data-tags="busqueda de identidad derechos humanos identidad biologica origen socioafectivo">
-          <h4>Búsqueda de Identidad</h4>
-          <p>Ley N° 10816</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/BUSQUEDA%20DE%20IDENTIDAD.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/BUSQUEDA%20DE%20IDENTIDAD.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10816')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10816">Crea un programa para la búsqueda familiar, identidad biológica y origen socioafectivo, con intervención del área de DD.HH.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Búsqueda de Identidad</h4>
+              <p>Ley N° 10816</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/BUSQUEDA%20DE%20IDENTIDAD.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/BUSQUEDA%20DE%20IDENTIDAD.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10816')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10816">Crea un programa para la búsqueda familiar, identidad biológica y origen socioafectivo, con intervención del área de DD.HH.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- NUEVA Categoría: Justicia y Seguridad -->
+    <!-- Justicia y Seguridad -->
     <div class="accordion-item tarjeta">
       <div class="accordion-header">Justicia y Seguridad</div>
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10797" data-tags="codigo procesal penal justicia seguridad procedimiento">
-          <h4>Código Procesal Penal de La Rioja</h4>
-          <p>Ley N° 10797</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/CODOGO%20PROCESAL%20PENAL.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/CODOGO%20PROCESAL%20PENAL.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10797')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10797">Aprueba/organiza el Código Procesal Penal provincial y sus lineamientos generales.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Código Procesal Penal de La Rioja</h4>
+              <p>Ley N° 10797</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/CODOGO%20PROCESAL%20PENAL.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/CODOGO%20PROCESAL%20PENAL.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10797')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10797">Aprueba/organiza el Código Procesal Penal provincial y sus lineamientos generales.</div>
         </div>
 
         <div class="ley-card" data-ley="10796" data-tags="juicio por jurados justicia penal jurado">
-          <h4>Juicio por Jurados en materia penal</h4>
-          <p>Ley N° 10796</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/JUICIOS%20POR%20JURADO%201.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/JUICIOS%20POR%20JURADO%201.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10796')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10796">Establece el juicio por jurados en materia penal y define su procedimiento y alcance.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Juicio por Jurados en materia penal</h4>
+              <p>Ley N° 10796</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/JUICIOS%20POR%20JURADO%201.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/JUICIOS%20POR%20JURADO%201.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10796')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10796">Establece el juicio por jurados en materia penal y define su procedimiento y alcance.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- NUEVA Categoría: Ambiente y Convivencia -->
+    <!-- Ambiente y Convivencia -->
     <div class="accordion-item tarjeta">
       <div class="accordion-header">Ambiente y Convivencia</div>
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10819" data-tags="pirotecnia cero ambiente fauna bienestar salud sonora">
-          <h4>Pirotecnia Cero</h4>
-          <p>Ley N° 10819</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/PIROTECNIA%20CERO.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/PIROTECNIA%20CERO.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10819')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10819">Protege la salud, el bienestar, la fauna y el ambiente frente a los efectos de la pirotecnia (impacto sonoro y ambiental).</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Pirotecnia Cero</h4>
+              <p>Ley N° 10819</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/PIROTECNIA%20CERO.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/PIROTECNIA%20CERO.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10819')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10819">Protege la salud, el bienestar, la fauna y el ambiente frente a los efectos de la pirotecnia (impacto sonoro y ambiental).</div>
         </div>
 
       </div>
     </div>
 
-    <!-- NUEVA Categoría: Minería y Producción -->
+    <!-- Minería y Producción -->
     <div class="accordion-item tarjeta">
       <div class="accordion-header">Minería y Producción</div>
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10799" data-tags="proveedores mineros mineria empleo mano de obra riojana">
-          <h4>Proveedores Mineros</h4>
-          <p>Ley N° 10799</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/PROVEDORES%20MINEROS.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/PROVEDORES%20MINEROS.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10799')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10799">Crea un marco para el desarrollo de proveedores mineros y mano de obra local, fomentando contratación y registro/condiciones.</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Proveedores Mineros</h4>
+              <p>Ley N° 10799</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/PROVEDORES%20MINEROS.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/PROVEDORES%20MINEROS.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10799')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10799">Crea un marco para el desarrollo de proveedores mineros y mano de obra local, fomentando contratación y registro/condiciones.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- NUEVA Categoría: Patrimonio e Instituciones -->
+    <!-- Patrimonio e Instituciones -->
     <div class="accordion-item tarjeta">
       <div class="accordion-header">Patrimonio e Instituciones</div>
       <div class="accordion-content">
 
         <div class="ley-card" data-ley="10841" data-tags="donacion inmueble munay biblioteca santa vera cruz castro barros patrimonio">
-          <h4>Donación de Inmueble – “Munay”</h4>
-          <p>Ley N° 10841</p>
-          <div class="botones">
-            <a href="proyectos_legislativos/DONACI%C3%93N%20INMUEBLE%20MUNAY.pdf" target="_blank" rel="noopener">Ver PDF</a>
-            <a href="proyectos_legislativos/DONACI%C3%93N%20INMUEBLE%20MUNAY.pdf" download>Descargar PDF</a>
-            <button type="button" onclick="toggleDescripcion('desc-10841')">Ver resumen</button>
-            <div class="descripcion-extra" id="desc-10841">Transfiere en carácter de donación un inmueble a una institución (Asociación Civil/Biblioteca Popular “Munay”).</div>
+          <div class="ley-head">
+            <div class="ley-txt">
+              <h4>Donación de Inmueble – “Munay”</h4>
+              <p>Ley N° 10841</p>
+            </div>
+            <div class="botones">
+              <a class="btn-ver" href="proyectos_legislativos/DONACI%C3%93N%20INMUEBLE%20MUNAY.pdf" target="_blank" rel="noopener">Ver PDF</a>
+              <a class="btn-desc" href="proyectos_legislativos/DONACI%C3%93N%20INMUEBLE%20MUNAY.pdf" download>Descargar</a>
+              <button type="button" onclick="toggleDescripcion('desc-10841')">Ver resumen</button>
+            </div>
           </div>
+          <div class="descripcion-extra" id="desc-10841">Transfiere en carácter de donación un inmueble a una institución (Asociación Civil/Biblioteca Popular “Munay”).</div>
         </div>
 
       </div>
@@ -766,13 +1071,15 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener"><img src="logo ig.png" alt="Instagram"></a>
-      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener"><img src="logo fb.png" alt="Facebook"></a>
-      <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener"><img src="logo x.png" alt="X"></a>
+    <div class="footer-pill">
+      <div class="social-icons">
+        <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener"><img src="logo ig.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener"><img src="logo fb.png" alt="Facebook"></a>
+        <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener"><img src="logo x.png" alt="X"></a>
+      </div>
+      <div>Creado por PB – © 2025</div>
+      <img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes" style="height:42px; display:none;">
     </div>
-    <div style="font-size:14px;">Creado por PB – © 2025</div>
-    <img id="logo-lourdes-mobile" src="logo-lou.png" alt="Logo Lourdes" style="height:50px; display:none;">
   </footer>
 
   <script>
@@ -781,8 +1088,13 @@
       // 1) Acordeón manual
       document.querySelectorAll('.accordion-header').forEach(header => {
         header.addEventListener('click', () => {
+          const item = header.closest(".accordion-item");
           const content = header.nextElementSibling;
-          content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+
+          const isOpen = content.style.display === 'block';
+          content.style.display = isOpen ? 'none' : 'block';
+
+          if (item) item.classList.toggle("is-open", !isOpen);
         });
       });
 
@@ -861,7 +1173,10 @@
 
           // Abrir acordeón si tiene resultados
           const content = item.querySelector('.accordion-content');
-          if (content) content.style.display = tieneAlgunaVisible ? 'block' : 'none';
+          if (content) {
+            content.style.display = tieneAlgunaVisible ? 'block' : 'none';
+            item.classList.toggle("is-open", tieneAlgunaVisible);
+          }
         });
 
         // Resaltar primera coincidencia
@@ -906,6 +1221,5 @@
 
     });
   </script>
-
 </body>
 </html>

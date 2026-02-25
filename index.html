@@ -3,251 +3,206 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" href="bot/vicunita-bot.css">
-
+  <link rel="stylesheet" href="bot/vicunita-bot.css?v=20260224-2">
   <title>Bot de Lourdes Ortiz</title>
 
   <link rel="preload" as="image" href="fondos (2).png" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="vicu.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    :root {
-      --primario: #0198a4;
-      --secundario: #1a8689;
-      --blanco: #ffffff;
+    :root{
+      --primario:#0198a4;
+      --secundario:#1a8689;
+      --texto:#ffffff;
+      --muted:rgba(255,255,255,.88);
     }
 
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: url('fondos (2).png') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:url('fondos (2).png') no-repeat center center fixed;
+      background-size:cover;
+      color:var(--texto);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
 
-    /* ✅ LOGO lateral Lourdes (marca de agua + detrás del chat) */
-    .logo-lourdes-lateral {
-      position: fixed;
-      left: 15px;
-      top: 52%;
-      transform: translateY(-50%);
-      height: 72px;
-
-      /* ✅ detrás del chat */
-      z-index: 1;
-      pointer-events: none;
-
-      /* ✅ efecto marca de agua elegante */
-      opacity: 0.35;
-      filter: blur(0.2px);
-      transition: opacity 0.3s ease, filter 0.3s ease;
+    /* Capa institucional suave */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:linear-gradient(
+        180deg,
+        rgba(1,152,164,.45),
+        rgba(26,134,137,.35)
+      );
+      z-index:0;
+      pointer-events:none;
     }
 
-    /* opcional: si querés que al pasar el mouse se vea un poquito más */
-    .logo-lourdes-lateral:hover {
-      opacity: 0.45;
-      filter: blur(0px);
+    /* Logo Lourdes lateral */
+    .logo-lourdes{
+      position:fixed;
+      left:20px;
+      top:50%;
+      transform:translateY(-50%);
+      height:60px;
+      opacity:.18;
+      pointer-events:none;
+      z-index:1;
     }
 
-    header {
-      text-align: center;
-      padding: 1.2rem 0.8rem;
-      background-color: rgba(1, 152, 164, 0.85);
-      color: var(--blanco);
+    /* Vicuñita */
+    #vicunita-index{
+      position:fixed;
+      right:-10px;
+      bottom:-10px;
+      width:min(520px, 42vw);
+      max-height:86vh;
+      pointer-events:none;
+      z-index:1;
     }
 
-    header h1 {
-      font-size: 2.8rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
+    header{
+      position:relative;
+      z-index:2;
+      text-align:center;
+      padding:60px 20px 30px;
     }
 
-    header p {
-      font-size: 1.2rem;
-      margin: 0;
-      font-weight: 500;
+    header h1{
+      font-size:clamp(2rem,4vw,2.8rem);
+      font-weight:800;
+      margin:0 0 15px;
     }
 
-    .botones {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 2rem;
+    header p{
+      font-size:1.1rem;
+      margin:0;
+      color:var(--muted);
     }
 
-    .botones button {
-      font-size: 1.1rem;
-      font-weight: bold;
-      padding: 1rem 1.5rem;
-      background-color: var(--primario);
-      color: white;
-      border: 2px solid white;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
+    header p + p{
+      margin-top:8px;
     }
 
-    .botones button:hover {
-      background-color: var(--secundario);
-      transform: scale(1.05);
+    main{
+      position:relative;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+      padding:20px;
+      max-width:600px;
+      margin:0 auto;
     }
 
-    footer {
-      background-color: var(--secundario);
-      color: white;
-      padding: 0.4rem 0.6rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
-      margin-top: auto;
-      font-size: 0.85rem;
+    .btn{
+      width:100%;
+      padding:16px;
+      font-size:1.05rem;
+      font-weight:600;
+      border-radius:14px;
+      border:none;
+      cursor:pointer;
+      background:linear-gradient(135deg,var(--primario),var(--secundario));
+      color:white;
+      transition:.25s ease;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
     }
 
-    footer .social-icons {
-      display: flex;
-      gap: 10px;
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 40px rgba(0,0,0,.25);
     }
 
-    footer .social-icons img {
-      width: 18px;
-      height: 18px;
-      transition: transform 0.3s;
+    footer{
+      margin-top:auto;
+      text-align:center;
+      padding:20px;
+      position:relative;
+      z-index:2;
+      font-size:.9rem;
     }
 
-    footer .social-icons img:hover {
-      transform: scale(1.1);
+    .social-icons{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin-bottom:10px;
     }
 
-    @media screen and (max-width: 600px) {
-      header h1 { font-size: 1.4rem; }
-      header p { font-size: 0.85rem; }
-
-      .logo-lourdes-lateral {
-        height: 50px;
-        left: 5px;
-        opacity: 0.30;
-      }
+    .social-icons img{
+      width:18px;
+      transition:.2s;
     }
 
-    /* ✅ Ajuste mobile general */
-    @media screen and (max-width: 768px) {
-      header {
-        padding-top: 30px;
-        text-align: center;
-      }
+    .social-icons img:hover{
+      transform:scale(1.1);
+    }
 
-      /* ✅ Logo en mobile: atrás del chat + marca de agua */
-      .logo-lourdes-lateral {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        height: 38px;
-        transform: none;
+    /* MOBILE */
+    @media (max-width:768px){
 
-        z-index: 1;
-        pointer-events: none;
-
-        opacity: 0.30;
-        filter: blur(0.2px);
-      }
-
-      header h1 { font-size: 1.5rem; }
-      header p { font-size: 1rem; margin: 0 10px; }
-
-      .botones button {
-        font-size: 1rem;
-        padding: 0.9rem;
-        margin: 8px 12px;
-        width: 90%;
+      .logo-lourdes{
+        height:40px;
+        top:15px;
+        transform:none;
       }
 
-      #vicuñita-index {
-        display: block;
-        position: absolute;
-        bottom: 10px;
-        left: 12px;
-        width: 80px;
-        opacity: 0.95;
-      }
-    }
-
-    /* Logo para móviles (abajo al lado de la vicuña) */
-    .logo-lourdes-mobile {
-      display: none;
-    }
-
-    @media screen and (max-width: 768px) {
-      #logo-lourdes-desktop {
-        display: none !important;
+      #vicunita-index{
+        position:absolute;
+        width:75vw;
+        opacity:.25;
       }
 
-      .logo-lourdes-mobile {
-        display: block;
-        position: absolute;
-        bottom: 10px;
-        left: 95px;
-        width: 90px;
-        opacity: 0.95;
-        z-index: 5;
+      header{
+        padding-top:80px;
       }
 
-      footer {
-        position: relative;
-        padding-bottom: 60px;
+      main{
+        padding:15px;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Logo lateral Lourdes -->
-  <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-lateral" id="logo-lourdes-desktop">
 
-  <!-- ENCABEZADO -->
+  <img src="logo-lou.png" class="logo-lourdes" alt="Logo Lourdes Ortiz">
+  <img src="vicu.png" id="vicunita-index" alt="Vicuñita">
+
   <header>
     <h1>¡Hola! Soy Vicuñita</h1>
-    <p>estoy acá para ayudarte y guiarte.</p>
+    <p>Estoy acá para ayudarte y guiarte.</p>
     <p>Participá, consultá, proponé ideas y seguí proyectos en curso.</p>
   </header>
 
-  <!-- BOTONES -->
-  <main class="botones">
-    <button onclick="location.href='reclamos.html'">📌 Realizar una Sugerencia</button>
-    <button onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
-    <button onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
-    <button onclick="location.href='ideas.html'">💡 Proponer una Idea</button>
-    <button onclick="location.href='funcion-legislatura.html'">🏛️ ¿Conocés cuál es la función de la Legislatura?</button>
+  <main>
+    <button class="btn" onclick="location.href='reclamos.html'">📌 Realizar una Sugerencia</button>
+    <button class="btn" onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
+    <button class="btn" onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
+    <button class="btn" onclick="location.href='ideas.html'">💡 Proponer una Idea</button>
+    <button class="btn" onclick="location.href='funcion-legislatura.html'">🏛️ ¿Conocés cuál es la función de la Legislatura?</button>
   </main>
 
-   <!-- BOT Vicuñita (flotante) -->
-    <div id="vicunita-bot-root"></div>
-    <script src="bot/vicunita-bot.js?v=20260224-1" defer></script>
+  <div id="vicunita-bot-root"></div>
+  <script src="bot/vicunita-bot.js?v=20260224-3" defer></script>
 
-  <!-- FOOTER -->
   <footer>
     <div class="social-icons">
-      <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener">
-        <img src="logo ig.png" alt="Instagram">
-      </a>
-      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener">
-        <img src="logo fb.png" alt="Facebook">
-      </a>
-      <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener">
-        <img src="logo x.png" alt="x">
-      </a>
+      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png"></a>
+      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png"></a>
+      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png"></a>
     </div>
-
-    <div>Creado por PB – © 2025</div>
-
-    <!-- Logo Lourdes abajo solo para móviles -->
-    <img src="logo-lou.png" alt="Logo Lourdes Ortiz" class="logo-lourdes-mobile">
+    Creado por PB – © 2025
   </footer>
+
 </body>
 </html>
-
