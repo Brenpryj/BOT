@@ -29,9 +29,10 @@
       min-height:100vh;
       display:flex;
       flex-direction:column;
+      position:relative;
+      overflow-x:hidden;
     }
 
-    /* Capa institucional suave */
     body::before{
       content:"";
       position:fixed;
@@ -45,7 +46,6 @@
       pointer-events:none;
     }
 
-    /* Logo Lourdes lateral */
     .logo-lourdes{
       position:fixed;
       left:20px;
@@ -57,15 +57,16 @@
       z-index:1;
     }
 
-    /* Vicuñita */
     #vicunita-index{
       position:fixed;
       right:-10px;
-      bottom:-10px;
+      bottom:0;
       width:min(520px, 42vw);
-      max-height:86vh;
+      max-width:520px;
+      max-height:82vh;
       pointer-events:none;
       z-index:1;
+      object-fit:contain;
     }
 
     header{
@@ -79,6 +80,7 @@
       font-size:clamp(2rem,4vw,2.8rem);
       font-weight:800;
       margin:0 0 15px;
+      line-height:1.1;
     }
 
     header p{
@@ -99,6 +101,7 @@
       align-items:center;
       gap:18px;
       padding:20px;
+      width:min(100%, 600px);
       max-width:600px;
       margin:0 auto;
     }
@@ -134,40 +137,140 @@
     .social-icons{
       display:flex;
       justify-content:center;
+      align-items:center;
       gap:14px;
       margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+
+    .social-icons a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
     }
 
     .social-icons img{
       width:18px;
+      height:18px;
+      object-fit:contain;
       transition:.2s;
+      display:block;
     }
 
     .social-icons img:hover{
       transform:scale(1.1);
     }
 
-    /* MOBILE */
-    @media (max-width:768px){
-
-      .logo-lourdes{
-        height:40px;
-        top:15px;
-        transform:none;
-      }
-
+    /* TABLET */
+    @media (max-width: 1024px){
       #vicunita-index{
-        position:absolute;
-        width:75vw;
-        opacity:.25;
-      }
-
-      header{
-        padding-top:80px;
+        width:min(380px, 38vw);
+        max-height:70vh;
+        opacity:.75;
       }
 
       main{
-        padding:15px;
+        max-width:560px;
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width:768px){
+
+      body{
+        background-position:center top;
+      }
+
+      .logo-lourdes{
+        position:absolute;
+        left:14px;
+        top:14px;
+        transform:none;
+        height:38px;
+        opacity:.22;
+      }
+
+      #vicunita-index{
+        position:fixed;
+        right:50%;
+        transform:translateX(50%);
+        bottom:88px;
+        width:min(250px, 62vw);
+        max-width:none;
+        max-height:34vh;
+        opacity:.20;
+        object-fit:contain;
+      }
+
+      header{
+        padding:80px 16px 24px;
+      }
+
+      header h1{
+        font-size:clamp(1.8rem, 8vw, 2.3rem);
+        line-height:1.08;
+      }
+
+      header p{
+        font-size:1rem;
+      }
+
+      main{
+        width:100%;
+        max-width:100%;
+        padding:12px 14px 20px;
+        gap:14px;
+      }
+
+      .btn{
+        font-size:1rem;
+        padding:15px 14px;
+        border-radius:12px;
+      }
+
+      footer{
+        padding:20px 14px 26px;
+        font-size:.85rem;
+      }
+
+      .social-icons{
+        gap:16px;
+      }
+    }
+
+    /* MOBILE PEQUEÑO */
+    @media (max-width:480px){
+      #vicunita-index{
+        width:min(220px, 64vw);
+        bottom:100px;
+        opacity:.16;
+      }
+
+      header{
+        padding:78px 14px 22px;
+      }
+
+      header h1{
+        font-size:clamp(1.65rem, 8vw, 2rem);
+      }
+
+      header p{
+        font-size:.96rem;
+      }
+
+      main{
+        padding:10px 12px 18px;
+        gap:12px;
+      }
+
+      .btn{
+        font-size:.96rem;
+        padding:14px 12px;
+      }
+
+      footer{
+        padding:18px 12px 24px;
       }
     }
   </style>
@@ -189,6 +292,7 @@
     <button class="btn" onclick="location.href='proyectos.html'">📚 Ver Proyectos Legislativos</button>
     <button class="btn" onclick="location.href='declaraciones.html'">📄 Declaraciones de Interés</button>
     <button class="btn" onclick="location.href='ideas.html'">💡 Proponer una Idea</button>
+    <button class="btn" onclick="location.href='companeros.html'">👥 Conocé a mis compañeros</button>
     <button class="btn" onclick="location.href='funcion-legislatura.html'">🏛️ ¿Conocés cuál es la función de la Legislatura?</button>
   </main>
 
@@ -197,9 +301,15 @@
 
   <footer>
     <div class="social-icons">
-      <a href="https://www.instagram.com/lourortiz" target="_blank"><img src="logo ig.png"></a>
-      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank"><img src="logo fb.png"></a>
-      <a href="https://x.com/Lourdez_ortiz" target="_blank"><img src="logo x.png"></a>
+      <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener noreferrer">
+        <img src="logo ig.png" alt="Instagram">
+      </a>
+      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener noreferrer">
+        <img src="logo fb.png" alt="Facebook">
+      </a>
+      <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener noreferrer">
+        <img src="logo x.png" alt="X">
+      </a>
     </div>
     Creado por PB – © 2025
   </footer>

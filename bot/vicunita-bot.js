@@ -80,10 +80,13 @@
   const elSend = document.getElementById("vbSend");
 
   const STATE = {
-    mode: "menu", // menu | awaiting_keyword | chat
-    subscribedWeekly: localStorage.getItem("vb_weekly") === "true",
-    welcomeHidden: false
-  };
+    mode: "menu",
+  subscribedWeekly: localStorage.getItem("vb_weekly") === "true",
+  welcomeHidden: false,
+  lastKeyword: "",
+  lastUserText: "",
+  lastPage: window.location.pathname.split("/").pop() || "index.html"
+};
 
   // ======================
   // Helpers UX
@@ -258,7 +261,7 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
     );
 
     setQuickButtons([
-      { label: "1️⃣ Trabajo Territorial", onClick: option1, _divider: "Trabajo Territorial" },
+      // { label: "1️⃣ Trabajo Territorial", onClick: option1, _divider: "Trabajo Territorial" },
       { label: "2️⃣ Leyes y proyectos", onClick: option2, _divider: "Leyes y proyectos" },
       { label: "3️⃣ Sobre la Legislatura", onClick: option3, _divider: "Sobre la Legislatura" },
       { label: "4️⃣ Noticias recientes", onClick: option4, _divider: "Noticias recientes" },
@@ -457,6 +460,8 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
   function searchKeyword(keywordRaw) {
     const original = (keywordRaw || "").trim();
     const cleaned = limpiarConsultaParaProyectos(original);
+    STATE.lastKeyword = cleaned || "";
+    STATE.lastUserText = original || "";
 
     if (!cleaned) {
       pushMsg("Decime una palabra o número de ley (ej: salud, educación, 10490, 10585).");
@@ -794,112 +799,344 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
   // ======================
   // Opción 5 - Contactar equipo
   // ======================
-  function option5() {
-    pushMsg("📞 Para contactar al equipo, podés elegir una opción:");
+function option5() {
+  pushMsg("📞 Para contactar al equipo, podés elegir una opción:");
 
-    setQuickButtons([
-      {
-        label: "✉️ Mail institucional",
-        onClick: () =>
-          openMailDirect({
-            to: "equipolourdesortiz1@gmail.com",
-            subject: "Contacto desde Vicuñita",
-            body: "Hola equipo, les escribo por lo siguiente:\n\n",
-          }),
-        _divider: "Mail",
-      },
-      {
-        label: "🤝 Participar en actividades",
-        onClick: () => option5_ActivitiesFormInChat(),
-        _divider: "Actividades",
-      },
-      { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
-    ]);
-  }
+  setQuickButtons([
+    {
+      label: "✉️ Email institucional",
+      onClick: () =>
+        openMailDirect({
+          to: "equipo.lourdesortiz@gmail.com",
+          subject: "Contacto desde Vicuñita",
+          body: "Hola equipo, les escribo por lo siguiente:\n\n",
+        }),
+      _divider: "Email institucional",
+    },
+    {
+      label: "🤝 Contactar con el equipo",
+      onClick: () => option5_ContactFormInChat(),
+      _divider: "Contacto",
+    },
+    {
+      label: "🙋 Participar en actividades",
+      onClick: () => option5_ActivitiesFormInChat(),
+      _divider: "Actividades",
+    },
+    { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
+  ]);
+}
 
-  function openMailDirect({ to, subject = "", body = "" }) {
-    const mailto =
-      `mailto:${encodeURIComponent(to)}` +
-      `?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(body)}`;
+function openMailDirect({ to, subject = "", body = "" }) {
+  const mailto =
+    `mailto:${to}` +
+    `?subject=${encodeURIComponent(subject)}` +
+    `&body=${encodeURIComponent(body)}`;
 
-    window.location.href = mailto;
-  }
+  window.location.href = mailto;
+}
 
-  function getChatMessagesContainerSmart() {
-    return document.getElementById("vbBody");
-  }
+function getChatMessagesContainerSmart() {
+  return document.getElementById("vbBody");
+}
 
-  function option5_ActivitiesFormInChat(retries = 10) {
-    const container = getChatMessagesContainerSmart();
+function getCurrentDateTimeMeta() {
+  const now = new Date();
 
-    if (!container) {
-      if (retries > 0) return setTimeout(() => option5_ActivitiesFormInChat(retries - 1), 120);
-      return;
+  const fecha = now.toLocaleDateString("es-AR");
+  const hora = now.toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  return { fecha, hora };
+}
+
+function getContactContextMeta() {
+  const { fecha, hora } = getCurrentDateTimeMeta();
+
+  return {
+    fecha,
+    hora,
+    pagina: window.location.href,
+    paginaNombre:
+      (typeof STATE !== "undefined" && STATE.lastPage)
+        ? STATE.lastPage
+        : (window.location.pathname.split("/").pop() || "index.html"),
+    palabraClave:
+      (typeof STATE !== "undefined" && STATE.lastKeyword)
+        ? STATE.lastKeyword
+        : "",
+    textoBuscado:
+      (typeof STATE !== "undefined" && STATE.lastUserText)
+        ? STATE.lastUserText
+        : ""
+  };
+}
+
+async function saveContactToFirebase(payload) {
+  try {
+    if (
+      !window.firebaseDB ||
+      !window.firebaseFns ||
+      typeof window.firebaseFns.addDoc !== "function" ||
+      typeof window.firebaseFns.collection !== "function"
+    ) {
+      console.warn("Firebase no disponible para guardar contactos.");
+      return { ok: false, reason: "firebase-no-disponible" };
     }
 
-    const old = document.getElementById("formActividadesEnChat");
-    if (old) old.remove();
+    const { addDoc, collection, serverTimestamp } = window.firebaseFns;
 
-    const bubble = document.createElement("div");
-    bubble.id = "formActividadesEnChat";
-    bubble.className = "vb-msg vb-bot actividad-bubble";
-
-    bubble.innerHTML = `
-      <div class="actividad-card">
-        <div class="actividad-title">🤝 Participar en actividades</div>
-
-        <form class="form-actividades-chat" autocomplete="on">
-          <label>Nombre y apellido *</label>
-          <input type="text" name="nombre" placeholder="Ej: Romina Díaz" required />
-
-          <label>Número de teléfono *</label>
-          <input type="tel" name="telefono" placeholder="Ej: 3804..." required />
-
-          <label>Email *</label>
-          <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
-
-          <label>¿En qué actividades te gustaría participar? *</label>
-          <textarea name="actividades" rows="3" placeholder="Ej: rondas de servicios, eventos barriales, voluntariado..." required></textarea>
-
-          <label>Disponibilidad horaria *</label>
-          <input type="text" name="disponibilidad" placeholder="Ej: Lun a Vie 9 a 12 / Sáb por la tarde..." required />
-
-          <div class="form-actions">
-            <button type="submit" class="btn-enviar-form">Enviar</button>
-            <button type="button" class="btn-cancelar-form">Cancelar</button>
-          </div>
-
-          <small class="help">Al enviar, se abrirá tu correo con el mensaje ya armado.</small>
-        </form>
-      </div>
-    `;
-
-    container.appendChild(bubble);
-    container.scrollTop = container.scrollHeight;
-
-    const form = bubble.querySelector("form");
-    const cancel = bubble.querySelector(".btn-cancelar-form");
-
-    cancel.addEventListener("click", () => {
-      bubble.remove();
-      container.scrollTop = container.scrollHeight;
+    await addDoc(collection(window.firebaseDB, "contactos_vicunita"), {
+      ...payload,
+      createdAt: typeof serverTimestamp === "function" ? serverTimestamp() : new Date(),
+      source: "vicuñita-bot",
+      estado: "nuevo"
     });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    return { ok: true };
+  } catch (error) {
+    console.warn("Error Firebase:", error);
+    return { ok: false, reason: "firebase-error" };
+  }
+}
 
-      const data = new FormData(form);
-      const nombre = (data.get("nombre") || "").toString().trim();
-      const telefono = (data.get("telefono") || "").toString().trim();
-      const email = (data.get("email") || "").toString().trim();
-      const actividades = (data.get("actividades") || "").toString().trim();
-      const disponibilidad = (data.get("disponibilidad") || "").toString().trim();
+async function saveActivityToFirebase(payload) {
+  try {
+    if (
+      !window.firebaseDB ||
+      !window.firebaseFns ||
+      typeof window.firebaseFns.addDoc !== "function" ||
+      typeof window.firebaseFns.collection !== "function"
+    ) {
+      console.warn("Firebase no disponible para guardar actividades.");
+      return { ok: false, reason: "firebase-no-disponible" };
+    }
 
-      if (!nombre || !telefono || !email || !actividades || !disponibilidad) return;
+    const { addDoc, collection, serverTimestamp } = window.firebaseFns;
 
-      const subject = "Participación en actividades (Vicuñita)";
-      const body =
+    await addDoc(collection(window.firebaseDB, "participacion_actividades_vicunita"), {
+      ...payload,
+      createdAt: typeof serverTimestamp === "function" ? serverTimestamp() : new Date(),
+      source: "vicuñita-bot",
+      estado: "nuevo"
+    });
+
+    return { ok: true };
+  } catch (error) {
+    console.warn("Error Firebase:", error);
+    return { ok: false, reason: "firebase-error" };
+  }
+}
+
+function option5_ContactFormInChat(retries = 10) {
+  const container = getChatMessagesContainerSmart();
+
+  if (!container) {
+    if (retries > 0) {
+      return setTimeout(() => option5_ContactFormInChat(retries - 1), 120);
+    }
+    return;
+  }
+
+  const old = document.getElementById("formContactoEquipoEnChat");
+  if (old) old.remove();
+
+  const bubble = document.createElement("div");
+  bubble.id = "formContactoEquipoEnChat";
+  bubble.className = "vb-msg vb-bot actividad-bubble";
+
+  bubble.innerHTML = `
+    <div class="actividad-card">
+      <div class="actividad-title">🤝 Contactar con el equipo</div>
+
+      <form class="form-actividades-chat" autocomplete="on">
+        <label>Nombre y apellido *</label>
+        <input type="text" name="nombre" placeholder="Ej: Brenda Pryjmaczuk" required />
+
+        <label>Número de teléfono</label>
+        <input type="tel" name="telefono" placeholder="Ej: 3804..." />
+
+        <label>Email *</label>
+        <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
+
+        <label>Motivo del contacto *</label>
+        <textarea name="motivo" rows="4" placeholder="Ej: Quiero comunicarme con el equipo por..." required></textarea>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-enviar-form">Enviar</button>
+          <button type="button" class="btn-cancelar-form">Cancelar</button>
+        </div>
+
+        <small class="help">Al enviar, se guardará el contacto y se abrirá tu correo con el mensaje ya armado.</small>
+      </form>
+    </div>
+  `;
+
+  container.appendChild(bubble);
+  container.scrollTop = container.scrollHeight;
+
+  const form = bubble.querySelector("form");
+  const cancel = bubble.querySelector(".btn-cancelar-form");
+
+  cancel.addEventListener("click", () => {
+    bubble.remove();
+    container.scrollTop = container.scrollHeight;
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const nombre = (data.get("nombre") || "").toString().trim();
+    const telefono = (data.get("telefono") || "").toString().trim();
+    const email = (data.get("email") || "").toString().trim();
+    const motivo = (data.get("motivo") || "").toString().trim();
+
+    if (!nombre || !email || !motivo) return;
+
+    const meta = getContactContextMeta();
+
+    const payload = {
+      tipo: "contacto_equipo",
+      nombre,
+      telefono: telefono || "",
+      email,
+      motivo,
+      fechaTexto: meta.fecha,
+      horaTexto: meta.hora,
+      pagina: meta.pagina,
+      paginaNombre: meta.paginaNombre,
+      palabraClave: meta.palabraClave,
+      textoBuscado: meta.textoBuscado
+    };
+
+    const subject = "Contacto desde Vicuñita";
+    const body =
+`Hola equipo,
+Quiero contactarme con ustedes. Mis datos son:
+
+• Nombre y apellido: ${nombre}
+• Teléfono: ${telefono || "No informado"}
+• Email: ${email}
+• Motivo del contacto: ${motivo}
+
+Datos automáticos del sistema:
+• Fecha: ${meta.fecha}
+• Hora: ${meta.hora}
+• Página: ${meta.paginaNombre}
+• URL: ${meta.pagina}
+• Palabra clave buscada: ${meta.palabraClave || "No informada"}
+• Último texto escrito: ${meta.textoBuscado || "No informado"}
+
+¡Gracias!`;
+
+    const result = await saveContactToFirebase(payload);
+
+    bubble.remove();
+
+    if (result.ok) {
+      pushMsg("✅ Tus datos fueron registrados correctamente.");
+    } else {
+      pushMsg("⚠️ No se pudo guardar en la base de datos, pero igual vamos a abrir el correo.");
+    }
+
+    openMailDirect({
+      to: "equipo.lourdesortiz@gmail.com",
+      subject,
+      body
+    });
+  });
+}
+
+function option5_ActivitiesFormInChat(retries = 10) {
+  const container = getChatMessagesContainerSmart();
+
+  if (!container) {
+    if (retries > 0) return setTimeout(() => option5_ActivitiesFormInChat(retries - 1), 120);
+    return;
+  }
+
+  const old = document.getElementById("formActividadesEnChat");
+  if (old) old.remove();
+
+  const bubble = document.createElement("div");
+  bubble.id = "formActividadesEnChat";
+  bubble.className = "vb-msg vb-bot actividad-bubble";
+
+  bubble.innerHTML = `
+    <div class="actividad-card">
+      <div class="actividad-title">🙋 Participar en actividades</div>
+
+      <form class="form-actividades-chat" autocomplete="on">
+        <label>Nombre y apellido *</label>
+        <input type="text" name="nombre" placeholder="Ej: Romina Díaz" required />
+
+        <label>Número de teléfono *</label>
+        <input type="tel" name="telefono" placeholder="Ej: 3804..." required />
+
+        <label>Email *</label>
+        <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
+
+        <label>¿En qué actividades te gustaría participar? *</label>
+        <textarea name="actividades" rows="3" placeholder="Ej: rondas de servicios, eventos barriales, voluntariado..." required></textarea>
+
+        <label>Disponibilidad horaria *</label>
+        <input type="text" name="disponibilidad" placeholder="Ej: Lun a Vie 9 a 12 / Sáb por la tarde..." required />
+
+        <div class="form-actions">
+          <button type="submit" class="btn-enviar-form">Enviar</button>
+          <button type="button" class="btn-cancelar-form">Cancelar</button>
+        </div>
+
+        <small class="help">Al enviar, se guardará la solicitud y se abrirá tu correo con el mensaje ya armado.</small>
+      </form>
+    </div>
+  `;
+
+  container.appendChild(bubble);
+  container.scrollTop = container.scrollHeight;
+
+  const form = bubble.querySelector("form");
+  const cancel = bubble.querySelector(".btn-cancelar-form");
+
+  cancel.addEventListener("click", () => {
+    bubble.remove();
+    container.scrollTop = container.scrollHeight;
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const nombre = (data.get("nombre") || "").toString().trim();
+    const telefono = (data.get("telefono") || "").toString().trim();
+    const email = (data.get("email") || "").toString().trim();
+    const actividades = (data.get("actividades") || "").toString().trim();
+    const disponibilidad = (data.get("disponibilidad") || "").toString().trim();
+
+    if (!nombre || !telefono || !email || !actividades || !disponibilidad) return;
+
+    const meta = getContactContextMeta();
+
+    const payload = {
+      tipo: "participacion_actividades",
+      nombre,
+      telefono,
+      email,
+      actividades,
+      disponibilidad,
+      fechaTexto: meta.fecha,
+      horaTexto: meta.hora,
+      pagina: meta.pagina,
+      paginaNombre: meta.paginaNombre,
+      palabraClave: meta.palabraClave,
+      textoBuscado: meta.textoBuscado
+    };
+
+    const subject = "Participación en actividades (Vicuñita)";
+    const body =
 `Hola equipo,
 Quiero participar en actividades. Mis datos son:
 
@@ -909,13 +1146,33 @@ Quiero participar en actividades. Mis datos son:
 • Actividades de interés: ${actividades}
 • Disponibilidad horaria: ${disponibilidad}
 
+Datos automáticos del sistema:
+• Fecha: ${meta.fecha}
+• Hora: ${meta.hora}
+• Página: ${meta.paginaNombre}
+• URL: ${meta.pagina}
+• Palabra clave buscada: ${meta.palabraClave || "No informada"}
+• Último texto escrito: ${meta.textoBuscado || "No informado"}
+
 ¡Gracias!`;
 
-      bubble.remove();
-      openMailDirect({ to: "equipolourdesortiz1@gmail.com", subject, body });
-    });
-  }
+    const result = await saveActivityToFirebase(payload);
 
+    bubble.remove();
+
+    if (result.ok) {
+      pushMsg("✅ Tu solicitud fue registrada correctamente.");
+    } else {
+      pushMsg("⚠️ No se pudo guardar en la base de datos, pero igual vamos a abrir el correo.");
+    }
+
+    openMailDirect({
+      to: "equipo.lourdesortiz@gmail.com",
+      subject,
+      body
+    });
+  });
+}
   // ======================
   // Opción 6 - Información Ciudadana Útil
   // ======================
@@ -1006,6 +1263,7 @@ Quiero participar en actividades. Mis datos son:
     const text = (elInput.value || "").trim();
     if (!text) return;
 
+    STATE.lastUserText = text;
     pushMsg(text, "user");
     elInput.value = "";
 
