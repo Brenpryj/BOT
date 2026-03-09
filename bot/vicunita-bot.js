@@ -827,13 +827,38 @@ function option5() {
   ]);
 }
 
-function openMailDirect({ to, subject = "", body = "" }) {
-  const mailto =
-    `mailto:${to}` +
-    `?subject=${encodeURIComponent(subject)}` +
-    `&body=${encodeURIComponent(body)}`;
+function buildMailtoLink({ to, subject = "", body = "" }) {
+  const params = new URLSearchParams();
+  if (subject) params.set("subject", subject);
+  if (body) params.set("body", body);
+  return `mailto:${to}?${params.toString()}`;
+}
 
-  window.location.href = mailto;
+function openMailDirect({ to, subject = "", body = "" }) {
+  try {
+    const mailto = buildMailtoLink({ to, subject, body });
+
+    const link = document.createElement("a");
+    link.href = mailto;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setTimeout(() => {
+      try {
+        window.location.href = mailto;
+      } catch (err) {
+        console.warn("No se pudo redirigir con mailto:", err);
+      }
+    }, 150);
+
+    return true;
+  } catch (error) {
+    console.warn("Error al abrir mailto:", error);
+    pushMsg("⚠️ No se pudo abrir tu aplicación de correo automáticamente.");
+    return false;
+  }
 }
 
 function getChatMessagesContainerSmart() {
@@ -1032,21 +1057,21 @@ Datos automáticos del sistema:
 
 ¡Gracias!`;
 
-    const result = await saveContactToFirebase(payload);
-
     bubble.remove();
-
-    if (result.ok) {
-      pushMsg("✅ Tus datos fueron registrados correctamente.");
-    } else {
-      pushMsg("⚠️ No se pudo guardar en la base de datos, pero igual vamos a abrir el correo.");
-    }
 
     openMailDirect({
       to: "equipo.lourdesortiz@gmail.com",
       subject,
       body
     });
+
+    const result = await saveContactToFirebase(payload);
+
+    if (result.ok) {
+      pushMsg("✅ Tus datos fueron registrados correctamente.");
+    } else {
+      pushMsg("⚠️ No se pudo guardar en la base de datos, pero el correo igualmente fue preparado.");
+    }
   });
 }
 
@@ -1156,21 +1181,21 @@ Datos automáticos del sistema:
 
 ¡Gracias!`;
 
-    const result = await saveActivityToFirebase(payload);
-
     bubble.remove();
-
-    if (result.ok) {
-      pushMsg("✅ Tu solicitud fue registrada correctamente.");
-    } else {
-      pushMsg("⚠️ No se pudo guardar en la base de datos, pero igual vamos a abrir el correo.");
-    }
 
     openMailDirect({
       to: "equipo.lourdesortiz@gmail.com",
       subject,
       body
     });
+
+    const result = await saveActivityToFirebase(payload);
+
+    if (result.ok) {
+      pushMsg("✅ Tu solicitud fue registrada correctamente.");
+    } else {
+      pushMsg("⚠️ No se pudo guardar en la base de datos, pero el correo igualmente fue preparado.");
+    }
   });
 }
   // ======================
