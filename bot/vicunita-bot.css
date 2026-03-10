@@ -440,7 +440,7 @@
 @media (max-width: 768px){
   #vicunita-bot-root{
     right: 12px;
-    bottom: 12px;
+    bottom: 18px;
   }
 
   .vb-fab{
@@ -450,10 +450,10 @@
 
   .vb-panel{
     width: min(92vw, 380px);
-    height: min(72vh, 560px);
-    max-height: calc(100vh - 90px);
+    height: min(68vh, 560px);
+    max-height: calc(100vh - 130px);
     border-radius: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .vb-body{
@@ -491,7 +491,7 @@
 @media (max-width: 480px){
   #vicunita-bot-root{
     right: 10px;
-    bottom: 10px;
+    bottom: 22px;
   }
 
   .vb-fab{
@@ -506,9 +506,9 @@
 
   .vb-panel{
     width: calc(100vw - 20px);
-    height: min(70vh, 560px);
-    max-height: calc(100vh - 84px);
-    margin-bottom: 8px;
+    height: min(66vh, 540px);
+    max-height: calc(100vh - 145px);
+    margin-bottom: 12px;
     border-radius: 16px;
   }
 
