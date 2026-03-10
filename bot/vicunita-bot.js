@@ -850,7 +850,12 @@ function buildMailtoLink({ to, subject = "", body = "" }) {
 
 function openMailDirect({ to, subject = "", body = "" }) {
   try {
-    const mailto = buildMailtoLink({ to, subject, body });
+
+    // Codificar texto para evitar + en los espacios
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+
+    const mailto = `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
 
     const link = document.createElement("a");
     link.href = mailto;
@@ -868,6 +873,7 @@ function openMailDirect({ to, subject = "", body = "" }) {
     }, 150);
 
     return true;
+
   } catch (error) {
     console.warn("Error al abrir mailto:", error);
     pushMsg("⚠️ No se pudo abrir tu aplicación de correo automáticamente.");
