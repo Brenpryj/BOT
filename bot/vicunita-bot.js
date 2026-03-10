@@ -494,276 +494,290 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
 
   // ======================
   // Opción 3
-  // ======================
-  DATA.legislaturaInfo = {
-    funciona: [
-      "🏛️ ¿Cómo funciona la Legislatura de La Rioja?",
-      "",
-      "• Es el órgano que debate y aprueba leyes provinciales.",
-      "• Es unicameral (una sola cámara) e integrada por diputadas y diputados elegidos por voto popular.",
-      "",
-      "Cómo se trabaja (resumen):",
-      "1) Se presenta un proyecto (Ley / Resolución / Declaración).",
-      "2) Pasa a Comisiones para análisis y mejoras.",
-      "3) Se emite dictamen (recomendación).",
-      "4) Se debate en el recinto y se vota.",
-      "5) Si se aprueba, se sanciona y sigue el circuito correspondiente.",
-    ].join("\n"),
+  // Opción 3
+// ======================
+DATA.legislaturaInfo = {
+  funciona: [
+    "🏛️ ¿Cómo funciona la Legislatura de La Rioja?",
+    "",
+    "• Es el órgano que debate y aprueba leyes provinciales.",
+    "• Es unicameral (una sola cámara) e integrada por diputadas y diputados elegidos por voto popular.",
+    "",
+    "Cómo se trabaja (resumen):",
+    "1) Se presenta un proyecto (Ley / Resolución / Declaración).",
+    "2) Pasa a Comisiones para análisis y mejoras.",
+    "3) Se emite dictamen (recomendación).",
+    "4) Se debate en el recinto y se vota.",
+    "5) Si se aprueba, se sanciona y sigue el circuito correspondiente.",
+  ].join("\n"),
 
-    comisiones: [
-      "🧩 ¿Qué son las Comisiones?",
-      "",
-      "Las comisiones son grupos de legisladores/as que estudian los proyectos antes de que lleguen al recinto.",
-      "",
-      "Qué hacen:",
-      "• Analizan el tema (salud, educación, presupuesto, obras, etc.).",
-      "• Pueden pedir informes y realizar reuniones de trabajo.",
-      "• Elaboran un dictamen: aprobar, modificar o rechazar.",
-      "",
-      "Cómo se integran:",
-      "• Se conforman con legisladores/as de distintos espacios.",
-      "• Suelen tener Presidencia, Vicepresidencia, Secretaría e integrantes.",
-    ].join("\n"),
-  };
+  comisiones: [
+    "🧩 ¿Qué son las Comisiones?",
+    "",
+    "Las comisiones son grupos de legisladores/as que estudian los proyectos antes de que lleguen al recinto.",
+    "",
+    "Qué hacen:",
+    "• Analizan el tema (salud, educación, presupuesto, obras, etc.).",
+    "• Pueden pedir informes y realizar reuniones de trabajo.",
+    "• Elaboran un dictamen: aprobar, modificar o rechazar.",
+    "",
+    "Cómo se integran:",
+    "• Se conforman con legisladores/as de distintos espacios.",
+    "• Suelen tener Presidencia, Vicepresidencia, Secretaría e integrantes.",
+  ].join("\n"),
+};
 
-  const LEGI_URL = "https://legislaturalarioja.gob.ar/legisladores.html";
-  const LEGI_URL_READER = "https://r.jina.ai/https://legislaturalarioja.gob.ar/legisladores.html";
+const LEGI_URL = "https://legislaturalarioja.gob.ar/legisladores.html";
+const LEGI_URL_READER = "https://r.jina.ai/https://legislaturalarioja.gob.ar/legisladores.html";
 
-  function normalizarBloque(raw) {
-    if (!raw) return "";
-    return raw
-      .replace(/\*+/g, "") // ✅ saca ****
-      .replace(/\bPresidente\b/gi, "")
-      .replace(/\bPresidenta\b/gi, "")
-      .replace(/\bVicepresidente\b/gi, "")
-      .replace(/\bVicepresidenta\b/gi, "")
-      .replace(/\bSecretario\b/gi, "")
-      .replace(/\bSecretaría\b/gi, "")
-      .replace(/\bSecretarío\b/gi, "")
-      .replace(/\s{2,}/g, " ")
-      .trim();
-  }
+function normalizarBloque(raw) {
+  if (!raw) return "";
+  return raw
+    .replace(/\*+/g, "")
+    .replace(/\bPresidente\b/gi, "")
+    .replace(/\bPresidenta\b/gi, "")
+    .replace(/\bVicepresidente\b/gi, "")
+    .replace(/\bVicepresidenta\b/gi, "")
+    .replace(/\bSecretario\b/gi, "")
+    .replace(/\bSecretaría\b/gi, "")
+    .replace(/\bSecretarío\b/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
 
-  function limpiarBasuraDeLinks(s) {
-    if (!s) return "";
-    let t = String(s);
+function limpiarBasuraDeLinks(s) {
+  if (!s) return "";
+  let t = String(s);
 
-    t = t.replace(/\]\(\s*https?:\/\/[^\s)]+\s*\)/gi, " ");
-    t = t.replace(/https?:\/\/\S+/gi, " ");
-    t = t.replace(/\bimagenes\/\S+/gi, " ");
-    t = t.replace(/\b\w+\.(png|jpg|jpeg|gif|webp)\b/gi, " ");
-    t = t.replace(/[\[\]]/g, " ");
-    t = t.replace(/\s{2,}/g, " ").trim();
+  t = t.replace(/\]\(\s*https?:\/\/[^\s)]+\s*\)/gi, " ");
+  t = t.replace(/https?:\/\/\S+/gi, " ");
+  t = t.replace(/\bimagenes\/\S+/gi, " ");
+  t = t.replace(/\b\w+\.(png|jpg|jpeg|gif|webp)\b/gi, " ");
+  t = t.replace(/[\[\]]/g, " ");
+  t = t.replace(/\s{2,}/g, " ").trim();
 
-    return t;
-  }
+  return t;
+}
 
-  function pareceNombreHumano(s) {
-    if (!s) return false;
-    const t = s.trim();
-    if (t.length < 6) return false;
-    return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s'.-]+$/.test(t);
-  }
+function pareceNombreHumano(s) {
+  if (!s) return false;
+  const t = s.trim();
+  if (t.length < 6) return false;
+  return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s'.-]+$/.test(t);
+}
 
-  // ✅ Heurística: si el nombre está repetido (ej: "DIEGO MOLINA ... DIEGO MOLINA ...")
-  // recorta desde la 2da aparición del inicio.
-  function dedupeNombre(nombre) {
-    const words = (nombre || "").trim().split(/\s+/).filter(Boolean);
-    if (words.length < 4) return (nombre || "").trim();
+// ✅ Heurística: si el nombre está repetido (ej: "DIEGO MOLINA ... DIEGO MOLINA ...")
+// recorta desde la 2da aparición del inicio.
+function dedupeNombre(nombre) {
+  const words = (nombre || "").trim().split(/\s+/).filter(Boolean);
+  if (words.length < 4) return (nombre || "").trim();
 
-    // buscamos otra ocurrencia del comienzo (dos palabras) más adelante
-    const w0 = (words[0] || "").toLowerCase();
-    const w1 = (words[1] || "").toLowerCase();
+  const w0 = (words[0] || "").toLowerCase();
+  const w1 = (words[1] || "").toLowerCase();
 
-    for (let i = 2; i < words.length - 1; i++) {
-      if (words[i].toLowerCase() === w0 && words[i + 1].toLowerCase() === w1) {
-        // si recortar deja algo razonable, lo hacemos
-        const sliced = words.slice(i).join(" ").trim();
-        if (sliced.length >= 6) return sliced;
-      }
+  for (let i = 2; i < words.length - 1; i++) {
+    if (words[i].toLowerCase() === w0 && words[i + 1].toLowerCase() === w1) {
+      const sliced = words.slice(i).join(" ").trim();
+      if (sliced.length >= 6) return sliced;
     }
-    return words.join(" ").trim();
   }
+  return words.join(" ").trim();
+}
 
-  function parsearLegisladoresDesdeTexto(texto) {
-    const out = [];
-    const re =
-      /Dip\.\s*([^\n]+)\n[\s\S]*?Partido Político\n\s*([^\n]+)\n[\s\S]*?Mandato\n\s*([0-9]{4}\s*-\s*[0-9]{4})\n[\s\S]*?Bloque Político\n\s*([^\n]+)/g;
+function parsearLegisladoresDesdeTexto(texto) {
+  const out = [];
+  const re =
+    /Dip\.\s*([^\n]+)\n[\s\S]*?Partido Político\n\s*([^\n]+)\n[\s\S]*?Mandato\n\s*([0-9]{4}\s*-\s*[0-9]{4})\n[\s\S]*?Bloque Político\n\s*([^\n]+)/g;
 
-    let m;
-    while ((m = re.exec(texto)) !== null) {
-      const chunkRaw = m[0];
-      const chunk = limpiarBasuraDeLinks(chunkRaw);
+  let m;
+  while ((m = re.exec(texto)) !== null) {
+    const chunkRaw = m[0];
+    const chunk = limpiarBasuraDeLinks(chunkRaw);
 
-      const nombreCorto = limpiarBasuraDeLinks((m[1] || "").trim());
-      const partido = limpiarBasuraDeLinks((m[2] || "").trim());
-      const mandato = limpiarBasuraDeLinks((m[3] || "").trim());
-      const bloque = normalizarBloque(limpiarBasuraDeLinks((m[4] || "").trim()));
+    const nombreCorto = limpiarBasuraDeLinks((m[1] || "").trim());
+    const partido = limpiarBasuraDeLinks((m[2] || "").trim());
+    const mandato = limpiarBasuraDeLinks((m[3] || "").trim());
+    const bloque = normalizarBloque(limpiarBasuraDeLinks((m[4] || "").trim()));
 
-      let nombre = nombreCorto;
+    let nombre = nombreCorto;
 
-      const lineas = chunk
-        .split("\n")
-        .map((s) => limpiarBasuraDeLinks(s.trim()))
-        .filter(Boolean);
+    const lineas = chunk
+      .split("\n")
+      .map((s) => limpiarBasuraDeLinks(s.trim()))
+      .filter(Boolean);
 
-      for (const linea of lineas) {
-        const low = linea.toLowerCase();
-        const esEtiqueta =
-          low.includes("partido político") ||
-          low.includes("mandato") ||
-          low.includes("bloque político") ||
-          low.includes("departamento") ||
-          low.startsWith("dip.");
+    for (const linea of lineas) {
+      const low = linea.toLowerCase();
+      const esEtiqueta =
+        low.includes("partido político") ||
+        low.includes("mandato") ||
+        low.includes("bloque político") ||
+        low.includes("departamento") ||
+        low.startsWith("dip.");
 
-        if (!esEtiqueta && pareceNombreHumano(linea) && linea.length > nombre.length) {
-          nombre = linea;
-        }
-      }
-
-      if (!pareceNombreHumano(nombre)) nombre = nombreCorto;
-
-      nombre = dedupeNombre(limpiarBasuraDeLinks(nombre).replace(/\s{2,}/g, " ").trim());
-
-      out.push({ nombre, partido, mandato, bloque });
-    }
-
-    // dedupe por nombre
-    const seen = new Set();
-    const final = [];
-    for (const l of out) {
-      const key = (l.nombre || "").toLowerCase().replace(/\s+/g, " ").trim();
-      if (!key) continue;
-      if (!seen.has(key)) {
-        seen.add(key);
-        final.push(l);
+      if (!esEtiqueta && pareceNombreHumano(linea) && linea.length > nombre.length) {
+        nombre = linea;
       }
     }
 
-    return final;
+    if (!pareceNombreHumano(nombre)) nombre = nombreCorto;
+
+    nombre = dedupeNombre(limpiarBasuraDeLinks(nombre).replace(/\s{2,}/g, " ").trim());
+
+    out.push({ nombre, partido, mandato, bloque });
   }
 
-  // ✅ Render HTML profesional (tarjetas)
-  function escapeHTML(str) {
-    return String(str || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  function buildLegisladoresHTML(legisladores) {
-    const porBloque = {};
-    for (const l of legisladores) {
-      const b = (l.bloque && l.bloque.trim()) ? l.bloque.trim() : "Sin bloque informado";
-      (porBloque[b] ||= []).push(l);
+  const seen = new Set();
+  const final = [];
+  for (const l of out) {
+    const key = (l.nombre || "").toLowerCase().replace(/\s+/g, " ").trim();
+    if (!key) continue;
+    if (!seen.has(key)) {
+      seen.add(key);
+      final.push(l);
     }
+  }
 
-    const bloques = Object.keys(porBloque).sort((a, b) => a.localeCompare(b, "es"));
-    bloques.forEach((b) => porBloque[b].sort((x, y) => (x.nombre || "").localeCompare(y.nombre || "", "es")));
+  return final;
+}
 
-    // estilos inline para que quede prolijo sin tocar tu CSS
-    const wrapStyle = "font-size:13px; line-height:1.35;";
-    const bloqueStyle = "margin:10px 0 14px; padding:10px; border-radius:12px; background:rgba(1,152,164,.06); border:1px solid rgba(2,6,23,.08);";
-    const tituloStyle = "font-weight:800; font-size:13.5px; color:var(--vb-primary,#0198A4); padding:0 0 8px; margin:0 0 8px; border-bottom:1px solid rgba(2,6,23,.10);";
-    const cardStyle = "background:#fff; border:1px solid rgba(2,6,23,.10); border-radius:12px; padding:10px 10px; margin:8px 0; box-shadow:0 8px 18px rgba(2,6,23,.06);";
-    const nameStyle = "font-weight:800; font-size:13px; margin:0 0 6px; color:#0f172a;";
-    const metaStyle = "font-size:12px; color:#475569; margin:2px 0;";
+// ✅ Render HTML profesional (tarjetas)
+function escapeHTML(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-    let html = `<div style="${wrapStyle}">`;
-    html += `<div style="font-weight:900; font-size:14px; margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>`;
-    html += `<div style="color:#64748b; font-size:12px; margin-bottom:10px;">Listado oficial agrupado por bloques políticos.</div>`;
+function buildLegisladoresHTML(legisladores) {
+  const porBloque = {};
+  for (const l of legisladores) {
+    const b = (l.bloque && l.bloque.trim()) ? l.bloque.trim() : "Sin bloque informado";
+    (porBloque[b] ||= []).push(l);
+  }
 
-    for (const b of bloques) {
-      html += `<div style="${bloqueStyle}">`;
-      html += `<div style="${tituloStyle}">${escapeHTML(b)}</div>`;
+  const ordenDeseado = [
+    "Partido Justicialista",
+    "PRO",
+    "La Libertad Avanza"
+  ];
 
-      for (const l of porBloque[b]) {
-        html += `<div style="${cardStyle}">`;
-        html += `<div style="${nameStyle}">${escapeHTML(l.nombre)}</div>`;
-        if (l.partido) html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
-        if (l.mandato) html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
-        html += `</div>`;
-      }
+  const bloques = Object.keys(porBloque).sort((a, b) => {
+    const ia = ordenDeseado.indexOf(a);
+    const ib = ordenDeseado.indexOf(b);
 
+    if (ia !== -1 && ib !== -1) return ia - ib;
+    if (ia !== -1) return -1;
+    if (ib !== -1) return 1;
+
+    return a.localeCompare(b, "es");
+  });
+
+  bloques.forEach((b) =>
+    porBloque[b].sort((x, y) => (x.nombre || "").localeCompare(y.nombre || "", "es"))
+  );
+
+  const wrapStyle = "font-size:13px; line-height:1.35;";
+  const bloqueStyle = "margin:10px 0 14px; padding:10px; border-radius:12px; background:rgba(1,152,164,.06); border:1px solid rgba(2,6,23,.08);";
+  const tituloStyle = "font-weight:800; font-size:13.5px; color:var(--vb-primary,#0198A4); padding:0 0 8px; margin:0 0 8px; border-bottom:1px solid rgba(2,6,23,.10);";
+  const cardStyle = "background:#fff; border:1px solid rgba(2,6,23,.10); border-radius:12px; padding:10px 10px; margin:8px 0; box-shadow:0 8px 18px rgba(2,6,23,.06);";
+  const nameStyle = "font-weight:800; font-size:13px; margin:0 0 6px; color:#0f172a;";
+  const metaStyle = "font-size:12px; color:#475569; margin:2px 0;";
+
+  let html = `<div style="${wrapStyle}">`;
+  html += `<div style="font-weight:900; font-size:14px; margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>`;
+  html += `<div style="color:#64748b; font-size:12px; margin-bottom:10px;">Listado oficial agrupado por bloques políticos.</div>`;
+
+  for (const b of bloques) {
+    html += `<div style="${bloqueStyle}">`;
+    html += `<div style="${tituloStyle}">${escapeHTML(b)}</div>`;
+
+    for (const l of porBloque[b]) {
+      html += `<div style="${cardStyle}">`;
+      html += `<div style="${nameStyle}">${escapeHTML(l.nombre)}</div>`;
+      if (l.partido) html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
+      if (l.mandato) html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
       html += `</div>`;
     }
 
-    html += `<div style="margin-top:10px; font-size:12px; color:#64748b;">
-      <div><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
-      <div style="margin-top:4px;">.</div>
-    </div>`;
-
     html += `</div>`;
-    return html;
   }
 
-  async function buildLegisladoresPayload() {
-    try {
-      const res = await fetch(LEGI_URL_READER, { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const textoPlano = await res.text();
+  html += `<div style="margin-top:10px; font-size:12px; color:#64748b;">
+    <div><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
+    <div style="margin-top:4px;">.</div>
+  </div>`;
 
-      const legisladores = parsearLegisladoresDesdeTexto(textoPlano);
+  html += `</div>`;
+  return html;
+}
 
-      if (!legisladores.length) {
-        return {
-          ok: false,
-          html: `<div style="font-size:13px;line-height:1.35;">
-            <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
-            <div style="color:#64748b;margin-bottom:10px;">No pude leer el listado automáticamente en este momento.</div>
-            <div style="font-size:12px;color:#64748b;"><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
-          </div>`
-        };
-      }
+async function buildLegisladoresPayload() {
+  try {
+    const res = await fetch(LEGI_URL_READER, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const textoPlano = await res.text();
 
-      return { ok: true, html: buildLegisladoresHTML(legisladores) };
-    } catch (e) {
+    const legisladores = parsearLegisladoresDesdeTexto(textoPlano);
+
+    if (!legisladores.length) {
       return {
         ok: false,
         html: `<div style="font-size:13px;line-height:1.35;">
           <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
-          <div style="color:#64748b;margin-bottom:10px;">No se pudo cargar el listado en este momento.</div>
+          <div style="color:#64748b;margin-bottom:10px;">No pude leer el listado automáticamente en este momento.</div>
           <div style="font-size:12px;color:#64748b;"><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
         </div>`
       };
     }
-  }
 
-  function option3() {
-    pushMsg("🏛️ ¿Qué querés saber sobre la Legislatura?");
-    setQuickButtons([
-      {
-        label: "⚙️ Cómo funciona",
-        onClick: () => {
-          pushMsg(DATA.legislaturaInfo?.funciona || "");
-          option3();
-        },
-        _divider: "Cómo funciona",
-      },
-      {
-        label: "👥 Quiénes la integran",
-        onClick: async () => {
-          pushMsg("🔄 Cargando listado oficial de legisladores...");
-          const payload = await buildLegisladoresPayload();
-          pushMsg(payload.html, "bot", { html: true });
-          option3();
-        },
-        _divider: "Quiénes la integran",
-      },
-      {
-        label: "🧩 Qué son las comisiones",
-        onClick: () => {
-          pushMsg(DATA.legislaturaInfo?.comisiones || "");
-          option3();
-        },
-        _divider: "Comisiones",
-      },
-      { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
-    ]);
+    return { ok: true, html: buildLegisladoresHTML(legisladores) };
+  } catch (e) {
+    return {
+      ok: false,
+      html: `<div style="font-size:13px;line-height:1.35;">
+        <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
+        <div style="color:#64748b;margin-bottom:10px;">No se pudo cargar el listado en este momento.</div>
+        <div style="font-size:12px;color:#64748b;"><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
+      </div>`
+    };
   }
+}
 
+function option3() {
+  pushMsg("🏛️ ¿Qué querés saber sobre la Legislatura?");
+  setQuickButtons([
+    {
+      label: "⚙️ Cómo funciona",
+      onClick: () => {
+        pushMsg(DATA.legislaturaInfo?.funciona || "");
+        option3();
+      },
+      _divider: "Cómo funciona",
+    },
+    {
+      label: "👥 Quiénes la integran",
+      onClick: async () => {
+        pushMsg("🔄 Cargando listado oficial de legisladores...");
+        const payload = await buildLegisladoresPayload();
+        pushMsg(payload.html, "bot", { html: true });
+        option3();
+      },
+      _divider: "Quiénes la integran",
+    },
+    {
+      label: "🧩 Qué son las comisiones",
+      onClick: () => {
+        pushMsg(DATA.legislaturaInfo?.comisiones || "");
+        option3();
+      },
+      _divider: "Comisiones",
+    },
+    { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
+  ]);
+}
   // ======================
   // Opción 4
   // ======================
