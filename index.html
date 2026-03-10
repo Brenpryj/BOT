@@ -7,7 +7,7 @@
   <title>Bot de Lourdes Ortiz</title>
 
   <link rel="preload" as="image" href="fondos (2).png" />
-  <link rel="preload" as="image" href="vicu.png" />
+  <link rel="preload" as="image" href="avatar.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -59,14 +59,15 @@
 
     #vicunita-index{
       position:fixed;
-      right:-10px;
-      bottom:0;
-      width:min(520px, 42vw);
-      max-width:520px;
-      max-height:82vh;
+      right:8px;
+      bottom:8px;
+      width:min(390px, 30vw);
+      max-width:390px;
+      max-height:58vh;
       pointer-events:none;
       z-index:1;
       object-fit:contain;
+      opacity:.92;
     }
 
     header{
@@ -91,6 +92,24 @@
 
     header p + p{
       margin-top:8px;
+    }
+
+    .vicu-mobile-wrap{
+      display:none;
+      position:relative;
+      z-index:2;
+      width:100%;
+      text-align:center;
+      padding:6px 16px 2px;
+    }
+
+    .vicu-mobile-wrap img{
+      width:min(220px, 58vw);
+      height:auto;
+      object-fit:contain;
+      display:inline-block;
+      opacity:.95;
+      pointer-events:none;
     }
 
     main{
@@ -165,9 +184,9 @@
     /* TABLET */
     @media (max-width: 1024px){
       #vicunita-index{
-        width:min(380px, 38vw);
-        max-height:70vh;
-        opacity:.75;
+        width:min(300px, 28vw);
+        max-height:48vh;
+        opacity:.82;
       }
 
       main{
@@ -192,19 +211,15 @@
       }
 
       #vicunita-index{
-        position:fixed;
-        right:50%;
-        transform:translateX(50%);
-        bottom:88px;
-        width:min(250px, 62vw);
-        max-width:none;
-        max-height:34vh;
-        opacity:.20;
-        object-fit:contain;
+        display:none;
+      }
+
+      .vicu-mobile-wrap{
+        display:block;
       }
 
       header{
-        padding:80px 16px 24px;
+        padding:80px 16px 18px;
       }
 
       header h1{
@@ -241,14 +256,12 @@
 
     /* MOBILE PEQUEÑO */
     @media (max-width:480px){
-      #vicunita-index{
-        width:min(220px, 64vw);
-        bottom:100px;
-        opacity:.16;
+      .vicu-mobile-wrap img{
+        width:min(180px, 54vw);
       }
 
       header{
-        padding:78px 14px 22px;
+        padding:78px 14px 16px;
       }
 
       header h1{
@@ -279,13 +292,17 @@
 <body>
 
   <img src="logo-lou.png" class="logo-lourdes" alt="Logo Lourdes Ortiz">
-  <img src="vicu.png" id="vicunita-index" alt="Vicuñita">
+  <img src="avatar.png" id="vicunita-index" alt="Vicuñita">
 
   <header>
     <h1>¡Hola! Soy Vicuñita</h1>
     <p>Estoy acá para ayudarte y guiarte.</p>
     <p>Participá, consultá, proponé ideas y seguí proyectos en curso.</p>
   </header>
+
+  <div class="vicu-mobile-wrap">
+    <img src="avatar.png" alt="Vicuñita">
+  </div>
 
   <main>
     <button class="btn" onclick="location.href='reclamos.html'">📌 Realizar una Sugerencia</button>
