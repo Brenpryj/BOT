@@ -882,28 +882,18 @@ function buildMailtoLink({ to, subject = "", body = "" }) {
 
 function openMailDirect({ to, subject = "", body = "" }) {
   try {
-    const mailto = buildMailtoLink({ to, subject, body });
+    const gmailUrl =
+      "https://mail.google.com/mail/?view=cm&fs=1" +
+      "&to=" + encodeURIComponent(to) +
+      "&su=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
 
-    const link = document.createElement("a");
-    link.href = mailto;
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    setTimeout(() => {
-      try {
-        window.location.href = mailto;
-      } catch (err) {
-        console.warn("No se pudo redirigir con mailto:", err);
-      }
-    }, 200);
-
+    window.open(gmailUrl, "_blank", "noopener,noreferrer");
     return true;
 
   } catch (error) {
-    console.warn("Error al abrir mailto:", error);
-    pushMsg("⚠️ No se pudo abrir la aplicación de correo automáticamente. Verificá que tengas un correo configurado en tu PC.");
+    console.warn("Error al abrir Gmail:", error);
+    pushMsg("⚠️ No se pudo abrir Gmail automáticamente.");
     return false;
   }
 }
