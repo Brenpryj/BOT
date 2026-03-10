@@ -811,8 +811,8 @@ function option3() {
   }
 
   // ======================
-  // Opción 5 - Contactar equipo
-  // ======================
+  // // Opción 5 - Contactar equipo
+// ======================
 function option5() {
   pushMsg("📞 Para contactar al equipo, podés elegir una opción:");
 
@@ -822,8 +822,24 @@ function option5() {
       onClick: () =>
         openMailDirect({
           to: "equipo.lourdesortiz@gmail.com",
-          subject: "Contacto desde Vicuñita",
-          body: "Hola equipo, les escribo por lo siguiente:\n\n",
+          subject: "Primer contacto institucional",
+          body: `Hola,
+
+Este espacio está pensado para instituciones, organizaciones sociales, entidades educativas y organismos públicos que deseen comunicarse con nuestro equipo.
+
+Si representan a una institución y desean realizar una consulta, proponer una actividad conjunta o generar un espacio de trabajo colaborativo, pueden escribirnos por este medio.
+
+Recibiremos su mensaje y nos pondremos en contacto para dar seguimiento.
+
+Institución:
+Área / sector:
+Persona de contacto:
+Cargo:
+Teléfono:
+Correo electrónico:
+Motivo del contacto:
+
+Saludos cordiales.`
         }),
       _divider: "Email institucional",
     },
@@ -842,20 +858,31 @@ function option5() {
 }
 
 function buildMailtoLink({ to, subject = "", body = "" }) {
-  const params = new URLSearchParams();
-  if (subject) params.set("subject", subject);
-  if (body) params.set("body", body);
-  return `mailto:${to}?${params.toString()}`;
+  const safeTo = String(to || "").trim();
+  const safeSubject = String(subject || "");
+  const safeBody = String(body || "");
+
+  let mailto = `mailto:${safeTo}`;
+  const params = [];
+
+  if (safeSubject) {
+    params.push(`subject=${encodeURIComponent(safeSubject)}`);
+  }
+
+  if (safeBody) {
+    params.push(`body=${encodeURIComponent(safeBody)}`);
+  }
+
+  if (params.length > 0) {
+    mailto += `?${params.join("&")}`;
+  }
+
+  return mailto;
 }
 
 function openMailDirect({ to, subject = "", body = "" }) {
   try {
-
-    // Codificar texto para evitar + en los espacios
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-
-    const mailto = `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
+    const mailto = buildMailtoLink({ to, subject, body });
 
     const link = document.createElement("a");
     link.href = mailto;
@@ -870,13 +897,13 @@ function openMailDirect({ to, subject = "", body = "" }) {
       } catch (err) {
         console.warn("No se pudo redirigir con mailto:", err);
       }
-    }, 150);
+    }, 200);
 
     return true;
 
   } catch (error) {
     console.warn("Error al abrir mailto:", error);
-    pushMsg("⚠️ No se pudo abrir tu aplicación de correo automáticamente.");
+    pushMsg("⚠️ No se pudo abrir la aplicación de correo automáticamente. Verificá que tengas un correo configurado en tu PC.");
     return false;
   }
 }
@@ -998,7 +1025,7 @@ function option5_ContactFormInChat(retries = 10) {
 
       <form class="form-actividades-chat" autocomplete="on">
         <label>Nombre y apellido *</label>
-        <input type="text" name="nombre" placeholder="Ej: Brenda Pryjmaczuk" required />
+        <input type="text" name="nombre" placeholder="Ej: Giovani Perez" required />
 
         <label>Número de teléfono</label>
         <input type="tel" name="telefono" placeholder="Ej: 3804..." />
