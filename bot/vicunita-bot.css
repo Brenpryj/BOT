@@ -561,69 +561,48 @@
     animation: none;
   }
 }
-/* =====================================================
-   VICUÑITA FLOTANTE SOLO EN TELÉFONO
-   Estilo: asistente institucional, asomando desde el costado
-===================================================== */
 
-/* Oculta la vicuñita por defecto */
-#vicunita-index{
-  display: none;
+   VICUÑITA SOLO EN TELÉFONO
+
+ #vicunita-index{
+  display: none !important;
 }
 
-/* Animación suave, profesional y discreta */
 @keyframes vicunitaAsomaMobile{
   0%, 100%{
-    transform: translateY(0) translateX(0);
+    transform: translateY(0);
   }
   50%{
-    transform: translateY(-5px) translateX(-2px);
+    transform: translateY(-5px);
   }
 }
 
-/* Solo visible en celular */
-@media (max-width: 768px){
+@media screen and (max-width: 768px){
   #vicunita-index{
-    display: block;
-    position: fixed;
-    right: -18px;         /* asoma desde el costado */
-    bottom: 118px;        /* queda por encima del botón flotante */
-    width: 92px;
-    height: auto;
-    z-index: 9998;
-    pointer-events: none;
-    opacity: 0.96;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.16));
-    animation: vicunitaAsomaMobile 3.4s ease-in-out infinite;
-    transform-origin: bottom right;
+    display: block !important;
+    position: fixed !important;
+    right: 4px !important;
+    bottom: 92px !important;
+    width: 82px !important;
+    height: auto !important;
+    z-index: 99998 !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.18)) !important;
+    animation: vicunitaAsomaMobile 3.4s ease-in-out infinite !important;
   }
 }
 
-/* Ajuste para pantallas bien angostas */
-
-/* Vicu que asome desde abajo */
-
-@media (max-width: 768px){
+@media screen and (max-width: 480px){
   #vicunita-index{
-    display: block;
-    position: fixed;
-    right: 2px;
-    bottom: 78px;
-    width: 88px;
-    height: auto;
-    z-index: 9998;
-    pointer-events: none;
-    opacity: 0.96;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.16));
-    animation: vicunitaAsomaMobile 3.4s ease-in-out infinite;
-    transform-origin: bottom right;
-    clip-path: inset(0 0 18% 0);
+    right: 2px !important;
+    bottom: 88px !important;
+    width: 74px !important;
   }
 }
 
-/* Accesibilidad */
 @media (prefers-reduced-motion: reduce){
   #vicunita-index{
-    animation: none;
+    animation: none !important;
   }
 }
