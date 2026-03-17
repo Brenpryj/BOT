@@ -818,7 +818,7 @@ function option5() {
 
   setQuickButtons([
     {
-      label: "✉️ Email institucional",
+      label: "✉️ Contacto institucional",
       onClick: () =>
         openMailDirect({
           to: "equipo.lourdesortiz@gmail.com",
