@@ -528,120 +528,220 @@ DATA.legislaturaInfo = {
 };
 
 const LEGI_URL = "https://legislaturalarioja.gob.ar/legisladores.html";
-const LEGI_URL_READER = "https://r.jina.ai/https://legislaturalarioja.gob.ar/legisladores.html";
+const LEGI_URL_READER = "https://r.jina.ai/http://legislaturalarioja.gob.ar/legisladores.html";
 
-function normalizarBloque(raw) {
-  if (!raw) return "";
-  return raw
-    .replace(/\*+/g, "")
+function normalizarTexto(s) {
+  return String(s || "")
+    .replace(/\r/g, "")
+    .replace(/\t/g, " ")
+    .replace(/\u00A0/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function normalizarComparacion(s) {
+  return normalizarTexto(s)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function limpiarBasuraDeLinks(s) {
+  return String(s || "")
+    .replace(/\]\(\s*https?:\/\/[^\s)]+\s*\)/gi, " ")
+    .replace(/https?:\/\/\S+/gi, " ")
+    .replace(/\bimagenes\/\S+/gi, " ")
+    .replace(/\b\S+\.(png|jpg|jpeg|gif|webp|svg)\b/gi, " ")
+    .replace(/[#_*`>\[\]]/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function limpiarTextoLegislador(s) {
+  return limpiarBasuraDeLinks(s)
+    .replace(/\bDip\.\s*/gi, "")
+    .replace(/\bDiputada\b/gi, "")
+    .replace(/\bDiputado\b/gi, "")
     .replace(/\bPresidente\b/gi, "")
     .replace(/\bPresidenta\b/gi, "")
     .replace(/\bVicepresidente\b/gi, "")
     .replace(/\bVicepresidenta\b/gi, "")
     .replace(/\bSecretario\b/gi, "")
+    .replace(/\bSecretaria\b/gi, "")
     .replace(/\bSecretaría\b/gi, "")
-    .replace(/\bSecretarío\b/gi, "")
+    .replace(/\bBloque Político\b/gi, "")
+    .replace(/\bPartido Político\b/gi, "")
+    .replace(/\bMandato\b/gi, "")
+    .replace(/\bDepartamento\b/gi, "")
     .replace(/\s{2,}/g, " ")
     .trim();
 }
 
-function limpiarBasuraDeLinks(s) {
-  if (!s) return "";
-  let t = String(s);
-
-  t = t.replace(/\]\(\s*https?:\/\/[^\s)]+\s*\)/gi, " ");
-  t = t.replace(/https?:\/\/\S+/gi, " ");
-  t = t.replace(/\bimagenes\/\S+/gi, " ");
-  t = t.replace(/\b\w+\.(png|jpg|jpeg|gif|webp)\b/gi, " ");
-  t = t.replace(/[\[\]]/g, " ");
-  t = t.replace(/\s{2,}/g, " ").trim();
-
-  return t;
-}
-
 function pareceNombreHumano(s) {
-  if (!s) return false;
-  const t = s.trim();
-  if (t.length < 6) return false;
-  return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s'.-]+$/.test(t);
+  const t = limpiarTextoLegislador(s);
+  if (!t || t.length < 5) return false;
+
+  const invalido = [
+    "partido politico",
+    "mandato",
+    "bloque politico",
+    "departamento",
+    "legisladores",
+    "legislatura",
+    "periodo"
+  ];
+
+  const norm = normalizarComparacion(t);
+  if (invalido.some(x => norm.includes(x))) return false;
+
+  return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'´.\-\s]+$/.test(t);
 }
 
-// ✅ Heurística: si el nombre está repetido (ej: "DIEGO MOLINA ... DIEGO MOLINA ...")
-// recorta desde la 2da aparición del inicio.
-function dedupeNombre(nombre) {
-  const words = (nombre || "").trim().split(/\s+/).filter(Boolean);
-  if (words.length < 4) return (nombre || "").trim();
+function quitarDuplicadoExacto(nombre) {
+  const limpio = normalizarTexto(nombre);
+  const palabras = limpio.split(/\s+/).filter(Boolean);
 
-  const w0 = (words[0] || "").toLowerCase();
-  const w1 = (words[1] || "").toLowerCase();
+  if (palabras.length < 4) return limpio;
 
-  for (let i = 2; i < words.length - 1; i++) {
-    if (words[i].toLowerCase() === w0 && words[i + 1].toLowerCase() === w1) {
-      const sliced = words.slice(i).join(" ").trim();
-      if (sliced.length >= 6) return sliced;
+  const mitad = palabras.length / 2;
+
+  if (Number.isInteger(mitad)) {
+    const a = palabras.slice(0, mitad).join(" ");
+    const b = palabras.slice(mitad).join(" ");
+    if (normalizarComparacion(a) === normalizarComparacion(b)) {
+      return a.trim();
     }
   }
-  return words.join(" ").trim();
+
+  return limpio;
+}
+
+function quitarDuplicadoParcial(nombre) {
+  const limpio = normalizarTexto(nombre);
+  const palabras = limpio.split(/\s+/).filter(Boolean);
+
+  if (palabras.length < 4) return limpio;
+
+  for (let size = Math.floor(palabras.length / 2); size >= 2; size--) {
+    const inicio = palabras.slice(0, size).join(" ");
+    const siguiente = palabras.slice(size, size * 2).join(" ");
+
+    if (
+      inicio &&
+      siguiente &&
+      normalizarComparacion(inicio) === normalizarComparacion(siguiente)
+    ) {
+      return palabras.slice(size).join(" ").trim();
+    }
+  }
+
+  return limpio;
+}
+
+function limpiarNombreFinal(nombre) {
+  let n = limpiarTextoLegislador(nombre);
+
+  n = quitarDuplicadoExacto(n);
+  n = quitarDuplicadoParcial(n);
+
+  const partes = n.split(/\s+/).filter(Boolean);
+
+  if (partes.length >= 6) {
+    const mitad = partes.length / 2;
+    if (Number.isInteger(mitad)) {
+      const a = partes.slice(0, mitad).join(" ");
+      const b = partes.slice(mitad).join(" ");
+      if (normalizarComparacion(a) === normalizarComparacion(b)) {
+        n = a;
+      }
+    }
+  }
+
+  return n.trim();
+}
+
+function obtenerValorDespuesDeEtiqueta(lineas, etiqueta) {
+  const etiquetaNorm = normalizarComparacion(etiqueta);
+
+  for (let i = 0; i < lineas.length; i++) {
+    const actual = normalizarComparacion(lineas[i]);
+    if (actual === etiquetaNorm || actual.includes(etiquetaNorm)) {
+      for (let j = i + 1; j < lineas.length; j++) {
+        const candidato = limpiarTextoLegislador(lineas[j]);
+        if (!candidato) continue;
+
+        const cNorm = normalizarComparacion(candidato);
+        if (
+          cNorm.includes("partido politico") ||
+          cNorm.includes("mandato") ||
+          cNorm.includes("bloque politico") ||
+          cNorm.includes("departamento")
+        ) {
+          continue;
+        }
+
+        return candidato;
+      }
+    }
+  }
+
+  return "";
 }
 
 function parsearLegisladoresDesdeTexto(texto) {
-  const out = [];
-  const re =
-    /Dip\.\s*([^\n]+)\n[\s\S]*?Partido Político\n\s*([^\n]+)\n[\s\S]*?Mandato\n\s*([0-9]{4}\s*-\s*[0-9]{4})\n[\s\S]*?Bloque Político\n\s*([^\n]+)/g;
+  const limpio = String(texto || "").replace(/\r/g, "");
+  const bloques = limpio.split(/\n(?=Dip\.)/g).map(b => b.trim()).filter(Boolean);
 
-  let m;
-  while ((m = re.exec(texto)) !== null) {
-    const chunkRaw = m[0];
-    const chunk = limpiarBasuraDeLinks(chunkRaw);
+  const legisladores = [];
 
-    const nombreCorto = limpiarBasuraDeLinks((m[1] || "").trim());
-    const partido = limpiarBasuraDeLinks((m[2] || "").trim());
-    const mandato = limpiarBasuraDeLinks((m[3] || "").trim());
-    const bloque = normalizarBloque(limpiarBasuraDeLinks((m[4] || "").trim()));
-
-    let nombre = nombreCorto;
-
-    const lineas = chunk
+  for (const bloque of bloques) {
+    const lineas = bloque
       .split("\n")
-      .map((s) => limpiarBasuraDeLinks(s.trim()))
+      .map(l => limpiarBasuraDeLinks(l))
+      .map(l => l.trim())
       .filter(Boolean);
 
-    for (const linea of lineas) {
-      const low = linea.toLowerCase();
-      const esEtiqueta =
-        low.includes("partido político") ||
-        low.includes("mandato") ||
-        low.includes("bloque político") ||
-        low.includes("departamento") ||
-        low.startsWith("dip.");
+    if (!lineas.length) continue;
 
-      if (!esEtiqueta && pareceNombreHumano(linea) && linea.length > nombre.length) {
-        nombre = linea;
-      }
+    const primeraLinea = lineas.find(l => /^Dip\./i.test(l)) || "";
+    let nombre = limpiarNombreFinal(primeraLinea);
+
+    if (!pareceNombreHumano(nombre)) {
+      const candidatoExtra = lineas
+        .map(l => limpiarNombreFinal(l))
+        .find(l => pareceNombreHumano(l));
+
+      if (candidatoExtra) nombre = candidatoExtra;
     }
 
-    if (!pareceNombreHumano(nombre)) nombre = nombreCorto;
+    const partido = obtenerValorDespuesDeEtiqueta(lineas, "Partido Político");
+    const mandato = obtenerValorDespuesDeEtiqueta(lineas, "Mandato");
+    const bloquePolitico = obtenerValorDespuesDeEtiqueta(lineas, "Bloque Político");
 
-    nombre = dedupeNombre(limpiarBasuraDeLinks(nombre).replace(/\s{2,}/g, " ").trim());
+    if (!pareceNombreHumano(nombre)) continue;
 
-    out.push({ nombre, partido, mandato, bloque });
+    legisladores.push({
+      nombre,
+      partido: limpiarTextoLegislador(partido),
+      mandato: limpiarTextoLegislador(mandato),
+      bloque: limpiarTextoLegislador(bloquePolitico) || "Sin bloque informado"
+    });
   }
 
+  const unicos = [];
   const seen = new Set();
-  const final = [];
-  for (const l of out) {
-    const key = (l.nombre || "").toLowerCase().replace(/\s+/g, " ").trim();
+
+  for (const item of legisladores) {
+    const key = normalizarComparacion(item.nombre);
     if (!key) continue;
-    if (!seen.has(key)) {
-      seen.add(key);
-      final.push(l);
-    }
+    if (seen.has(key)) continue;
+    seen.add(key);
+    unicos.push(item);
   }
 
-  return final;
+  return unicos;
 }
 
-// ✅ Render HTML profesional (tarjetas)
 function escapeHTML(str) {
   return String(str || "")
     .replace(/&/g, "&amp;")
@@ -652,10 +752,21 @@ function escapeHTML(str) {
 }
 
 function buildLegisladoresHTML(legisladores) {
+  if (!Array.isArray(legisladores) || !legisladores.length) {
+    return `
+      <div style="font-size:13px;line-height:1.35;">
+        <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>
+        <div style="color:#64748b;">No se encontraron legisladores para mostrar en este momento.</div>
+      </div>
+    `;
+  }
+
   const porBloque = {};
+
   for (const l of legisladores) {
-    const b = (l.bloque && l.bloque.trim()) ? l.bloque.trim() : "Sin bloque informado";
-    (porBloque[b] ||= []).push(l);
+    const bloque = (l.bloque || "Sin bloque informado").trim();
+    if (!porBloque[bloque]) porBloque[bloque] = [];
+    porBloque[bloque].push(l);
   }
 
   const ordenDeseado = [
@@ -675,9 +786,11 @@ function buildLegisladoresHTML(legisladores) {
     return a.localeCompare(b, "es");
   });
 
-  bloques.forEach((b) =>
-    porBloque[b].sort((x, y) => (x.nombre || "").localeCompare(y.nombre || "", "es"))
-  );
+  bloques.forEach((b) => {
+    porBloque[b].sort((x, y) =>
+      (x.nombre || "").localeCompare(y.nombre || "", "es")
+    );
+  });
 
   const wrapStyle = "font-size:13px; line-height:1.35;";
   const bloqueStyle = "margin:10px 0 14px; padding:10px; border-radius:12px; background:rgba(1,152,164,.06); border:1px solid rgba(2,6,23,.08);";
@@ -690,25 +803,32 @@ function buildLegisladoresHTML(legisladores) {
   html += `<div style="font-weight:900; font-size:14px; margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>`;
   html += `<div style="color:#64748b; font-size:12px; margin-bottom:10px;">Listado oficial agrupado por bloques políticos.</div>`;
 
-  for (const b of bloques) {
+  for (const bloque of bloques) {
     html += `<div style="${bloqueStyle}">`;
-    html += `<div style="${tituloStyle}">${escapeHTML(b)}</div>`;
+    html += `<div style="${tituloStyle}">${escapeHTML(bloque)}</div>`;
 
-    for (const l of porBloque[b]) {
+    for (const l of porBloque[bloque]) {
+      const nombreSeguro = limpiarNombreFinal(l.nombre || "");
+
       html += `<div style="${cardStyle}">`;
-      html += `<div style="${nameStyle}">${escapeHTML(l.nombre)}</div>`;
-      if (l.partido) html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
-      if (l.mandato) html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
+      html += `<div style="${nameStyle}">${escapeHTML(nombreSeguro || "Nombre no disponible")}</div>`;
+      if (l.partido) {
+        html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
+      }
+      if (l.mandato) {
+        html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
+      }
       html += `</div>`;
     }
 
     html += `</div>`;
   }
 
-  html += `<div style="margin-top:10px; font-size:12px; color:#64748b;">
-    <div><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
-    <div style="margin-top:4px;">.</div>
-  </div>`;
+  html += `
+    <div style="margin-top:10px; font-size:12px; color:#64748b;">
+      <div><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
+    </div>
+  `;
 
   html += `</div>`;
   return html;
@@ -718,30 +838,33 @@ async function buildLegisladoresPayload() {
   try {
     const res = await fetch(LEGI_URL_READER, { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const textoPlano = await res.text();
 
+    const textoPlano = await res.text();
     const legisladores = parsearLegisladoresDesdeTexto(textoPlano);
 
     if (!legisladores.length) {
-      return {
-        ok: false,
-        html: `<div style="font-size:13px;line-height:1.35;">
-          <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
-          <div style="color:#64748b;margin-bottom:10px;">No pude leer el listado automáticamente en este momento.</div>
-          <div style="font-size:12px;color:#64748b;"><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
-        </div>`
-      };
+      throw new Error("No se pudieron parsear legisladores");
     }
 
-    return { ok: true, html: buildLegisladoresHTML(legisladores) };
+    return {
+      ok: true,
+      html: buildLegisladoresHTML(legisladores)
+    };
   } catch (e) {
+    console.warn("Error cargando legisladores:", e);
+
     return {
       ok: false,
-      html: `<div style="font-size:13px;line-height:1.35;">
-        <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
-        <div style="color:#64748b;margin-bottom:10px;">No se pudo cargar el listado en este momento.</div>
-        <div style="font-size:12px;color:#64748b;"><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
-      </div>`
+      html: `
+        <div style="font-size:13px;line-height:1.35;">
+          <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
+          <div style="color:#64748b;margin-bottom:10px;">No se pudo cargar el listado oficial en este momento.</div>
+          <div style="font-size:12px;color:#64748b;">
+            <strong>Fuente oficial:</strong>
+            <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a>
+          </div>
+        </div>
+      `
     };
   }
 }
