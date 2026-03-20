@@ -1,4 +1,3 @@
-
 (function () {
   "use strict";
 
@@ -30,6 +29,7 @@
     infoCiudadana: []
   };
 
+  // ======================
   // UI
   // ======================
   rootElement.innerHTML = `
@@ -63,7 +63,6 @@
       <span>💬</span>
     </button>
 
-    <!-- 🔔 Burbuja flotante inicial -->
     <div class="vb-tooltip" id="vbTooltip" role="status" aria-live="polite" tabindex="0">
       💬 ¿Necesitás ayuda? Tocá acá
     </div>
@@ -81,12 +80,12 @@
 
   const STATE = {
     mode: "menu",
-  subscribedWeekly: localStorage.getItem("vb_weekly") === "true",
-  welcomeHidden: false,
-  lastKeyword: "",
-  lastUserText: "",
-  lastPage: window.location.pathname.split("/").pop() || "index.html"
-};
+    subscribedWeekly: localStorage.getItem("vb_weekly") === "true",
+    welcomeHidden: false,
+    lastKeyword: "",
+    lastUserText: "",
+    lastPage: window.location.pathname.split("/").pop() || "index.html"
+  };
 
   // ======================
   // Helpers UX
@@ -103,10 +102,6 @@
     scrollToBottom();
   }
 
-  /**
-   * pushMsg normal (texto)
-   * ✅ ahora soporta opts.html = true (para render prolijo en tarjetas)
-   */
   function pushMsg(text, who = "bot", opts = {}) {
     const div = document.createElement("div");
     div.className = `vb-msg ${who === "user" ? "vb-user" : "vb-bot"} ${opts.extraClass || ""}`;
@@ -144,10 +139,9 @@
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
-  /* =====================================================
-     🔔 Tooltip flotante
-  ===================================================== */
-
+  // ======================
+  // Tooltip flotante
+  // ======================
   const TIP_KEY = "vb_tip_seen_v4";
 
   function positionTooltip() {
@@ -261,7 +255,6 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
     );
 
     setQuickButtons([
-      // { label: "1️⃣ Trabajo Territorial", onClick: option1, _divider: "Trabajo Territorial" },
       { label: "2️⃣ Leyes y proyectos", onClick: option2, _divider: "Leyes y proyectos" },
       { label: "3️⃣ Sobre la Legislatura", onClick: option3, _divider: "Sobre la Legislatura" },
       { label: "4️⃣ Noticias recientes", onClick: option4, _divider: "Noticias recientes" },
@@ -283,7 +276,6 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
     renderWelcome();
   }
 
-  // ✅ NUEVA opción chat
   function optionChat() {
     pushMsg("💬 Dale, escribime lo que necesitás. Podés buscar por palabra o número de ley (ej: salud, 10585).");
     STATE.mode = "chat";
@@ -494,413 +486,451 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
 
   // ======================
   // Opción 3
-  // Opción 3
-// ======================
-DATA.legislaturaInfo = {
-  funciona: [
-    "🏛️ ¿Cómo funciona la Legislatura de La Rioja?",
-    "",
-    "• Es el órgano que debate y aprueba leyes provinciales.",
-    "• Es unicameral (una sola cámara) e integrada por diputadas y diputados elegidos por voto popular.",
-    "",
-    "Cómo se trabaja (resumen):",
-    "1) Se presenta un proyecto (Ley / Resolución / Declaración).",
-    "2) Pasa a Comisiones para análisis y mejoras.",
-    "3) Se emite dictamen (recomendación).",
-    "4) Se debate en el recinto y se vota.",
-    "5) Si se aprueba, se sanciona y sigue el circuito correspondiente.",
-  ].join("\n"),
+  // ======================
+  DATA.legislaturaInfo = {
+    funciona: [
+      "🏛️ ¿Cómo funciona la Legislatura de La Rioja?",
+      "",
+      "• Es el órgano que debate y aprueba leyes provinciales.",
+      "• Es unicameral (una sola cámara) e integrada por diputadas y diputados elegidos por voto popular.",
+      "",
+      "Cómo se trabaja (resumen):",
+      "1) Se presenta un proyecto (Ley / Resolución / Declaración).",
+      "2) Pasa a Comisiones para análisis y mejoras.",
+      "3) Se emite dictamen (recomendación).",
+      "4) Se debate en el recinto y se vota.",
+      "5) Si se aprueba, se sanciona y sigue el circuito correspondiente."
+    ].join("\n"),
 
-  comisiones: [
-    "🧩 ¿Qué son las Comisiones?",
-    "",
-    "Las comisiones son grupos de legisladores/as que estudian los proyectos antes de que lleguen al recinto.",
-    "",
-    "Qué hacen:",
-    "• Analizan el tema (salud, educación, presupuesto, obras, etc.).",
-    "• Pueden pedir informes y realizar reuniones de trabajo.",
-    "• Elaboran un dictamen: aprobar, modificar o rechazar.",
-    "",
-    "Cómo se integran:",
-    "• Se conforman con legisladores/as de distintos espacios.",
-    "• Suelen tener Presidencia, Vicepresidencia, Secretaría e integrantes.",
-  ].join("\n"),
-};
+    comisiones: [
+      "🧩 ¿Qué son las Comisiones?",
+      "",
+      "Las comisiones son grupos de legisladores/as que estudian los proyectos antes de que lleguen al recinto.",
+      "",
+      "Qué hacen:",
+      "• Analizan el tema (salud, educación, presupuesto, obras, etc.).",
+      "• Pueden pedir informes y realizar reuniones de trabajo.",
+      "• Elaboran un dictamen: aprobar, modificar o rechazar.",
+      "",
+      "Cómo se integran:",
+      "• Se conforman con legisladores/as de distintos espacios.",
+      "• Suelen tener Presidencia, Vicepresidencia, Secretaría e integrantes."
+    ].join("\n")
+  };
 
-const LEGI_URL = "https://legislaturalarioja.gob.ar/legisladores.html";
-const LEGI_URL_READER = "https://r.jina.ai/http://legislaturalarioja.gob.ar/legisladores.html";
+  const LEGI_URL = "https://legislaturalarioja.gob.ar/legisladores.html";
+  const LEGI_URL_READER = "https://r.jina.ai/http://legislaturalarioja.gob.ar/legisladores.html";
 
-function normalizarTexto(s) {
-  return String(s || "")
-    .replace(/\r/g, "")
-    .replace(/\t/g, " ")
-    .replace(/\u00A0/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
-
-function normalizarComparacion(s) {
-  return normalizarTexto(s)
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-}
-
-function limpiarBasuraDeLinks(s) {
-  return String(s || "")
-    .replace(/\]\(\s*https?:\/\/[^\s)]+\s*\)/gi, " ")
-    .replace(/https?:\/\/\S+/gi, " ")
-    .replace(/\bimagenes\/\S+/gi, " ")
-    .replace(/\b\S+\.(png|jpg|jpeg|gif|webp|svg)\b/gi, " ")
-    .replace(/[#_*`>\[\]]/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
-
-function limpiarTextoLegislador(s) {
-  return limpiarBasuraDeLinks(s)
-    .replace(/\bDip\.\s*/gi, "")
-    .replace(/\bDiputada\b/gi, "")
-    .replace(/\bDiputado\b/gi, "")
-    .replace(/\bPresidente\b/gi, "")
-    .replace(/\bPresidenta\b/gi, "")
-    .replace(/\bVicepresidente\b/gi, "")
-    .replace(/\bVicepresidenta\b/gi, "")
-    .replace(/\bSecretario\b/gi, "")
-    .replace(/\bSecretaria\b/gi, "")
-    .replace(/\bSecretaría\b/gi, "")
-    .replace(/\bBloque Político\b/gi, "")
-    .replace(/\bPartido Político\b/gi, "")
-    .replace(/\bMandato\b/gi, "")
-    .replace(/\bDepartamento\b/gi, "")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
-
-function pareceNombreHumano(s) {
-  const t = limpiarTextoLegislador(s);
-  if (!t || t.length < 5) return false;
-
-  const invalido = [
-    "partido politico",
-    "mandato",
-    "bloque politico",
-    "departamento",
-    "legisladores",
-    "legislatura",
-    "periodo"
-  ];
-
-  const norm = normalizarComparacion(t);
-  if (invalido.some(x => norm.includes(x))) return false;
-
-  return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'´.\-\s]+$/.test(t);
-}
-
-function quitarDuplicadoExacto(nombre) {
-  const limpio = normalizarTexto(nombre);
-  const palabras = limpio.split(/\s+/).filter(Boolean);
-
-  if (palabras.length < 4) return limpio;
-
-  const mitad = palabras.length / 2;
-
-  if (Number.isInteger(mitad)) {
-    const a = palabras.slice(0, mitad).join(" ");
-    const b = palabras.slice(mitad).join(" ");
-    if (normalizarComparacion(a) === normalizarComparacion(b)) {
-      return a.trim();
-    }
+  function normalizarTexto(s) {
+    return String(s || "")
+      .replace(/\r/g, "")
+      .replace(/\t/g, " ")
+      .replace(/\u00A0/g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
   }
 
-  return limpio;
-}
-
-function quitarDuplicadoParcial(nombre) {
-  const limpio = normalizarTexto(nombre);
-  const palabras = limpio.split(/\s+/).filter(Boolean);
-
-  if (palabras.length < 4) return limpio;
-
-  for (let size = Math.floor(palabras.length / 2); size >= 2; size--) {
-    const inicio = palabras.slice(0, size).join(" ");
-    const siguiente = palabras.slice(size, size * 2).join(" ");
-
-    if (
-      inicio &&
-      siguiente &&
-      normalizarComparacion(inicio) === normalizarComparacion(siguiente)
-    ) {
-      return palabras.slice(size).join(" ").trim();
-    }
+  function normalizarComparacion(s) {
+    return normalizarTexto(s)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
   }
 
-  return limpio;
-}
+  function limpiarBasuraDeLinks(s) {
+    return String(s || "")
+      .replace(/\]\(\s*https?:\/\/[^\s)]+\s*\)/gi, " ")
+      .replace(/https?:\/\/\S+/gi, " ")
+      .replace(/\bimagenes\/\S+/gi, " ")
+      .replace(/\b\S+\.(png|jpg|jpeg|gif|webp|svg)\b/gi, " ")
+      .replace(/[#_*`>\[\]]/g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  }
 
-function limpiarNombreFinal(nombre) {
-  let n = limpiarTextoLegislador(nombre);
+  function limpiarTextoLegislador(s) {
+    return limpiarBasuraDeLinks(s)
+      .replace(/\bDip\.\s*/gi, "")
+      .replace(/\bDiputada\b/gi, "")
+      .replace(/\bDiputado\b/gi, "")
+      .replace(/\bPresidente\b/gi, "")
+      .replace(/\bPresidenta\b/gi, "")
+      .replace(/\bVicepresidente\b/gi, "")
+      .replace(/\bVicepresidenta\b/gi, "")
+      .replace(/\bSecretario\b/gi, "")
+      .replace(/\bSecretaria\b/gi, "")
+      .replace(/\bSecretaría\b/gi, "")
+      .replace(/\bBloque Político\b/gi, "")
+      .replace(/\bPartido Político\b/gi, "")
+      .replace(/\bMandato\b/gi, "")
+      .replace(/\bDepartamento\b/gi, "")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  }
 
-  n = quitarDuplicadoExacto(n);
-  n = quitarDuplicadoParcial(n);
+  function pareceNombreHumano(s) {
+    const t = limpiarTextoLegislador(s);
+    if (!t || t.length < 5) return false;
 
-  const partes = n.split(/\s+/).filter(Boolean);
+    const invalido = [
+      "partido politico",
+      "mandato",
+      "bloque politico",
+      "departamento",
+      "legisladores",
+      "legislatura",
+      "periodo"
+    ];
 
-  if (partes.length >= 6) {
-    const mitad = partes.length / 2;
+    const norm = normalizarComparacion(t);
+    if (invalido.some(x => norm.includes(x))) return false;
+
+    return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'´.\-\s]+$/.test(t);
+  }
+
+  function quitarDuplicadoExacto(nombre) {
+    const limpio = normalizarTexto(nombre);
+    const palabras = limpio.split(/\s+/).filter(Boolean);
+
+    if (palabras.length < 4) return limpio;
+
+    const mitad = palabras.length / 2;
+
     if (Number.isInteger(mitad)) {
-      const a = partes.slice(0, mitad).join(" ");
-      const b = partes.slice(mitad).join(" ");
+      const a = palabras.slice(0, mitad).join(" ");
+      const b = palabras.slice(mitad).join(" ");
       if (normalizarComparacion(a) === normalizarComparacion(b)) {
-        n = a;
+        return a.trim();
       }
     }
+
+    return limpio;
   }
 
-  return n.trim();
-}
+  function quitarDuplicadoParcial(nombre) {
+    const limpio = normalizarTexto(nombre);
+    const palabras = limpio.split(/\s+/).filter(Boolean);
 
-function obtenerValorDespuesDeEtiqueta(lineas, etiqueta) {
-  const etiquetaNorm = normalizarComparacion(etiqueta);
+    if (palabras.length < 4) return limpio;
 
-  for (let i = 0; i < lineas.length; i++) {
-    const actual = normalizarComparacion(lineas[i]);
-    if (actual === etiquetaNorm || actual.includes(etiquetaNorm)) {
-      for (let j = i + 1; j < lineas.length; j++) {
-        const candidato = limpiarTextoLegislador(lineas[j]);
-        if (!candidato) continue;
+    for (let size = Math.floor(palabras.length / 2); size >= 2; size--) {
+      const inicio = palabras.slice(0, size).join(" ");
+      const siguiente = palabras.slice(size, size * 2).join(" ");
 
-        const cNorm = normalizarComparacion(candidato);
-        if (
-          cNorm.includes("partido politico") ||
-          cNorm.includes("mandato") ||
-          cNorm.includes("bloque politico") ||
-          cNorm.includes("departamento")
-        ) {
-          continue;
+      if (
+        inicio &&
+        siguiente &&
+        normalizarComparacion(inicio) === normalizarComparacion(siguiente)
+      ) {
+        return palabras.slice(size).join(" ").trim();
+      }
+    }
+
+    return limpio;
+  }
+
+  function limpiarNombreFinal(nombre) {
+    let n = limpiarTextoLegislador(nombre);
+    n = n.replace(/\s{2,}/g, " ").trim();
+
+    let palabras = n.split(/\s+/).filter(Boolean);
+
+    if (palabras.length >= 4 && palabras.length % 2 === 0) {
+      const mitad = palabras.length / 2;
+      const a = palabras.slice(0, mitad).join(" ");
+      const b = palabras.slice(mitad).join(" ");
+
+      if (normalizarComparacion(a) === normalizarComparacion(b)) {
+        n = a.trim();
+      }
+    }
+
+    palabras = n.split(/\s+/).filter(Boolean);
+    for (let i = 2; i < palabras.length; i++) {
+      const inicio = palabras.slice(0, i).join(" ");
+      const resto = palabras.slice(i).join(" ");
+
+      if (
+        inicio &&
+        resto &&
+        normalizarComparacion(resto).includes(normalizarComparacion(inicio))
+      ) {
+        n = resto.trim();
+        break;
+      }
+    }
+
+    palabras = n.split(/\s+/).filter(Boolean);
+    for (let size = Math.floor(palabras.length / 2); size >= 2; size--) {
+      const a = palabras.slice(0, size).join(" ");
+      const b = palabras.slice(size, size * 2).join(" ");
+
+      if (a && b && normalizarComparacion(a) === normalizarComparacion(b)) {
+        n = palabras.slice(size).join(" ").trim();
+        break;
+      }
+    }
+
+    n = quitarDuplicadoExacto(n);
+    n = quitarDuplicadoParcial(n);
+
+    const partes = n.split(/\s+/).filter(Boolean);
+    if (partes.length >= 6) {
+      const mitad = partes.length / 2;
+      if (Number.isInteger(mitad)) {
+        const a = partes.slice(0, mitad).join(" ");
+        const b = partes.slice(mitad).join(" ");
+        if (normalizarComparacion(a) === normalizarComparacion(b)) {
+          n = a.trim();
         }
-
-        return candidato;
       }
     }
+
+    return n.trim();
   }
 
-  return "";
-}
+  function obtenerValorDespuesDeEtiqueta(lineas, etiqueta) {
+    const etiquetaNorm = normalizarComparacion(etiqueta);
 
-function parsearLegisladoresDesdeTexto(texto) {
-  const limpio = String(texto || "").replace(/\r/g, "");
-  const bloques = limpio.split(/\n(?=Dip\.)/g).map(b => b.trim()).filter(Boolean);
+    for (let i = 0; i < lineas.length; i++) {
+      const actual = normalizarComparacion(lineas[i]);
+      if (actual === etiquetaNorm || actual.includes(etiquetaNorm)) {
+        for (let j = i + 1; j < lineas.length; j++) {
+          const candidato = limpiarTextoLegislador(lineas[j]);
+          if (!candidato) continue;
 
-  const legisladores = [];
+          const cNorm = normalizarComparacion(candidato);
+          if (
+            cNorm.includes("partido politico") ||
+            cNorm.includes("mandato") ||
+            cNorm.includes("bloque politico") ||
+            cNorm.includes("departamento")
+          ) {
+            continue;
+          }
 
-  for (const bloque of bloques) {
-    const lineas = bloque
-      .split("\n")
-      .map(l => limpiarBasuraDeLinks(l))
-      .map(l => l.trim())
-      .filter(Boolean);
-
-    if (!lineas.length) continue;
-
-    const primeraLinea = lineas.find(l => /^Dip\./i.test(l)) || "";
-    let nombre = limpiarNombreFinal(primeraLinea);
-
-    if (!pareceNombreHumano(nombre)) {
-      const candidatoExtra = lineas
-        .map(l => limpiarNombreFinal(l))
-        .find(l => pareceNombreHumano(l));
-
-      if (candidatoExtra) nombre = candidatoExtra;
+          return candidato;
+        }
+      }
     }
 
-    const partido = obtenerValorDespuesDeEtiqueta(lineas, "Partido Político");
-    const mandato = obtenerValorDespuesDeEtiqueta(lineas, "Mandato");
-    const bloquePolitico = obtenerValorDespuesDeEtiqueta(lineas, "Bloque Político");
+    return "";
+  }
 
-    if (!pareceNombreHumano(nombre)) continue;
+  function parsearLegisladoresDesdeTexto(texto) {
+    const limpio = String(texto || "").replace(/\r/g, "");
+    const bloques = limpio.split(/\n(?=Dip\.)/g).map(b => b.trim()).filter(Boolean);
 
-    legisladores.push({
-      nombre,
-      partido: limpiarTextoLegislador(partido),
-      mandato: limpiarTextoLegislador(mandato),
-      bloque: limpiarTextoLegislador(bloquePolitico) || "Sin bloque informado"
+    const legisladores = [];
+
+    for (const bloque of bloques) {
+      const lineas = bloque
+        .split("\n")
+        .map(l => limpiarBasuraDeLinks(l))
+        .map(l => l.trim())
+        .filter(Boolean);
+
+      if (!lineas.length) continue;
+
+      const primeraLinea = lineas.find(l => /^Dip\./i.test(l)) || "";
+      let nombre = limpiarNombreFinal(primeraLinea);
+
+      if (!pareceNombreHumano(nombre)) {
+        const candidatoExtra = lineas
+          .map(l => limpiarNombreFinal(l))
+          .find(l => pareceNombreHumano(l));
+
+        if (candidatoExtra) nombre = candidatoExtra;
+      }
+
+      const partido = obtenerValorDespuesDeEtiqueta(lineas, "Partido Político");
+      const mandato = obtenerValorDespuesDeEtiqueta(lineas, "Mandato");
+      const bloquePolitico = obtenerValorDespuesDeEtiqueta(lineas, "Bloque Político");
+
+      if (!pareceNombreHumano(nombre)) continue;
+
+      legisladores.push({
+        nombre,
+        partido: limpiarTextoLegislador(partido),
+        mandato: limpiarTextoLegislador(mandato),
+        bloque: limpiarTextoLegislador(bloquePolitico) || "Sin bloque informado"
+      });
+    }
+
+    const unicos = [];
+    const seen = new Set();
+
+    for (const item of legisladores) {
+      const key = normalizarComparacion(item.nombre);
+      if (!key) continue;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      unicos.push(item);
+    }
+
+    return unicos;
+  }
+
+  function escapeHTML(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function buildLegisladoresHTML(legisladores) {
+    if (!Array.isArray(legisladores) || !legisladores.length) {
+      return `
+        <div style="font-size:13px;line-height:1.35;">
+          <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>
+          <div style="color:#64748b;">No se encontraron legisladores para mostrar en este momento.</div>
+        </div>
+      `;
+    }
+
+    const porBloque = {};
+
+    for (const l of legisladores) {
+      const bloque = (l.bloque || "Sin bloque informado").trim();
+      if (!porBloque[bloque]) porBloque[bloque] = [];
+      porBloque[bloque].push(l);
+    }
+
+    const ordenDeseado = [
+      "Partido Justicialista",
+      "PRO",
+      "La Libertad Avanza"
+    ];
+
+    const bloques = Object.keys(porBloque).sort((a, b) => {
+      const ia = ordenDeseado.indexOf(a);
+      const ib = ordenDeseado.indexOf(b);
+
+      if (ia !== -1 && ib !== -1) return ia - ib;
+      if (ia !== -1) return -1;
+      if (ib !== -1) return 1;
+
+      return a.localeCompare(b, "es");
     });
-  }
 
-  const unicos = [];
-  const seen = new Set();
+    bloques.forEach((b) => {
+      porBloque[b].sort((x, y) =>
+        (x.nombre || "").localeCompare(y.nombre || "", "es")
+      );
+    });
 
-  for (const item of legisladores) {
-    const key = normalizarComparacion(item.nombre);
-    if (!key) continue;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    unicos.push(item);
-  }
+    const wrapStyle = "font-size:13px; line-height:1.35;";
+    const bloqueStyle = "margin:10px 0 14px; padding:10px; border-radius:12px; background:rgba(1,152,164,.06); border:1px solid rgba(2,6,23,.08);";
+    const tituloStyle = "font-weight:800; font-size:13.5px; color:var(--vb-primary,#0198A4); padding:0 0 8px; margin:0 0 8px; border-bottom:1px solid rgba(2,6,23,.10);";
+    const cardStyle = "background:#fff; border:1px solid rgba(2,6,23,.10); border-radius:12px; padding:10px 10px; margin:8px 0; box-shadow:0 8px 18px rgba(2,6,23,.06);";
+    const nameStyle = "font-weight:800; font-size:13px; margin:0 0 6px; color:#0f172a;";
+    const metaStyle = "font-size:12px; color:#475569; margin:2px 0;";
 
-  return unicos;
-}
+    let html = `<div style="${wrapStyle}">`;
+    html += `<div style="font-weight:900; font-size:14px; margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>`;
+    html += `<div style="color:#64748b; font-size:12px; margin-bottom:10px;">Listado oficial agrupado por bloques políticos.</div>`;
 
-function escapeHTML(str) {
-  return String(str || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
+    for (const bloque of bloques) {
+      html += `<div style="${bloqueStyle}">`;
+      html += `<div style="${tituloStyle}">${escapeHTML(bloque)}</div>`;
 
-function buildLegisladoresHTML(legisladores) {
-  if (!Array.isArray(legisladores) || !legisladores.length) {
-    return `
-      <div style="font-size:13px;line-height:1.35;">
-        <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>
-        <div style="color:#64748b;">No se encontraron legisladores para mostrar en este momento.</div>
-      </div>
-    `;
-  }
+      for (const l of porBloque[bloque]) {
+        const nombreSeguro = limpiarNombreFinal(l.nombre || "");
 
-  const porBloque = {};
-
-  for (const l of legisladores) {
-    const bloque = (l.bloque || "Sin bloque informado").trim();
-    if (!porBloque[bloque]) porBloque[bloque] = [];
-    porBloque[bloque].push(l);
-  }
-
-  const ordenDeseado = [
-    "Partido Justicialista",
-    "PRO",
-    "La Libertad Avanza"
-  ];
-
-  const bloques = Object.keys(porBloque).sort((a, b) => {
-    const ia = ordenDeseado.indexOf(a);
-    const ib = ordenDeseado.indexOf(b);
-
-    if (ia !== -1 && ib !== -1) return ia - ib;
-    if (ia !== -1) return -1;
-    if (ib !== -1) return 1;
-
-    return a.localeCompare(b, "es");
-  });
-
-  bloques.forEach((b) => {
-    porBloque[b].sort((x, y) =>
-      (x.nombre || "").localeCompare(y.nombre || "", "es")
-    );
-  });
-
-  const wrapStyle = "font-size:13px; line-height:1.35;";
-  const bloqueStyle = "margin:10px 0 14px; padding:10px; border-radius:12px; background:rgba(1,152,164,.06); border:1px solid rgba(2,6,23,.08);";
-  const tituloStyle = "font-weight:800; font-size:13.5px; color:var(--vb-primary,#0198A4); padding:0 0 8px; margin:0 0 8px; border-bottom:1px solid rgba(2,6,23,.10);";
-  const cardStyle = "background:#fff; border:1px solid rgba(2,6,23,.10); border-radius:12px; padding:10px 10px; margin:8px 0; box-shadow:0 8px 18px rgba(2,6,23,.06);";
-  const nameStyle = "font-weight:800; font-size:13px; margin:0 0 6px; color:#0f172a;";
-  const metaStyle = "font-size:12px; color:#475569; margin:2px 0;";
-
-  let html = `<div style="${wrapStyle}">`;
-  html += `<div style="font-weight:900; font-size:14px; margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>`;
-  html += `<div style="color:#64748b; font-size:12px; margin-bottom:10px;">Listado oficial agrupado por bloques políticos.</div>`;
-
-  for (const bloque of bloques) {
-    html += `<div style="${bloqueStyle}">`;
-    html += `<div style="${tituloStyle}">${escapeHTML(bloque)}</div>`;
-
-    for (const l of porBloque[bloque]) {
-      const nombreSeguro = limpiarNombreFinal(l.nombre || "");
-
-      html += `<div style="${cardStyle}">`;
-      html += `<div style="${nameStyle}">${escapeHTML(nombreSeguro || "Nombre no disponible")}</div>`;
-      if (l.partido) {
-        html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
+        html += `<div style="${cardStyle}">`;
+        html += `<div style="${nameStyle}">${escapeHTML(nombreSeguro || "Nombre no disponible")}</div>`;
+        if (l.partido) {
+          html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
+        }
+        if (l.mandato) {
+          html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
+        }
+        html += `</div>`;
       }
-      if (l.mandato) {
-        html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
-      }
+
       html += `</div>`;
     }
 
+    html += `
+      <div style="margin-top:10px; font-size:12px; color:#64748b;">
+        <div><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
+      </div>
+    `;
+
     html += `</div>`;
+    return html;
   }
 
-  html += `
-    <div style="margin-top:10px; font-size:12px; color:#64748b;">
-      <div><strong>Fuente oficial:</strong> <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a></div>
-    </div>
-  `;
+  async function buildLegisladoresPayload() {
+    try {
+      const res = await fetch(LEGI_URL_READER, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-  html += `</div>`;
-  return html;
-}
+      const textoPlano = await res.text();
+      const legisladores = parsearLegisladoresDesdeTexto(textoPlano);
 
-async function buildLegisladoresPayload() {
-  try {
-    const res = await fetch(LEGI_URL_READER, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!legisladores.length) {
+        throw new Error("No se pudieron parsear legisladores");
+      }
 
-    const textoPlano = await res.text();
-    const legisladores = parsearLegisladoresDesdeTexto(textoPlano);
+      return {
+        ok: true,
+        html: buildLegisladoresHTML(legisladores)
+      };
+    } catch (e) {
+      console.warn("Error cargando legisladores:", e);
 
-    if (!legisladores.length) {
-      throw new Error("No se pudieron parsear legisladores");
-    }
-
-    return {
-      ok: true,
-      html: buildLegisladoresHTML(legisladores)
-    };
-  } catch (e) {
-    console.warn("Error cargando legisladores:", e);
-
-    return {
-      ok: false,
-      html: `
-        <div style="font-size:13px;line-height:1.35;">
-          <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
-          <div style="color:#64748b;margin-bottom:10px;">No se pudo cargar el listado oficial en este momento.</div>
-          <div style="font-size:12px;color:#64748b;">
-            <strong>Fuente oficial:</strong>
-            <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a>
+      return {
+        ok: false,
+        html: `
+          <div style="font-size:13px;line-height:1.35;">
+            <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes la integran</div>
+            <div style="color:#64748b;margin-bottom:10px;">No se pudo cargar el listado oficial en este momento.</div>
+            <div style="font-size:12px;color:#64748b;">
+              <strong>Fuente oficial:</strong>
+              <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a>
+            </div>
           </div>
-        </div>
-      `
-    };
+        `
+      };
+    }
   }
-}
 
-function option3() {
-  pushMsg("🏛️ ¿Qué querés saber sobre la Legislatura?");
-  setQuickButtons([
-    {
-      label: "⚙️ Cómo funciona",
-      onClick: () => {
-        pushMsg(DATA.legislaturaInfo?.funciona || "");
-        option3();
+  function option3() {
+    pushMsg("🏛️ ¿Qué querés saber sobre la Legislatura?");
+    setQuickButtons([
+      {
+        label: "⚙️ Cómo funciona",
+        onClick: () => {
+          pushMsg(DATA.legislaturaInfo?.funciona || "");
+          option3();
+        },
+        _divider: "Cómo funciona"
       },
-      _divider: "Cómo funciona",
-    },
-    {
-      label: "👥 Quiénes la integran",
-      onClick: async () => {
-        pushMsg("🔄 Cargando listado oficial de legisladores...");
-        const payload = await buildLegisladoresPayload();
-        pushMsg(payload.html, "bot", { html: true });
-        option3();
+      {
+        label: "👥 Quiénes la integran",
+        onClick: async () => {
+          pushMsg("🔄 Cargando listado oficial de legisladores...");
+          const payload = await buildLegisladoresPayload();
+          pushMsg(payload.html, "bot", { html: true });
+          option3();
+        },
+        _divider: "Quiénes la integran"
       },
-      _divider: "Quiénes la integran",
-    },
-    {
-      label: "🧩 Qué son las comisiones",
-      onClick: () => {
-        pushMsg(DATA.legislaturaInfo?.comisiones || "");
-        option3();
+      {
+        label: "🧩 Qué son las comisiones",
+        onClick: () => {
+          pushMsg(DATA.legislaturaInfo?.comisiones || "");
+          option3();
+        },
+        _divider: "Comisiones"
       },
-      _divider: "Comisiones",
-    },
-    { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
-  ]);
-}
+      { label: "🏠 Menú", onClick: backToMenu, _isMenu: true }
+    ]);
+  }
+
   // ======================
   // Opción 4
   // ======================
@@ -934,19 +964,19 @@ function option3() {
   }
 
   // ======================
-  // // Opción 5 - Contactar equipo
-// ======================
-function option5() {
-  pushMsg("📞 Para contactar al equipo, podés elegir una opción:");
+  // Opción 5 - Contactar equipo
+  // ======================
+  function option5() {
+    pushMsg("📞 Para contactar al equipo, podés elegir una opción:");
 
-  setQuickButtons([
-    {
-      label: "✉️ Contacto institucional",
-      onClick: () =>
-        openMailDirect({
-          to: "equipo.lourdesortiz@gmail.com",
-          subject: "Primer contacto institucional",
-          body: `Hola,
+    setQuickButtons([
+      {
+        label: "✉️ Contacto institucional",
+        onClick: () =>
+          openMailDirect({
+            to: "equipo.lourdesortiz@gmail.com",
+            subject: "Primer contacto institucional",
+            body: `Hola,
 
 Este espacio está pensado para instituciones, organizaciones sociales, entidades educativas y organismos públicos que deseen comunicarse con nuestro equipo.
 
@@ -963,242 +993,241 @@ Correo electrónico:
 Motivo del contacto:
 
 Saludos cordiales.`
-        }),
-      _divider: "Email institucional",
-    },
-    {
-      label: "🤝 Contactar con el equipo",
-      onClick: () => option5_ContactFormInChat(),
-      _divider: "Contacto",
-    },
-    {
-      label: "🙋 Participar en actividades",
-      onClick: () => option5_ActivitiesFormInChat(),
-      _divider: "Actividades",
-    },
-    { label: "🏠 Menú", onClick: backToMenu, _isMenu: true },
-  ]);
-}
-
-function buildMailtoLink({ to, subject = "", body = "" }) {
-  const safeTo = String(to || "").trim();
-  const safeSubject = String(subject || "");
-  const safeBody = String(body || "");
-
-  let mailto = `mailto:${safeTo}`;
-  const params = [];
-
-  if (safeSubject) {
-    params.push(`subject=${encodeURIComponent(safeSubject)}`);
+          }),
+        _divider: "Email institucional"
+      },
+      {
+        label: "🤝 Contactar con el equipo",
+        onClick: () => option5_ContactFormInChat(),
+        _divider: "Contacto"
+      },
+      {
+        label: "🙋 Participar en actividades",
+        onClick: () => option5_ActivitiesFormInChat(),
+        _divider: "Actividades"
+      },
+      { label: "🏠 Menú", onClick: backToMenu, _isMenu: true }
+    ]);
   }
 
-  if (safeBody) {
-    params.push(`body=${encodeURIComponent(safeBody)}`);
-  }
+  function buildMailtoLink({ to, subject = "", body = "" }) {
+    const safeTo = String(to || "").trim();
+    const safeSubject = String(subject || "");
+    const safeBody = String(body || "");
 
-  if (params.length > 0) {
-    mailto += `?${params.join("&")}`;
-  }
+    let mailto = `mailto:${safeTo}`;
+    const params = [];
 
-  return mailto;
-}
-
-function openMailDirect({ to, subject = "", body = "" }) {
-  try {
-    const gmailUrl =
-      "https://mail.google.com/mail/?view=cm&fs=1" +
-      "&to=" + encodeURIComponent(to) +
-      "&su=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(body);
-
-    window.open(gmailUrl, "_blank", "noopener,noreferrer");
-    return true;
-
-  } catch (error) {
-    console.warn("Error al abrir Gmail:", error);
-    pushMsg("⚠️ No se pudo abrir Gmail automáticamente.");
-    return false;
-  }
-}
-
-function getChatMessagesContainerSmart() {
-  return document.getElementById("vbBody");
-}
-
-function getCurrentDateTimeMeta() {
-  const now = new Date();
-
-  const fecha = now.toLocaleDateString("es-AR");
-  const hora = now.toLocaleTimeString("es-AR", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  return { fecha, hora };
-}
-
-function getContactContextMeta() {
-  const { fecha, hora } = getCurrentDateTimeMeta();
-
-  return {
-    fecha,
-    hora,
-    pagina: window.location.href,
-    paginaNombre:
-      (typeof STATE !== "undefined" && STATE.lastPage)
-        ? STATE.lastPage
-        : (window.location.pathname.split("/").pop() || "index.html"),
-    palabraClave:
-      (typeof STATE !== "undefined" && STATE.lastKeyword)
-        ? STATE.lastKeyword
-        : "",
-    textoBuscado:
-      (typeof STATE !== "undefined" && STATE.lastUserText)
-        ? STATE.lastUserText
-        : ""
-  };
-}
-
-async function saveContactToFirebase(payload) {
-  try {
-    if (
-      !window.firebaseDB ||
-      !window.firebaseFns ||
-      typeof window.firebaseFns.addDoc !== "function" ||
-      typeof window.firebaseFns.collection !== "function"
-    ) {
-      console.warn("Firebase no disponible para guardar contactos.");
-      return { ok: false, reason: "firebase-no-disponible" };
+    if (safeSubject) {
+      params.push(`subject=${encodeURIComponent(safeSubject)}`);
     }
 
-    const { addDoc, collection, serverTimestamp } = window.firebaseFns;
+    if (safeBody) {
+      params.push(`body=${encodeURIComponent(safeBody)}`);
+    }
 
-    await addDoc(collection(window.firebaseDB, "contactos_vicunita"), {
-      ...payload,
-      createdAt: typeof serverTimestamp === "function" ? serverTimestamp() : new Date(),
-      source: "vicuñita-bot",
-      estado: "nuevo"
+    if (params.length > 0) {
+      mailto += `?${params.join("&")}`;
+    }
+
+    return mailto;
+  }
+
+  function openMailDirect({ to, subject = "", body = "" }) {
+    try {
+      const gmailUrl =
+        "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=" + encodeURIComponent(to) +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.open(gmailUrl, "_blank", "noopener,noreferrer");
+      return true;
+    } catch (error) {
+      console.warn("Error al abrir Gmail:", error);
+      pushMsg("⚠️ No se pudo abrir Gmail automáticamente.");
+      return false;
+    }
+  }
+
+  function getChatMessagesContainerSmart() {
+    return document.getElementById("vbBody");
+  }
+
+  function getCurrentDateTimeMeta() {
+    const now = new Date();
+
+    const fecha = now.toLocaleDateString("es-AR");
+    const hora = now.toLocaleTimeString("es-AR", {
+      hour: "2-digit",
+      minute: "2-digit"
     });
 
-    return { ok: true };
-  } catch (error) {
-    console.warn("Error Firebase:", error);
-    return { ok: false, reason: "firebase-error" };
-  }
-}
-
-async function saveActivityToFirebase(payload) {
-  try {
-    if (
-      !window.firebaseDB ||
-      !window.firebaseFns ||
-      typeof window.firebaseFns.addDoc !== "function" ||
-      typeof window.firebaseFns.collection !== "function"
-    ) {
-      console.warn("Firebase no disponible para guardar actividades.");
-      return { ok: false, reason: "firebase-no-disponible" };
-    }
-
-    const { addDoc, collection, serverTimestamp } = window.firebaseFns;
-
-    await addDoc(collection(window.firebaseDB, "participacion_actividades_vicunita"), {
-      ...payload,
-      createdAt: typeof serverTimestamp === "function" ? serverTimestamp() : new Date(),
-      source: "vicuñita-bot",
-      estado: "nuevo"
-    });
-
-    return { ok: true };
-  } catch (error) {
-    console.warn("Error Firebase:", error);
-    return { ok: false, reason: "firebase-error" };
-  }
-}
-
-function option5_ContactFormInChat(retries = 10) {
-  const container = getChatMessagesContainerSmart();
-
-  if (!container) {
-    if (retries > 0) {
-      return setTimeout(() => option5_ContactFormInChat(retries - 1), 120);
-    }
-    return;
+    return { fecha, hora };
   }
 
-  const old = document.getElementById("formContactoEquipoEnChat");
-  if (old) old.remove();
+  function getContactContextMeta() {
+    const { fecha, hora } = getCurrentDateTimeMeta();
 
-  const bubble = document.createElement("div");
-  bubble.id = "formContactoEquipoEnChat";
-  bubble.className = "vb-msg vb-bot actividad-bubble";
-
-  bubble.innerHTML = `
-    <div class="actividad-card">
-      <div class="actividad-title">🤝 Contactar con el equipo</div>
-
-      <form class="form-actividades-chat" autocomplete="on">
-        <label>Nombre y apellido *</label>
-        <input type="text" name="nombre" placeholder="Ej: Giovani Perez" required />
-
-        <label>Número de teléfono</label>
-        <input type="tel" name="telefono" placeholder="Ej: 3804..." />
-
-        <label>Email *</label>
-        <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
-
-        <label>Motivo del contacto *</label>
-        <textarea name="motivo" rows="4" placeholder="Ej: Quiero comunicarme con el equipo por..." required></textarea>
-
-        <div class="form-actions">
-          <button type="submit" class="btn-enviar-form">Enviar</button>
-          <button type="button" class="btn-cancelar-form">Cancelar</button>
-        </div>
-
-        <small class="help">Al enviar, se guardará el contacto y se abrirá tu correo con el mensaje ya armado.</small>
-      </form>
-    </div>
-  `;
-
-  container.appendChild(bubble);
-  container.scrollTop = container.scrollHeight;
-
-  const form = bubble.querySelector("form");
-  const cancel = bubble.querySelector(".btn-cancelar-form");
-
-  cancel.addEventListener("click", () => {
-    bubble.remove();
-    container.scrollTop = container.scrollHeight;
-  });
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const data = new FormData(form);
-    const nombre = (data.get("nombre") || "").toString().trim();
-    const telefono = (data.get("telefono") || "").toString().trim();
-    const email = (data.get("email") || "").toString().trim();
-    const motivo = (data.get("motivo") || "").toString().trim();
-
-    if (!nombre || !email || !motivo) return;
-
-    const meta = getContactContextMeta();
-
-    const payload = {
-      tipo: "contacto_equipo",
-      nombre,
-      telefono: telefono || "",
-      email,
-      motivo,
-      fechaTexto: meta.fecha,
-      horaTexto: meta.hora,
-      pagina: meta.pagina,
-      paginaNombre: meta.paginaNombre,
-      palabraClave: meta.palabraClave,
-      textoBuscado: meta.textoBuscado
+    return {
+      fecha,
+      hora,
+      pagina: window.location.href,
+      paginaNombre:
+        (typeof STATE !== "undefined" && STATE.lastPage)
+          ? STATE.lastPage
+          : (window.location.pathname.split("/").pop() || "index.html"),
+      palabraClave:
+        (typeof STATE !== "undefined" && STATE.lastKeyword)
+          ? STATE.lastKeyword
+          : "",
+      textoBuscado:
+        (typeof STATE !== "undefined" && STATE.lastUserText)
+          ? STATE.lastUserText
+          : ""
     };
+  }
 
-    const subject = "Contacto desde Vicuñita";
-    const body =
+  async function saveContactToFirebase(payload) {
+    try {
+      if (
+        !window.firebaseDB ||
+        !window.firebaseFns ||
+        typeof window.firebaseFns.addDoc !== "function" ||
+        typeof window.firebaseFns.collection !== "function"
+      ) {
+        console.warn("Firebase no disponible para guardar contactos.");
+        return { ok: false, reason: "firebase-no-disponible" };
+      }
+
+      const { addDoc, collection, serverTimestamp } = window.firebaseFns;
+
+      await addDoc(collection(window.firebaseDB, "contactos_vicunita"), {
+        ...payload,
+        createdAt: typeof serverTimestamp === "function" ? serverTimestamp() : new Date(),
+        source: "vicuñita-bot",
+        estado: "nuevo"
+      });
+
+      return { ok: true };
+    } catch (error) {
+      console.warn("Error Firebase:", error);
+      return { ok: false, reason: "firebase-error" };
+    }
+  }
+
+  async function saveActivityToFirebase(payload) {
+    try {
+      if (
+        !window.firebaseDB ||
+        !window.firebaseFns ||
+        typeof window.firebaseFns.addDoc !== "function" ||
+        typeof window.firebaseFns.collection !== "function"
+      ) {
+        console.warn("Firebase no disponible para guardar actividades.");
+        return { ok: false, reason: "firebase-no-disponible" };
+      }
+
+      const { addDoc, collection, serverTimestamp } = window.firebaseFns;
+
+      await addDoc(collection(window.firebaseDB, "participacion_actividades_vicunita"), {
+        ...payload,
+        createdAt: typeof serverTimestamp === "function" ? serverTimestamp() : new Date(),
+        source: "vicuñita-bot",
+        estado: "nuevo"
+      });
+
+      return { ok: true };
+    } catch (error) {
+      console.warn("Error Firebase:", error);
+      return { ok: false, reason: "firebase-error" };
+    }
+  }
+
+  function option5_ContactFormInChat(retries = 10) {
+    const container = getChatMessagesContainerSmart();
+
+    if (!container) {
+      if (retries > 0) {
+        return setTimeout(() => option5_ContactFormInChat(retries - 1), 120);
+      }
+      return;
+    }
+
+    const old = document.getElementById("formContactoEquipoEnChat");
+    if (old) old.remove();
+
+    const bubble = document.createElement("div");
+    bubble.id = "formContactoEquipoEnChat";
+    bubble.className = "vb-msg vb-bot actividad-bubble";
+
+    bubble.innerHTML = `
+      <div class="actividad-card">
+        <div class="actividad-title">🤝 Contactar con el equipo</div>
+
+        <form class="form-actividades-chat" autocomplete="on">
+          <label>Nombre y apellido *</label>
+          <input type="text" name="nombre" placeholder="Ej: Giovani Perez" required />
+
+          <label>Número de teléfono</label>
+          <input type="tel" name="telefono" placeholder="Ej: 3804..." />
+
+          <label>Email *</label>
+          <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
+
+          <label>Motivo del contacto *</label>
+          <textarea name="motivo" rows="4" placeholder="Ej: Quiero comunicarme con el equipo por..." required></textarea>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-enviar-form">Enviar</button>
+            <button type="button" class="btn-cancelar-form">Cancelar</button>
+          </div>
+
+          <small class="help">Al enviar, se guardará el contacto y se abrirá tu correo con el mensaje ya armado.</small>
+        </form>
+      </div>
+    `;
+
+    container.appendChild(bubble);
+    container.scrollTop = container.scrollHeight;
+
+    const form = bubble.querySelector("form");
+    const cancel = bubble.querySelector(".btn-cancelar-form");
+
+    cancel.addEventListener("click", () => {
+      bubble.remove();
+      container.scrollTop = container.scrollHeight;
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const nombre = (data.get("nombre") || "").toString().trim();
+      const telefono = (data.get("telefono") || "").toString().trim();
+      const email = (data.get("email") || "").toString().trim();
+      const motivo = (data.get("motivo") || "").toString().trim();
+
+      if (!nombre || !email || !motivo) return;
+
+      const meta = getContactContextMeta();
+
+      const payload = {
+        tipo: "contacto_equipo",
+        nombre,
+        telefono: telefono || "",
+        email,
+        motivo,
+        fechaTexto: meta.fecha,
+        horaTexto: meta.hora,
+        pagina: meta.pagina,
+        paginaNombre: meta.paginaNombre,
+        palabraClave: meta.palabraClave,
+        textoBuscado: meta.textoBuscado
+      };
+
+      const subject = "Contacto desde Vicuñita";
+      const body =
 `Hola equipo,
 Quiero contactarme con ustedes. Mis datos son:
 
@@ -1217,111 +1246,111 @@ Datos automáticos del sistema:
 
 ¡Gracias!`;
 
-    bubble.remove();
+      bubble.remove();
 
-    openMailDirect({
-      to: "equipo.lourdesortiz@gmail.com",
-      subject,
-      body
+      openMailDirect({
+        to: "equipo.lourdesortiz@gmail.com",
+        subject,
+        body
+      });
+
+      const result = await saveContactToFirebase(payload);
+
+      if (result.ok) {
+        pushMsg("✅ Tus datos fueron registrados correctamente.");
+      } else {
+        pushMsg("⚠️ No se pudo guardar en la base de datos, pero el correo igualmente fue preparado.");
+      }
     });
-
-    const result = await saveContactToFirebase(payload);
-
-    if (result.ok) {
-      pushMsg("✅ Tus datos fueron registrados correctamente.");
-    } else {
-      pushMsg("⚠️ No se pudo guardar en la base de datos, pero el correo igualmente fue preparado.");
-    }
-  });
-}
-
-function option5_ActivitiesFormInChat(retries = 10) {
-  const container = getChatMessagesContainerSmart();
-
-  if (!container) {
-    if (retries > 0) return setTimeout(() => option5_ActivitiesFormInChat(retries - 1), 120);
-    return;
   }
 
-  const old = document.getElementById("formActividadesEnChat");
-  if (old) old.remove();
+  function option5_ActivitiesFormInChat(retries = 10) {
+    const container = getChatMessagesContainerSmart();
 
-  const bubble = document.createElement("div");
-  bubble.id = "formActividadesEnChat";
-  bubble.className = "vb-msg vb-bot actividad-bubble";
+    if (!container) {
+      if (retries > 0) return setTimeout(() => option5_ActivitiesFormInChat(retries - 1), 120);
+      return;
+    }
 
-  bubble.innerHTML = `
-    <div class="actividad-card">
-      <div class="actividad-title">🙋 Participar en actividades</div>
+    const old = document.getElementById("formActividadesEnChat");
+    if (old) old.remove();
 
-      <form class="form-actividades-chat" autocomplete="on">
-        <label>Nombre y apellido *</label>
-        <input type="text" name="nombre" placeholder="Ej: Romina Díaz" required />
+    const bubble = document.createElement("div");
+    bubble.id = "formActividadesEnChat";
+    bubble.className = "vb-msg vb-bot actividad-bubble";
 
-        <label>Número de teléfono *</label>
-        <input type="tel" name="telefono" placeholder="Ej: 3804..." required />
+    bubble.innerHTML = `
+      <div class="actividad-card">
+        <div class="actividad-title">🙋 Participar en actividades</div>
 
-        <label>Email *</label>
-        <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
+        <form class="form-actividades-chat" autocomplete="on">
+          <label>Nombre y apellido *</label>
+          <input type="text" name="nombre" placeholder="Ej: Romina Díaz" required />
 
-        <label>¿En qué actividades te gustaría participar? *</label>
-        <textarea name="actividades" rows="3" placeholder="Ej: rondas de servicios, eventos barriales, voluntariado..." required></textarea>
+          <label>Número de teléfono *</label>
+          <input type="tel" name="telefono" placeholder="Ej: 3804..." required />
 
-        <label>Disponibilidad horaria *</label>
-        <input type="text" name="disponibilidad" placeholder="Ej: Lun a Vie 9 a 12 / Sáb por la tarde..." required />
+          <label>Email *</label>
+          <input type="email" name="email" placeholder="Ej: nombre@gmail.com" required />
 
-        <div class="form-actions">
-          <button type="submit" class="btn-enviar-form">Enviar</button>
-          <button type="button" class="btn-cancelar-form">Cancelar</button>
-        </div>
+          <label>¿En qué actividades te gustaría participar? *</label>
+          <textarea name="actividades" rows="3" placeholder="Ej: rondas de servicios, eventos barriales, voluntariado..." required></textarea>
 
-        <small class="help">Al enviar, se guardará la solicitud y se abrirá tu correo con el mensaje ya armado.</small>
-      </form>
-    </div>
-  `;
+          <label>Disponibilidad horaria *</label>
+          <input type="text" name="disponibilidad" placeholder="Ej: Lun a Vie 9 a 12 / Sáb por la tarde..." required />
 
-  container.appendChild(bubble);
-  container.scrollTop = container.scrollHeight;
+          <div class="form-actions">
+            <button type="submit" class="btn-enviar-form">Enviar</button>
+            <button type="button" class="btn-cancelar-form">Cancelar</button>
+          </div>
 
-  const form = bubble.querySelector("form");
-  const cancel = bubble.querySelector(".btn-cancelar-form");
+          <small class="help">Al enviar, se guardará la solicitud y se abrirá tu correo con el mensaje ya armado.</small>
+        </form>
+      </div>
+    `;
 
-  cancel.addEventListener("click", () => {
-    bubble.remove();
+    container.appendChild(bubble);
     container.scrollTop = container.scrollHeight;
-  });
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    const form = bubble.querySelector("form");
+    const cancel = bubble.querySelector(".btn-cancelar-form");
 
-    const data = new FormData(form);
-    const nombre = (data.get("nombre") || "").toString().trim();
-    const telefono = (data.get("telefono") || "").toString().trim();
-    const email = (data.get("email") || "").toString().trim();
-    const actividades = (data.get("actividades") || "").toString().trim();
-    const disponibilidad = (data.get("disponibilidad") || "").toString().trim();
+    cancel.addEventListener("click", () => {
+      bubble.remove();
+      container.scrollTop = container.scrollHeight;
+    });
 
-    if (!nombre || !telefono || !email || !actividades || !disponibilidad) return;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const meta = getContactContextMeta();
+      const data = new FormData(form);
+      const nombre = (data.get("nombre") || "").toString().trim();
+      const telefono = (data.get("telefono") || "").toString().trim();
+      const email = (data.get("email") || "").toString().trim();
+      const actividades = (data.get("actividades") || "").toString().trim();
+      const disponibilidad = (data.get("disponibilidad") || "").toString().trim();
 
-    const payload = {
-      tipo: "participacion_actividades",
-      nombre,
-      telefono,
-      email,
-      actividades,
-      disponibilidad,
-      fechaTexto: meta.fecha,
-      horaTexto: meta.hora,
-      pagina: meta.pagina,
-      paginaNombre: meta.paginaNombre,
-      palabraClave: meta.palabraClave,
-      textoBuscado: meta.textoBuscado
-    };
+      if (!nombre || !telefono || !email || !actividades || !disponibilidad) return;
 
-    const subject = "Participación en actividades (Vicuñita)";
-    const body =
+      const meta = getContactContextMeta();
+
+      const payload = {
+        tipo: "participacion_actividades",
+        nombre,
+        telefono,
+        email,
+        actividades,
+        disponibilidad,
+        fechaTexto: meta.fecha,
+        horaTexto: meta.hora,
+        pagina: meta.pagina,
+        paginaNombre: meta.paginaNombre,
+        palabraClave: meta.palabraClave,
+        textoBuscado: meta.textoBuscado
+      };
+
+      const subject = "Participación en actividades (Vicuñita)";
+      const body =
 `Hola equipo,
 Quiero participar en actividades. Mis datos son:
 
@@ -1341,23 +1370,24 @@ Datos automáticos del sistema:
 
 ¡Gracias!`;
 
-    bubble.remove();
+      bubble.remove();
 
-    openMailDirect({
-      to: "equipo.lourdesortiz@gmail.com",
-      subject,
-      body
+      openMailDirect({
+        to: "equipo.lourdesortiz@gmail.com",
+        subject,
+        body
+      });
+
+      const result = await saveActivityToFirebase(payload);
+
+      if (result.ok) {
+        pushMsg("✅ Tu solicitud fue registrada correctamente.");
+      } else {
+        pushMsg("⚠️ No se pudo guardar en la base de datos, pero el correo igualmente fue preparado.");
+      }
     });
+  }
 
-    const result = await saveActivityToFirebase(payload);
-
-    if (result.ok) {
-      pushMsg("✅ Tu solicitud fue registrada correctamente.");
-    } else {
-      pushMsg("⚠️ No se pudo guardar en la base de datos, pero el correo igualmente fue preparado.");
-    }
-  });
-}
   // ======================
   // Opción 6 - Información Ciudadana Útil
   // ======================
@@ -1457,7 +1487,6 @@ Datos automáticos del sistema:
       return;
     }
 
-    // Chat libre: igual mandamos a Proyectos filtrado
     searchKeyword(text);
   }
 
@@ -1525,7 +1554,6 @@ Datos automáticos del sistema:
   async function init() {
     await loadData();
 
-    // ✅ Forzamos que la burbuja se vea SIEMPRE en esta versión
     if (elTooltip) {
       elTooltip.classList.add("vb-show");
       positionTooltip();
