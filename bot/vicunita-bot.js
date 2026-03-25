@@ -568,22 +568,35 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
       .trim();
   }
 
-  function pareceNombreHumano(s) {
-    const t = limpiarTextoLegislador(s);
-    if (!t || t.length < 5) return false;
-
-    const invalido = [
+  function esNombreBasura(s) {
+    const t = normalizarComparacion(s);
+    return [
+      "inicio",
+      "legisladores",
+      "legislatura",
+      "quienes integran la legislatura",
+      "listado oficial agrupado por bloques politicos",
       "partido politico",
       "mandato",
       "bloque politico",
-      "departamento",
-      "legisladores",
-      "legislatura",
-      "periodo"
-    ];
+      "departamento"
+    ].includes(t);
+  }
+
+  function pareceNombreHumano(s) {
+    const t = limpiarTextoLegislador(s);
+    if (!t || t.length < 5) return false;
+    if (esNombreBasura(t)) return false;
 
     const norm = normalizarComparacion(t);
-    if (invalido.some(x => norm.includes(x))) return false;
+    if (
+      norm.includes("partido politico") ||
+      norm.includes("mandato") ||
+      norm.includes("bloque politico") ||
+      norm.includes("departamento")
+    ) {
+      return false;
+    }
 
     return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'´.\-\s]+$/.test(t);
   }
@@ -595,12 +608,33 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
     if (palabras.length < 4) return limpio;
 
     const mitad = palabras.length / 2;
-
     if (Number.isInteger(mitad)) {
       const a = palabras.slice(0, mitad).join(" ");
       const b = palabras.slice(mitad).join(" ");
       if (normalizarComparacion(a) === normalizarComparacion(b)) {
         return a.trim();
+      }
+    }
+
+    return limpio;
+  }
+
+  function quitarNombreCortoPegado(nombre) {
+    const limpio = normalizarTexto(nombre);
+    const palabras = limpio.split(/\s+/).filter(Boolean);
+
+    if (palabras.length < 4) return limpio;
+
+    for (let i = 2; i < palabras.length; i++) {
+      const inicio = palabras.slice(0, i).join(" ");
+      const resto = palabras.slice(i).join(" ");
+
+      if (
+        inicio &&
+        resto &&
+        normalizarComparacion(resto).includes(normalizarComparacion(inicio))
+      ) {
+        return resto.trim();
       }
     }
 
@@ -614,14 +648,10 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
     if (palabras.length < 4) return limpio;
 
     for (let size = Math.floor(palabras.length / 2); size >= 2; size--) {
-      const inicio = palabras.slice(0, size).join(" ");
-      const siguiente = palabras.slice(size, size * 2).join(" ");
+      const a = palabras.slice(0, size).join(" ");
+      const b = palabras.slice(size, size * 2).join(" ");
 
-      if (
-        inicio &&
-        siguiente &&
-        normalizarComparacion(inicio) === normalizarComparacion(siguiente)
-      ) {
+      if (a && b && normalizarComparacion(a) === normalizarComparacion(b)) {
         return palabras.slice(size).join(" ").trim();
       }
     }
@@ -630,22 +660,44 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
   }
 
   function limpiarNombreFinal(nombre) {
-    let n = limpiarTextoLegislador(nombre);
-    n = n.replace(/\s{2,}/g, " ").trim();
+  let n = limpiarTextoLegislador(nombre);
+  n = n.replace(/\s{2,}/g, " ").trim();
 
-    let palabras = n.split(/\s+/).filter(Boolean);
+  let palabras = n.split(/\s+/).filter(Boolean);
 
-    if (palabras.length >= 4 && palabras.length % 2 === 0) {
-      const mitad = palabras.length / 2;
-      const a = palabras.slice(0, mitad).join(" ");
-      const b = palabras.slice(mitad).join(" ");
+  // 1) Duplicado exacto
+  if (palabras.length >= 4 && palabras.length % 2 === 0) {
+    const mitad = palabras.length / 2;
+    const a = palabras.slice(0, mitad).join(" ");
+    const b = palabras.slice(mitad).join(" ");
 
-      if (normalizarComparacion(a) === normalizarComparacion(b)) {
-        n = a.trim();
+    if (normalizarComparacion(a) === normalizarComparacion(b)) {
+      n = a.trim();
+      palabras = n.split(/\s+/).filter(Boolean);
+    }
+  }
+
+  // 2) Caso clave: nombre corto + nombre completo
+  // Ej:
+  // Pablo Leo Pablo Darío Leo
+  // Paul Mercado Paul Alberto Mercado
+  // José Couceiro José Abrahán Couceiro
+  if (palabras.length >= 5) {
+    for (let i = 2; i < palabras.length - 1; i++) {
+      const primera = normalizarComparacion(palabras[0]);
+      const actual = normalizarComparacion(palabras[i]);
+      const ultimo = normalizarComparacion(palabras[palabras.length - 1]);
+
+      if (actual === primera && ultimo === normalizarComparacion(palabras[1])) {
+        n = palabras.slice(i).join(" ").trim();
+        palabras = n.split(/\s+/).filter(Boolean);
+        break;
       }
     }
+  }
 
-    palabras = n.split(/\s+/).filter(Boolean);
+  // 3) Variante general: si el inicio se repite más adelante, quedarse con la segunda aparición
+  if (palabras.length >= 4) {
     for (let i = 2; i < palabras.length; i++) {
       const inicio = palabras.slice(0, i).join(" ");
       const resto = palabras.slice(i).join(" ");
@@ -656,111 +708,71 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
         normalizarComparacion(resto).includes(normalizarComparacion(inicio))
       ) {
         n = resto.trim();
+        palabras = n.split(/\s+/).filter(Boolean);
         break;
       }
     }
+  }
 
-    palabras = n.split(/\s+/).filter(Boolean);
+  // 4) Duplicado parcial
+  if (palabras.length >= 4) {
     for (let size = Math.floor(palabras.length / 2); size >= 2; size--) {
       const a = palabras.slice(0, size).join(" ");
       const b = palabras.slice(size, size * 2).join(" ");
 
       if (a && b && normalizarComparacion(a) === normalizarComparacion(b)) {
         n = palabras.slice(size).join(" ").trim();
+        palabras = n.split(/\s+/).filter(Boolean);
         break;
       }
     }
-
-    n = quitarDuplicadoExacto(n);
-    n = quitarDuplicadoParcial(n);
-
-    const partes = n.split(/\s+/).filter(Boolean);
-    if (partes.length >= 6) {
-      const mitad = partes.length / 2;
-      if (Number.isInteger(mitad)) {
-        const a = partes.slice(0, mitad).join(" ");
-        const b = partes.slice(mitad).join(" ");
-        if (normalizarComparacion(a) === normalizarComparacion(b)) {
-          n = a.trim();
-        }
-      }
-    }
-
-    return n.trim();
   }
 
-  function obtenerValorDespuesDeEtiqueta(lineas, etiqueta) {
-    const etiquetaNorm = normalizarComparacion(etiqueta);
+  // 5) Última limpieza
+  n = quitarDuplicadoExacto(n);
+  n = quitarDuplicadoParcial(n);
 
-    for (let i = 0; i < lineas.length; i++) {
-      const actual = normalizarComparacion(lineas[i]);
-      if (actual === etiquetaNorm || actual.includes(etiquetaNorm)) {
-        for (let j = i + 1; j < lineas.length; j++) {
-          const candidato = limpiarTextoLegislador(lineas[j]);
-          if (!candidato) continue;
+  return n.trim();
+}
 
-          const cNorm = normalizarComparacion(candidato);
-          if (
-            cNorm.includes("partido politico") ||
-            cNorm.includes("mandato") ||
-            cNorm.includes("bloque politico") ||
-            cNorm.includes("departamento")
-          ) {
-            continue;
-          }
+  function normalizarBloquePolitico(bloque) {
+    const b = normalizarComparacion(bloque);
 
-          return candidato;
-        }
-      }
-    }
+    if (b.includes("justicial")) return "Partido Justicialista";
+    if (b === "ucr" || b.includes("union civica radical") || b.includes("unión cívica radical")) return "UCR";
+    if (b.includes("libertad avanza")) return "La Libertad Avanza";
 
-    return "";
+    return limpiarTextoLegislador(bloque) || "Sin bloque informado";
   }
 
   function parsearLegisladoresDesdeTexto(texto) {
-    const limpio = String(texto || "").replace(/\r/g, "");
-    const bloques = limpio.split(/\n(?=Dip\.)/g).map(b => b.trim()).filter(Boolean);
+    const out = [];
+    const limpio = String(texto || "");
 
-    const legisladores = [];
+    const re = /Dip\.\s*([^\n]+)\n[\s\S]*?Partido Político\s*\n?\s*([^\n]+)\n[\s\S]*?Mandato\s*\n?\s*([0-9]{4}\s*-\s*[0-9]{4})\n[\s\S]*?Bloque Político\s*\n?\s*([^\n]+)/gi;
 
-    for (const bloque of bloques) {
-      const lineas = bloque
-        .split("\n")
-        .map(l => limpiarBasuraDeLinks(l))
-        .map(l => l.trim())
-        .filter(Boolean);
-
-      if (!lineas.length) continue;
-
-      const primeraLinea = lineas.find(l => /^Dip\./i.test(l)) || "";
-      let nombre = limpiarNombreFinal(primeraLinea);
-
-      if (!pareceNombreHumano(nombre)) {
-        const candidatoExtra = lineas
-          .map(l => limpiarNombreFinal(l))
-          .find(l => pareceNombreHumano(l));
-
-        if (candidatoExtra) nombre = candidatoExtra;
-      }
-
-      const partido = obtenerValorDespuesDeEtiqueta(lineas, "Partido Político");
-      const mandato = obtenerValorDespuesDeEtiqueta(lineas, "Mandato");
-      const bloquePolitico = obtenerValorDespuesDeEtiqueta(lineas, "Bloque Político");
+    let m;
+    while ((m = re.exec(limpio)) !== null) {
+      const nombre = limpiarNombreFinal(m[1] || "");
+      const partido = limpiarTextoLegislador(m[2] || "");
+      const mandato = limpiarTextoLegislador(m[3] || "");
+      const bloque = normalizarBloquePolitico(m[4] || "");
 
       if (!pareceNombreHumano(nombre)) continue;
+      if (esNombreBasura(nombre)) continue;
 
-      legisladores.push({
+      out.push({
         nombre,
-        partido: limpiarTextoLegislador(partido),
-        mandato: limpiarTextoLegislador(mandato),
-        bloque: limpiarTextoLegislador(bloquePolitico) || "Sin bloque informado"
+        partido,
+        mandato,
+        bloque
       });
     }
 
     const unicos = [];
     const seen = new Set();
 
-    for (const item of legisladores) {
+    for (const item of out) {
       const key = normalizarComparacion(item.nombre);
       if (!key) continue;
       if (seen.has(key)) continue;
@@ -785,7 +797,11 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
       return `
         <div style="font-size:13px;line-height:1.35;">
           <div style="font-weight:900;font-size:14px;margin-bottom:6px;">👥 Quiénes integran la Legislatura</div>
-          <div style="color:#64748b;">No se encontraron legisladores para mostrar en este momento.</div>
+          <div style="color:#64748b;margin-bottom:8px;">No se pudo leer el listado completo automáticamente.</div>
+          <div style="font-size:12px;color:#64748b;">
+            <strong>Fuente oficial:</strong>
+            <a href="${escapeHTML(LEGI_URL)}" target="_blank" rel="noopener noreferrer">${escapeHTML(LEGI_URL)}</a>
+          </div>
         </div>
       `;
     }
@@ -800,7 +816,7 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
 
     const ordenDeseado = [
       "Partido Justicialista",
-      "PRO",
+      "UCR",
       "La Libertad Avanza"
     ];
 
@@ -837,16 +853,10 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
       html += `<div style="${tituloStyle}">${escapeHTML(bloque)}</div>`;
 
       for (const l of porBloque[bloque]) {
-        const nombreSeguro = limpiarNombreFinal(l.nombre || "");
-
         html += `<div style="${cardStyle}">`;
-        html += `<div style="${nameStyle}">${escapeHTML(nombreSeguro || "Nombre no disponible")}</div>`;
-        if (l.partido) {
-          html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
-        }
-        if (l.mandato) {
-          html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
-        }
+        html += `<div style="${nameStyle}">${escapeHTML(l.nombre || "Nombre no disponible")}</div>`;
+        if (l.partido) html += `<div style="${metaStyle}"><strong>Partido:</strong> ${escapeHTML(l.partido)}</div>`;
+        if (l.mandato) html += `<div style="${metaStyle}"><strong>Mandato:</strong> ${escapeHTML(l.mandato)}</div>`;
         html += `</div>`;
       }
 
@@ -871,12 +881,8 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
       const textoPlano = await res.text();
       const legisladores = parsearLegisladoresDesdeTexto(textoPlano);
 
-      if (!legisladores.length) {
-        throw new Error("No se pudieron parsear legisladores");
-      }
-
       return {
-        ok: true,
+        ok: legisladores.length > 0,
         html: buildLegisladoresHTML(legisladores)
       };
     } catch (e) {
