@@ -98,101 +98,123 @@
       padding:10px 20px 30px;
     }
 
-    .grid-companeros{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(260px, 1fr));
-      gap:24px;
-      max-width:760px;
+    .bloque-canva{
+      max-width:980px;
       margin:0 auto;
-    }
-
-    .card-companero{
       background:var(--card);
       border:1px solid var(--card-border);
       border-radius:22px;
-      padding:26px 22px;
+      padding:28px;
       box-shadow:var(--shadow);
       backdrop-filter:blur(10px);
       transition:.25s ease;
-      min-height:260px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
     }
 
-    .card-companero:hover{
+    .bloque-canva:hover{
       transform:translateY(-4px);
       background:rgba(255,255,255,.16);
     }
 
-    .icono{
-      width:72px;
-      height:72px;
-      border-radius:18px;
+    .canva-header{
       display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:2rem;
-      background:linear-gradient(135deg,var(--primario),var(--secundario));
-      box-shadow:0 12px 28px rgba(0,0,0,.18);
-      margin-bottom:18px;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
     }
 
-    .card-companero h2{
+    .canva-info{
+      flex:1;
+      min-width:260px;
+    }
+
+    .canva-badge{
+      display:inline-block;
+      margin-bottom:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      font-size:.9rem;
+      font-weight:700;
+    }
+
+    .bloque-canva h2{
       margin:0 0 10px;
       font-size:1.5rem;
       font-weight:800;
     }
 
-    .card-companero p{
+    .bloque-canva p{
       margin:0 0 18px;
       color:var(--muted);
       line-height:1.5;
       font-size:.98rem;
     }
 
-    .acciones{
+    .canva-acciones{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:auto;
     }
 
-    .btn-card,
-    .btn-volver{
-      border:none;
-      cursor:pointer;
+    .btn{
+      padding:13px 16px;
       border-radius:14px;
       font-weight:700;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       transition:.2s ease;
-      font-family:inherit;
+      cursor:pointer;
     }
 
-    .btn-card{
-      padding:13px 16px;
+    .btn-primario{
       background:linear-gradient(135deg,var(--primario),var(--secundario));
       color:#fff;
       box-shadow:0 10px 24px rgba(0,0,0,.15);
     }
 
-    .btn-card:hover,
-    .btn-volver:hover{
-      transform:translateY(-2px);
-    }
-
-    .btn-sec{
-      padding:13px 16px;
+    .btn-secundario{
       background:rgba(255,255,255,.14);
       color:#fff;
       border:1px solid rgba(255,255,255,.2);
-      border-radius:14px;
-      cursor:default;
-      font-weight:600;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .canva-frame{
+      position:relative;
+      width:100%;
+      padding-top:56.25%;
+      overflow:hidden;
+      border-radius:18px;
+      box-shadow:0 10px 28px rgba(0,0,0,.2);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.08);
+    }
+
+    .canva-frame iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:none;
+    }
+
+    .nota{
+      margin-top:16px;
+      font-size:.92rem;
+      text-align:center;
+      color:rgba(255,255,255,.82);
     }
 
     .zona-volver{
-      position:relative;
-      z-index:2;
       text-align:center;
       padding:10px 20px 34px;
     }
@@ -202,161 +224,83 @@
       background:rgba(255,255,255,.14);
       color:#fff;
       border:1px solid rgba(255,255,255,.22);
-      backdrop-filter:blur(8px);
-    }
-
-    @media (max-width:900px){
-      #vicunita-companeros{
-        width:min(320px, 34vw);
-        opacity:.75;
-      }
-
-      .grid-companeros{
-        max-width:680px;
-      }
+      border-radius:14px;
+      text-decoration:none;
     }
 
     @media (max-width:768px){
-      .logo-lourdes{
-        position:absolute;
-        left:14px;
-        top:14px;
-        transform:none;
-        height:38px;
-        opacity:.22;
-      }
-
-      #vicunita-companeros{
-        right:50%;
-        transform:translateX(50%);
-        bottom:86px;
-        width:min(220px, 56vw);
-        max-height:30vh;
-        opacity:.16;
-      }
-
       header{
-        padding:82px 16px 20px;
+        padding:80px 16px 20px;
       }
 
-      header h1{
-        font-size:clamp(1.8rem, 8vw, 2.3rem);
+      .bloque-canva{
+        padding:20px;
       }
 
-      header p{
-        font-size:.98rem;
-      }
-
-      .contenedor{
-        padding:10px 14px 24px;
-      }
-
-      .grid-companeros{
-        grid-template-columns:1fr;
-        gap:16px;
-        max-width:100%;
-      }
-
-      .card-companero{
-        min-height:auto;
-        padding:22px 18px;
-        border-radius:18px;
-      }
-
-      .icono{
-        width:64px;
-        height:64px;
-        font-size:1.7rem;
-        margin-bottom:16px;
-      }
-
-      .card-companero h2{
-        font-size:1.3rem;
-      }
-
-      .card-companero p{
-        font-size:.95rem;
-      }
-
-      .acciones{
+      .canva-acciones{
         flex-direction:column;
       }
 
-      .btn-card,
-      .btn-sec,
-      .btn-volver{
+      .btn{
         width:100%;
-        text-align:center;
-      }
-    }
-
-    @media (max-width:480px){
-      #vicunita-companeros{
-        width:min(190px, 58vw);
-        bottom:98px;
-        opacity:.14;
-      }
-
-      header{
-        padding:78px 14px 18px;
-      }
-
-      .contenedor{
-        padding:8px 12px 22px;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <img src="logo-lou.png" class="logo-lourdes" alt="Logo Lourdes Ortiz">
-  <img src="vicu.png" id="vicunita-companeros" alt="Vicuñita">
+  <img src="logo-lou.png" class="logo-lourdes" alt="">
+  <img src="vicu.png" id="vicunita-companeros" alt="">
 
   <header>
     <h1>Conocé a mis compañeros</h1>
-    <p>Elegí un apartado para conocer mejor el trabajo del equipo.</p>
+    <p>Contenido dinámico actualizado desde Canva.</p>
   </header>
 
   <section class="contenedor">
-    <div class="grid-companeros">
 
-      <article class="card-companero">
-        <div>
-          <div class="icono">🌿</div>
-          <h2>Territorio</h2>
+    <section class="bloque-canva">
+
+      <div class="canva-header">
+
+        <div class="canva-info">
+          <span class="canva-badge">✨ Vinculado a Canva</span>
+          <h2>Equipo y presentación</h2>
           <p>
-            Conocé el trabajo territorial, las acciones comunitarias, recorridos,
-            actividades barriales y el acompañamiento que se realiza junto a vecinos e instituciones.
+            Este contenido se actualiza automáticamente desde Canva.
+            Cualquier cambio realizado en el diseño se verá reflejado aquí.
           </p>
         </div>
 
-        <div class="acciones">
-          <button class="btn-card" onclick="location.href='territorio.html'">Ingresar</button>
-          <div class="btn-sec">Ficha lista para cargar</div>
-        </div>
-      </article>
+        <div class="canva-acciones">
+          <a class="btn btn-primario"
+             href="https://www.canva.com/design/DAHGSI5zvIQ/1zzjxgWF6jOPIhcqjDWlBw/view"
+             target="_blank">
+            Abrir en Canva
+          </a>
 
-      <article class="card-companero">
-        <div>
-          <div class="icono">📜</div>
-          <h2>Leyes</h2>
-          <p>
-            Accedé a un espacio pensado para mostrar el trabajo legislativo,
-            proyectos, acompañamiento en leyes y toda la información vinculada al área.
-          </p>
+          <a class="btn btn-secundario" href="#visor">
+            Ver presentación
+          </a>
         </div>
 
-        <div class="acciones">
-          <button class="btn-card" onclick="location.href='leyes.html'">Ingresar</button>
-          <div class="btn-sec">Ficha lista para cargar</div>
-        </div>
-      </article>
+      </div>
 
-    </div>
+      <div class="canva-frame" id="visor">
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHGSI5zvIQ/1zzjxgWF6jOPIhcqjDWlBw/view?embed"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+    </section>
+
   </section>
 
   <div class="zona-volver">
-    <button class="btn-volver" onclick="location.href='index.html'">⬅ Volver al inicio</button>
+    <a class="btn-volver" href="index.html">⬅ Volver al inicio</a>
   </div>
 
 </body>

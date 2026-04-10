@@ -37,7 +37,7 @@
       <div class="vb-header">
         <div class="vb-avatar" title="Vicuñita">🦙</div>
         <div class="vb-title">
-          <strong>Vicuñita</strong>
+          <strong>Vicu</strong>
           <small>Asistente virtual • Equipo</small>
         </div>
         <div class="vb-header-actions">
@@ -246,7 +246,7 @@
     STATE.welcomeHidden = false;
 
     pushMsg(
-      `👋 ¡Hola! Soy Vicuñita, la asistente virtual del equipo de la Diputada Lourdes Ortiz.
+      `👋 ¡Hola! Soy Vicu, la asistente virtual del equipo de la Diputada Lourdes Ortiz.
 Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que impulsamos y nuestras acciones dentro y fuera de la Legislatura Provincial.
 
 ¿Qué te gustaría hacer hoy?`,
@@ -678,10 +678,7 @@ Estoy acá para ayudarte a conocer más sobre nuestro trabajo, las leyes que imp
   }
 
   // 2) Caso clave: nombre corto + nombre completo
-  // Ej:
-  // Pablo Leo Pablo Darío Leo
-  // Paul Mercado Paul Alberto Mercado
-  // José Couceiro José Abrahán Couceiro
+  // Ej: Pablo Leo Pablo Darío Leo
   if (palabras.length >= 5) {
     for (let i = 2; i < palabras.length - 1; i++) {
       const primera = normalizarComparacion(palabras[0]);
