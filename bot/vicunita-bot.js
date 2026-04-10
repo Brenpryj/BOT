@@ -246,7 +246,7 @@
     STATE.welcomeHidden = false;
 
     pushMsg(
-      `👋 ¡Hola! Soy Vicu, la asistente virtual del equipo de la Diputada Lourdes Ortiz.
+      `👋¡Hola! Soy Vicu, la asistente virtual del equipo de la Diputada Lourdes Ortiz.
 Estoy acá para ayudarte a conocer más sobre nuestro trabajo,las leyes que impulsamos y nuestras acciones dentro y fuera de la Legislatura Provincial.
 
 ¿Qué te gustaría hacer hoy?`,
