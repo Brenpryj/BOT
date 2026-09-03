@@ -244,30 +244,62 @@
 
   /* Footer */
   footer{
-    margin-top: 26px;
-    background-color: rgba(26,134,137,.92);
-    color: white;
-    padding: 18px 14px;
+    margin-top:26px;
+    text-align:center;
+    padding:24px 20px 18px;
+    position:relative;
+    z-index:2;
+    font-size:.9rem;
+    color:white;
+  }
+
+  .footer-title{
+    margin:0 0 10px;
+    font-size:.88rem;
+    font-weight:600;
+    opacity:.95;
+  }
+
+  .social-icons{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap: 12px;
-    flex-wrap: wrap;
-    text-align:center;
-    position:relative;
-    z-index:1;
-    border-top: 1px solid rgba(255,255,255,.14);
+    gap:14px;
+    margin-bottom:10px;
+    flex-wrap:wrap;
   }
 
-  footer img{
-    height: 22px;
-    width: 22px;
-    opacity: .95;
-    transition: transform .18s ease, opacity .18s ease;
+  .social-icons a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
   }
-  footer a:hover img{
-    transform: translateY(-1px) scale(1.06);
-    opacity: 1;
+
+  .social-icons img{
+    width:18px;
+    height:18px;
+    object-fit:contain;
+    transition:.2s;
+    display:block;
+  }
+
+  .social-icons img:hover{
+    transform:scale(1.1);
+  }
+
+  .footer-equipo{
+    margin:10px 0 5px;
+    font-size:.82rem;
+    font-weight:500;
+    opacity:.88;
+  }
+
+  .footer-credit{
+    margin:0;
+    font-size:.76rem;
+    font-weight:400;
+    opacity:.68;
   }
 
   /* Responsive */
@@ -340,13 +372,32 @@ Tu propuesta puede ayudarnos a poner en valor esas historias que hacen crecer a 
     </section>
 
     <!-- Footer -->
-    <footer>
-      <div class="social-icons" style="display:flex; gap:14px; align-items:center; justify-content:center;">
-        <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener"><img src="logo ig.png" alt="Instagram"></a>
-        <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener"><img src="logo fb.png" alt="Facebook"></a>
-        <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener"><img src="logo x.png" alt="X"></a>
+    <footer class="footer">
+
+      <p class="footer-title">Seguinos en nuestras redes</p>
+
+      <div class="social-icons">
+        <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener noreferrer">
+          <img src="logo ig.png" alt="Instagram">
+        </a>
+
+        <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener noreferrer">
+          <img src="logo fb.png" alt="Facebook">
+        </a>
+
+        <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener noreferrer">
+          <img src="logo x.png" alt="X">
+        </a>
       </div>
-      <div style="font-weight:600; font-size:14px;">Creado por PB – © 2025</div>
+
+      <p class="footer-equipo">
+        Equipo de la Diputada Lourdes Ortiz · La Rioja
+      </p>
+
+      <p class="footer-credit">
+        VicuBot © 2026 · Desarrollado por BP
+      </p>
+
     </footer>
   </main>
 

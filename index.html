@@ -145,13 +145,14 @@
     }
 
     footer{
-      margin-top:auto;
-      text-align:center;
-      padding:20px;
-      position:relative;
-      z-index:2;
-      font-size:.9rem;
-    }
+  margin-top:auto;
+  text-align:center;
+  padding:24px 20px 18px;
+  position:relative;
+  z-index:2;
+  font-size:.9rem;
+  color:white;
+}
 
     .social-icons{
       display:flex;
@@ -180,7 +181,26 @@
     .social-icons img:hover{
       transform:scale(1.1);
     }
+.footer-title{
+  margin:0 0 10px;
+  font-size:.88rem;
+  font-weight:600;
+  opacity:.95;
+}
 
+.footer-equipo{
+  margin:10px 0 5px;
+  font-size:.82rem;
+  font-weight:500;
+  opacity:.88;
+}
+
+.footer-credit{
+  margin:0;
+  font-size:.76rem;
+  font-weight:400;
+  opacity:.68;
+}
     /* TABLET */
     @media (max-width: 1024px){
       main{
@@ -313,19 +333,30 @@
   <div id="vicunita-bot-root"></div>
   <script src="bot/vicunita-bot.js?v=20260224-3" defer></script>
 
-  <footer>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener noreferrer">
-        <img src="logo ig.png" alt="Instagram">
-      </a>
-      <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener noreferrer">
-        <img src="logo fb.png" alt="Facebook">
-      </a>
-      <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener noreferrer">
-        <img src="logo x.png" alt="X">
-      </a>
-    </div>
-    Creado por PB – © 2025
-  </footer>
-</body>
-</html>
+ <footer class="footer">
+
+  <p class="footer-title">Seguinos en nuestras redes</p>
+
+  <div class="social-icons">
+    <a href="https://www.instagram.com/lourortiz" target="_blank" rel="noopener noreferrer">
+      <img src="logo ig.png" alt="Instagram">
+    </a>
+
+    <a href="https://www.facebook.com/lourdes.ortiz.277" target="_blank" rel="noopener noreferrer">
+      <img src="logo fb.png" alt="Facebook">
+    </a>
+
+    <a href="https://x.com/Lourdez_ortiz" target="_blank" rel="noopener noreferrer">
+      <img src="logo x.png" alt="X">
+    </a>
+  </div>
+
+  <p class="footer-equipo">
+    Equipo de la Diputada Lourdes Ortiz · La Rioja
+  </p>
+
+  <p class="footer-credit">
+    VicuBot © 2026 · Desarrollado por BP
+  </p>
+
+</footer>
